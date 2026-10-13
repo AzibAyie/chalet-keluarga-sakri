@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Site Header</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</helmet>
+
+<header class="site-header" id="site-header">
+  <div class="wrap nav">
+    <a href="Main.dc.html" class="logo" aria-label="Laman utama Chalet Keluarga Sakri">
+      <img class="logo-mark" src="brand/cks-mark-sm.png" alt="" width="84" height="41">
+      <span class="logo-words"><span class="lw-1">chaletkeluarga<b>sakri</b></span><span class="lw-2">@sungai<b>inki</b></span></span>
+    </a>
+    <nav class="links" aria-label="Navigasi utama">
+      <a href="Rooms.dc.html" class="nl {{on.rooms}}">Penginapan</a>
+      <a href="Experience.dc.html" class="nl {{on.experience}}">Aktiviti</a>
+      <a href="Map.dc.html" class="nl {{on.map}}">Peta</a>
+      <a href="Gallery.dc.html" class="nl {{on.gallery}}">Galeri</a>
+      <a href="Booking.dc.html" class="btn btn-main">Hubungi kami</a>
+      <button class="menu-btn" onClick="{{openMenu}}" aria-label="Buka menu" aria-expanded="{{menuOpen}}" aria-controls="menu-sheet">
+        <svg width="22" height="18" viewBox="0 0 22 18" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 4h16"/><path d="M3 9h16"/><path d="M3 14h10"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="menu-overlay {{sheetClass}}" onClick="{{closeMenu}}"></div>
+<aside class="menu-sheet {{sheetClass}}" id="menu-sheet" aria-label="Menu laman">
+  <div class="menu-top">
+    <span class="hand" style="font-size:26px">Menu</span>
+    <button class="menu-close" onClick="{{closeMenu}}" aria-label="Tutup menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+
+  <div class="menu-group">Penginapan</div>
+  <a href="Main.dc.html" class="menu-link {{on.home}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 L12 4 L21 11"/><path d="M5 10v10h14V10"/></svg></span>Utama</a>
+  <a href="Rooms.dc.html" class="menu-link {{on.rooms}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7h5v3"/></svg></span>Bilik</a>
+  <a href="Map.dc.html" class="menu-link {{on.map}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span>Peta lokasi</a>
+  <a href="Booking.dc.html" class="menu-link {{on.booking}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>Hubungi kami</a>
+
+  <div class="menu-group">Terokai</div>
+  <a href="Experience.dc.html" class="menu-link {{on.experience}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><circle cx="12" cy="7" r="3"/></svg></span>Aktiviti</a>
+  <a href="Gallery.dc.html" class="menu-link {{on.gallery}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><circle cx="9" cy="11" r="2"/><path d="m21 17-5-5-9 8"/></svg></span>Galeri</a>
+  <a href="About.dc.html" class="menu-link {{on.about}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="#7FA886"><path d="M5 19C5 10 11 4 20 4c0 9-6 15-15 15z"/></svg></span>Kisah kami</a>
+  <a href="Reviews.dc.html" class="menu-link {{on.reviews}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span>Ulasan</a>
+  <a href="Location.dc.html" class="menu-link {{on.location}}"><span class="menu-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>Lokasi</a>
+
+  <div class="menu-foot">Ada soalan? WhatsApp <a href="https://wa.me/60173408345" target="_blank" rel="noopener">017 340 8345</a> (Nora)</div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"current":{"editor":null,"default":""},"$preview":{"width":1280,"height":70}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: false };
+  }
+
+  openMenu() {
+    this.setState({ open: true });
+    setTimeout(function () { const b = document.querySelector('.menu-close'); if (b) b.focus(); }, 60);
+  }
+
+  closeMenu() {
+    if (!this.state.open) return;
+    this.setState({ open: false });
+    const m = document.querySelector('.menu-btn');
+    if (m) m.focus();
+  }
+
+  renderVals() {
+    const self = this;
+    const current = this.props.current || '';
+    const on = {};
+    ['home', 'about', 'rooms', 'map', 'experience', 'gallery', 'reviews', 'location', 'booking'].forEach(function (k) { on[k] = k === current ? 'on' : ''; });
+    return {
+      on: on,
+      sheetClass: this.state.open ? 'open' : '',
+      menuOpen: String(this.state.open),
+      openMenu: function () { self.openMenu(); },
+      closeMenu: function () { self.closeMenu(); }
+    };
+  }
+
+  // Site-wide touches live here because every page includes the header.
+  componentDidMount() {
+    const self = this;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // header shadow once the page scrolls
+    const header = document.getElementById('site-header');
+    this._onScroll = function () { if (header) header.classList.toggle('scrolled', window.scrollY > 10); };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+
+    // gentle pop-in as things scroll into view (also for content rendered later)
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    let n = 0;
+    const watch = function (root) {
+      const els = [];
+      if (root.classList && root.classList.contains('pop-in')) els.push(root);
+      if (root.querySelectorAll) els.push.apply(els, root.querySelectorAll('.pop-in:not(.in)'));
+      els.forEach(function (el) { if (!el.style.transitionDelay) el.style.transitionDelay = (n++ % 3) * 0.08 + 's'; io.observe(el); });
+    };
+    watch(document);
+    this._mo = new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (node) { if (node.nodeType === 1) watch(node); }); }); });
+    this._mo.observe(document.body, { childList: true, subtree: true });
+    this._io = io;
+    document.addEventListener('transitionend', function (e) {
+      if (e.target.classList && e.target.classList.contains('in') && e.propertyName === 'opacity') e.target.style.transitionDelay = '';
+    });
+
+    // falling leaves
+    const colors = ['#8DBF7F', '#5E9A5C', '#CBE3B5', '#F6C35B', '#F2B8A2'];
+    window.sakriLeaves = function (x, y, count) {
+      if (reduceMotion) return;
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('div');
+        el.className = 'leaf-fx';
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        el.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 19C5 10 11 4 20 4c0 9-6 15-15 15z" fill="' + c + '"/><path d="M5 19L14 10" stroke="rgba(47,74,51,.5)" stroke-width="1.4" stroke-linecap="round"/></svg>';
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        el.style.setProperty('--dx', (Math.random() * 120 - 60) + 'px');
+        el.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
+        el.style.animationDelay = (i * 0.05) + 's';
+        el.style.animationDuration = (1.4 + Math.random() * 0.8) + 's';
+        document.body.appendChild(el);
+        el.addEventListener('animationend', function () { el.remove(); });
+      }
+    };
+
+    this._onKey = function (e) { if (e.key === 'Escape') self.closeMenu(); };
+    document.addEventListener('keydown', this._onKey);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('keydown', this._onKey);
+    if (this._mo) this._mo.disconnect();
+    if (this._io) this._io.disconnect();
+  }
+}
+</script>
+</body>
+</html>

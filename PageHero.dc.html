@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Page Banner</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</helmet>
+
+<section class="page-hero">
+  <svg class="doodle doodle-cloud" viewBox="0 0 120 50" aria-hidden="true"><g fill="#fff"><circle cx="30" cy="28" r="18"/><circle cx="56" cy="20" r="22"/><circle cx="84" cy="28" r="16"/><rect x="28" y="28" width="58" height="18" rx="9"/></g></svg>
+  <svg class="doodle doodle-cloud c2" viewBox="0 0 120 50" aria-hidden="true"><g fill="#fff" opacity=".85"><circle cx="30" cy="28" r="18"/><circle cx="56" cy="20" r="22"/><circle cx="84" cy="28" r="16"/><rect x="28" y="28" width="58" height="18" rx="9"/></g></svg>
+  <svg class="doodle doodle-sun" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="rays" stroke="#F6C35B" stroke-width="5" stroke-linecap="round">
+      <line x1="50" y1="4" x2="50" y2="14"/><line x1="50" y1="86" x2="50" y2="96"/><line x1="4" y1="50" x2="14" y2="50"/><line x1="86" y1="50" x2="96" y2="50"/>
+      <line x1="17" y1="17" x2="24" y2="24"/><line x1="76" y1="76" x2="83" y2="83"/><line x1="83" y1="17" x2="76" y2="24"/><line x1="24" y1="76" x2="17" y2="83"/>
+    </g>
+    <circle cx="50" cy="50" r="27" fill="#F6C35B"/>
+    <circle cx="41" cy="46" r="3" fill="#2C3A2E"/><circle cx="59" cy="46" r="3" fill="#2C3A2E"/>
+    <circle cx="35" cy="55" r="4.5" fill="#F29A7E" opacity=".55"/><circle cx="65" cy="55" r="4.5" fill="#F29A7E" opacity=".55"/>
+    <path d="M43 55 Q50 62 57 55" fill="none" stroke="#2C3A2E" stroke-width="2.6" stroke-linecap="round"/>
+  </svg>
+  <svg class="doodle doodle-leaf l1" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 11 4 20 4c0 9-6 15-15 15z" fill="#8DBF7F"/><path d="M5 19L14 10" stroke="#F2EEE4" stroke-width="1.4" stroke-linecap="round" opacity=".5"/></svg>
+  <svg class="doodle doodle-leaf l2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 11 4 20 4c0 9-6 15-15 15z" fill="#5E9A5C"/></svg>
+
+  <div class="wrap center" style="position:relative">
+    <div class="kicker pop-in">{{kicker}}</div>
+    <h1 class="pop-in">{{title}}</h1>
+    <p class="lede pop-in">{{lede}}</p>
+  </div>
+  <svg class="hills" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 L0 40 C160 10 300 14 440 34 C580 54 700 20 860 24 C1020 28 1120 2 1260 18 C1350 28 1410 30 1440 28 L1440 70Z" fill="{{hills}}"/></svg>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kicker":{"editor":null,"default":""},"title":{"editor":null,"default":""},"lede":{"editor":null,"default":""},"hills":{"editor":null,"default":"#1E3226"},"$preview":{"width":1280,"height":360}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { kicker: this.props.kicker, title: this.props.title, lede: this.props.lede, hills: this.props.hills };
+  }
+}
+</script>
+</body>
+</html>

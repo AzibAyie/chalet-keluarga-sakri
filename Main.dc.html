@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chalet Keluarga Sakri &mdash; Chalet &amp; Perkhemahan Tepi Sungai di Hulu Selangor</title>
+<meta name="description" content="Chalet dan tapak perkhemahan tepi sungai milik keluarga di Kalumpang, Hulu Selangor. Mandi sungai, kanopi tepi sungai, berkhemah dan malam BBQ. Chalet dari RM 160 semalam.">
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon-64.png">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3226">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(28px,5vw,64px) 0 clamp(56px,7vw,88px); position:relative; overflow:hidden}
+  .hero::before{content:''; position:absolute; inset:0 0 auto auto; width:56%; height:100%; background:radial-gradient(60% 60% at 70% 40%, var(--mint) 0%, transparent 70%); pointer-events:none}
+  .hero-grid{position:relative; display:grid; grid-template-columns:1.02fr 1fr; gap:clamp(28px,5vw,72px); align-items:center}
+  .hero h1{font-size:clamp(40px,5.4vw,68px); margin:18px 0 20px; font-weight:400}
+  .hero h1 em{font-style:italic; color:var(--leaf)}
+  .hero .lede{font-size:18.5px; max-width:520px}
+  .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+  .hero-brand{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:18px}
+  .hero-brand img{height:54px; width:auto}
+  .hero-brand .tagline{font-size:30px}
+  .loc{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:500; color:var(--ink-2); padding:6px 14px 6px 8px; border:1px solid var(--line); border-radius:999px; background:var(--white)}
+  .loc i{width:22px; height:22px; border-radius:50%; background:var(--mint); display:grid; place-items:center}
+
+  .collage{position:relative; aspect-ratio:1/1.02; max-width:560px; margin-left:auto; width:100%}
+  .collage figure{margin:0; position:absolute; overflow:hidden; border-radius:22px; box-shadow:var(--shadow-lg); background:var(--paper)}
+  .collage img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)}
+  .collage figure:hover img{transform:scale(1.04)}
+  .c-main{inset:0 14% 18% 0}
+  .c-side{right:0; bottom:0; width:46%; aspect-ratio:4/5; border:6px solid var(--cream)}
+  .c-badge{position:absolute; left:-18px; bottom:9%; background:var(--white); border-radius:16px; padding:14px 18px; box-shadow:var(--shadow-md); display:flex; align-items:center; gap:12px; z-index:2}
+  .c-badge .ic{width:40px; height:40px; border-radius:12px; background:var(--mint); display:grid; place-items:center; flex:0 0 auto}
+  .c-badge b{display:block; font-family:var(--round); font-weight:500; font-size:18px; color:var(--forest); line-height:1.15}
+  .c-badge span{font-size:12.5px; color:var(--ink-2)}
+  .c-time{position:absolute; top:5%; left:4%; z-index:2; background:rgba(30,50,38,.82); color:#fff; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:999px; padding:8px 14px; font-size:12.5px; font-weight:500; display:flex; align-items:center; gap:8px; font-variant-numeric:tabular-nums}
+  .c-time .live{width:8px; height:8px; border-radius:50%; background:#7FD69A; box-shadow:0 0 0 0 rgba(127,214,154,.7); animation:pulse 2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(127,214,154,0)}100%{box-shadow:0 0 0 0 rgba(127,214,154,0)}}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero::before{width:100%}
+    .collage{margin:12px auto 0; max-width:520px}
+    .c-badge{left:4px}
+  }
+
+  /* ---------- highlights ---------- */
+  .facts{padding:0 0 clamp(56px,7vw,80px)}
+  .facts-grid{display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .fact{padding:28px 24px; text-align:left}
+  .fact + .fact{border-left:1px solid var(--line)}
+  .fact b{display:block; font-family:var(--round); font-weight:400; font-size:clamp(30px,3.4vw,40px); color:var(--forest); line-height:1.05; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+  .fact span{display:block; margin-top:8px; font-size:14px; color:var(--ink-2)}
+  .fact b span{display:inline; margin:0; font-size:inherit; color:inherit}
+  @media (max-width:760px){ .facts-grid{grid-template-columns:1fr 1fr} .fact:nth-child(3){border-left:none} .fact:nth-child(n+3){border-top:1px solid var(--line)} }
+
+  /* ---------- section heads ---------- */
+  .head{display:flex; align-items:flex-end; justify-content:space-between; gap:24px 40px; flex-wrap:wrap; margin-bottom:clamp(28px,4vw,44px)}
+  .head .lede{max-width:540px}
+  .head h2{margin-bottom:10px}
+
+  /* ---------- experiences mosaic ---------- */
+  .mosaic{display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:clamp(180px,20vw,250px); gap:16px; grid-auto-flow:dense}
+  .tile{position:relative; border:none; padding:0; margin:0; border-radius:18px; overflow:hidden; cursor:zoom-in; background:var(--paper); text-align:left; color:#fff; isolation:isolate; font:inherit; transition:opacity .45s var(--ease), transform .45s var(--ease), box-shadow .4s}
+  .tile.feature{grid-column:span 2; grid-row:span 2}
+  .tile img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1s var(--ease); z-index:-2}
+  .tile::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,26,19,0) 45%, rgba(15,26,19,.78) 100%); z-index:-1}
+  .tile:hover img,.tile:focus-visible img{transform:scale(1.06)}
+  .tile:hover{box-shadow:var(--shadow-md)}
+  .tile .t-body{position:absolute; left:0; right:0; bottom:0; padding:18px 20px}
+  .tile .t-cat{display:block; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; opacity:.85}
+  .tile .t-title{display:block; font-family:var(--round); font-weight:400; font-size:21px; line-height:1.2; margin-top:4px}
+  .tile.feature .t-title{font-size:clamp(24px,2.6vw,32px)}
+  .tile .t-desc{display:block; font-size:14px; line-height:1.45; opacity:0; max-height:0; transition:opacity .4s, max-height .4s var(--ease), margin .4s; overflow:hidden}
+  .tile:hover .t-desc,.tile:focus-visible .t-desc{opacity:.9; max-height:60px; margin-top:6px}
+  .tile .zoom{position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.9); display:grid; place-items:center; opacity:0; transform:scale(.85); transition:opacity .3s, transform .3s var(--ease)}
+  .tile:hover .zoom,.tile:focus-visible .zoom{opacity:1; transform:none}
+  .tile.hide{display:none}
+  .tile.enter{animation:tileIn .5s var(--ease) both}
+  @keyframes tileIn{from{opacity:0; transform:translateY(12px) scale(.98)}}
+  @media (max-width:760px){ .mosaic{grid-template-columns:1fr 1fr} .tile.feature{grid-row:span 1} .tile .t-desc{display:none} }
+  @media (max-width:440px){ .mosaic{grid-template-columns:1fr; grid-auto-rows:220px} .tile.feature{grid-column:auto} }
+  .see-more{margin-top:28px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap}
+
+  /* ---------- lightbox ---------- */
+  .lb{position:fixed; inset:0; z-index:300; background:rgba(12,20,15,.94); display:flex; align-items:center; justify-content:center; padding:72px clamp(12px,6vw,96px) 96px; opacity:0; visibility:hidden; transition:opacity .3s, visibility 0s linear .3s}
+  .lb.open{opacity:1; visibility:visible; transition:opacity .3s}
+  .lb figure{margin:0; display:flex; flex-direction:column; align-items:center; max-width:100%; max-height:100%}
+  .lb figure > img{max-width:100%; max-height:calc(100vh - 220px); width:auto; height:auto; border-radius:12px; box-shadow:0 30px 80px rgba(0,0,0,.5); transition:opacity .2s; touch-action:pan-y; user-select:none; -webkit-user-drag:none}
+  .lb figure > img.fade{opacity:0}
+  .lb figcaption{color:#E8EEE9; text-align:center; margin-top:18px; max-width:620px}
+  .lb figcaption b{display:block; font-family:var(--round); font-weight:400; font-size:24px; color:#fff}
+  .lb figcaption span{font-size:14.5px; opacity:.75}
+  .lb-btn{position:absolute; width:50px; height:50px; border-radius:50%; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; display:grid; place-items:center; cursor:pointer; transition:background .2s, border-color .2s}
+  .lb-btn:hover{background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5)}
+  .lb :focus-visible{outline:2px solid #fff}
+  .lb-close{top:18px; right:18px}
+  .lb-prev{left:clamp(8px,2vw,28px); top:50%; margin-top:-25px}
+  .lb-next{right:clamp(8px,2vw,28px); top:50%; margin-top:-25px}
+  .lb-count{position:absolute; top:32px; left:28px; color:rgba(255,255,255,.7); font-size:13.5px; font-variant-numeric:tabular-nums; letter-spacing:.06em}
+  .lb-thumbs{position:absolute; left:0; right:0; bottom:20px; display:flex; justify-content:center; gap:8px; padding:0 16px; overflow-x:auto}
+  .lb-thumbs button{flex:0 0 auto; width:52px; height:40px; border-radius:8px; overflow:hidden; border:2px solid transparent; padding:0; cursor:pointer; opacity:.5; transition:opacity .2s, border-color .2s; background:#000}
+  .lb-thumbs button[aria-current=true]{opacity:1; border-color:#fff}
+  .lb-thumbs button:hover{opacity:.9}
+  .lb-thumbs img{width:100%; height:100%; object-fit:cover}
+  @media (max-width:640px){ .lb-prev,.lb-next{top:auto; bottom:28px; margin:0} .lb-thumbs{display:none} .lb{padding-bottom:110px} }
+
+  /* ---------- stays ---------- */
+  .stay .price-row{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:2px 0 14px; padding-bottom:14px; border-bottom:1px solid var(--line)}
+  .stay .price-row b{font-family:var(--round); font-weight:400; font-size:26px; color:var(--forest)}
+  .stay .price-row small{font-size:13px; color:var(--ink-2)}
+  .stay .price-row > span:first-child{white-space:nowrap}
+  .stay .cap-tag{font-size:12.5px; font-weight:500; color:var(--ink-2); background:var(--cream); border:1px solid var(--line); border-radius:999px; padding:4px 10px; white-space:nowrap}
+  .note{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; margin:36px auto 0; font-size:15px; color:var(--ink-2)}
+  .note a{color:var(--leaf); font-weight:600; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px}
+
+  /* ---------- FAQ ---------- */
+  .faq-grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(28px,5vw,72px); align-items:start}
+  .faq-aside{position:sticky; top:100px}
+  .faq-aside .lede{margin-bottom:26px}
+  .contact-card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:20px 22px; display:grid; gap:14px}
+  .contact-card > a,.contact-card > div{display:flex; align-items:center; gap:12px; font-weight:500; font-size:15px; color:var(--forest)}
+  .contact-card .dot{width:38px; height:38px; border-radius:50%; background:var(--mint); display:grid; place-items:center; flex:0 0 auto}
+  .contact-card .sub{font-weight:400; color:var(--ink-2); font-size:13.5px}
+  .contact-card a:hover .num{text-decoration:underline; text-underline-offset:3px}
+  .faq{border-top:1px solid var(--line)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq summary{list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 4px; font-family:var(--round); font-size:clamp(18px,1.8vw,21px); color:var(--forest); transition:color .2s}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:hover{color:var(--leaf)}
+  .faq summary .pm{flex:0 0 auto; width:32px; height:32px; border-radius:50%; border:1px solid var(--line); display:grid; place-items:center; transition:transform .35s var(--ease), background .2s, border-color .2s}
+  .faq details[open] summary .pm{transform:rotate(45deg); background:var(--leaf); border-color:var(--leaf)}
+  .faq details[open] summary .pm path{stroke:var(--on-accent)}
+  .faq .ans{overflow:hidden}
+  .faq .ans > div{padding:0 48px 24px 4px; color:var(--ink-2); font-size:15.5px}
+  .faq .ans p{margin:0 0 8px}
+  .faq .ans a{color:var(--leaf); font-weight:600; text-decoration:underline; text-underline-offset:3px}
+  .fee-table{width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:14.5px}
+  .fee-table td{padding:8px 0; border-bottom:1px dashed var(--line)}
+  .fee-table td:last-child{text-align:right; font-weight:600; color:var(--forest); font-variant-numeric:tabular-nums}
+  @media (max-width:900px){ .faq-grid{grid-template-columns:1fr} .faq-aside{position:static} .faq .ans > div{padding-right:8px} }
+
+  /* ---------- contact / how to book ---------- */
+  .plan-section{background:var(--deep); color:#E3EBE5; border:1px solid var(--line); border-radius:clamp(20px,3vw,32px); margin:0 clamp(8px,2vw,24px)}
+  .plan-section > .wrap{padding-top:clamp(48px,6vw,80px); padding-bottom:clamp(48px,6vw,80px)}
+  .plan-section h2{color:#fff}
+  .plan-section .kicker{color:var(--sun)}
+  .plan-section .lede{color:rgba(227,235,229,.78)}
+  .contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(18px,3vw,32px); margin-top:clamp(28px,4vw,44px); align-items:start}
+  .people{display:grid; gap:12px}
+  .person{display:flex; align-items:center; gap:14px; flex-wrap:wrap; background:var(--white); border:1px solid var(--line); border-radius:18px; padding:16px 18px}
+  .person .avatar{width:46px; height:46px; border-radius:50%; background:var(--leaf); color:var(--on-accent); display:grid; place-items:center; font-family:var(--round); font-size:20px; flex:0 0 auto}
+  .person .who{flex:1 1 140px}
+  .person .who b{display:block; font-size:16px; color:#fff}
+  .person .who span{font-size:14px; color:var(--ink-2); font-variant-numeric:tabular-nums}
+  .pacts{display:flex; gap:8px; flex-wrap:wrap}
+  .steps{list-style:none; counter-reset:step; margin:12px 0 0; padding:20px 22px; background:var(--white); border:1px solid var(--line); border-radius:18px; display:grid; gap:16px}
+  .steps li{counter-increment:step; display:grid; grid-template-columns:32px 1fr; gap:12px; font-size:14.5px; color:var(--ink-2)}
+  .steps li::before{content:counter(step); width:32px; height:32px; border-radius:50%; border:1px solid var(--leaf-2); display:grid; place-items:center; font-weight:600; color:#fff}
+  .steps b{display:block; color:#fff; font-size:15px}
+  .prices{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:22px 24px}
+  .prices h3{font-size:21px; margin-bottom:4px}
+  .prices table{width:100%; border-collapse:collapse; font-size:14.5px}
+  .prices th{text-align:left; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--sun); font-weight:600; padding:16px 0 6px}
+  .prices td{padding:8px 0; border-bottom:1px dashed var(--line); color:var(--ink-2)}
+  .prices td:last-child{text-align:right; color:#fff; font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums}
+  .prices p{font-size:12.5px; color:var(--ink-2); margin:14px 0 0; line-height:1.5}
+  @media (max-width:900px){ .contact-grid{grid-template-columns:1fr} }
+
+  /* ---------- floating WhatsApp ---------- */
+  .wa-fab{position:fixed; right:20px; bottom:20px; z-index:90; display:flex; align-items:center; gap:10px; background:#1F8F55; color:#fff; border-radius:999px; padding:12px 18px 12px 14px; font-weight:600; font-size:14.5px; box-shadow:0 14px 30px -10px rgba(20,60,35,.6); transform:translateY(120px); opacity:0; pointer-events:none; transition:transform .45s var(--ease), opacity .3s, background .2s}
+  .wa-fab.show{transform:none; opacity:1; pointer-events:auto}
+  .wa-fab:hover{background:#18784A}
+  @media (max-width:560px){ .wa-fab span{display:none} .wa-fab{padding:14px} }
+</style>
+</helmet>
+
+<div class="page">
+  <dc-import name="Header" current="home"></dc-import>
+  <main id="top">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-brand pop-in"><img src="brand/cks-mark-sm.png" alt="Logo CKS" width="110" height="54"><span class="tagline">&ldquo;Experience variety. Get natural&rdquo;</span></div>
+          <span class="loc pop-in"><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i>Kalumpang, Hulu Selangor</span>
+          <h1 id="hero-title" class="pop-in">Percutian keluarga di tebing <em>Sungai Kalumpang</em></h1>
+          <p class="lede pop-in">Chalet, kanopi dan padang perkhemahan di tepi sungai, di tengah hutan Hulu Selangor. Habiskan siang dalam air sungai yang sejuk dan malam bersama hidangan BBQ.</p>
+          <div class="hero-actions pop-in">
+            <a href="https://wa.me/60173408345?text=Salam%2C%20saya%20ingin%20bertanya%20tentang%20penginapan%20di%20Chalet%20Keluarga%20Sakri." target="_blank" rel="noopener" class="btn btn-main"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>WhatsApp kami</a>
+            <a href="#stays" class="btn btn-soft">Lihat penginapan</a>
+          </div>
+        </div>
+
+        <div class="collage pop-in">
+          <figure class="c-main"><img src="photos/hero.jpg" alt="Keluarga mandi di sungai berbatu di bawah chalet, dikelilingi hutan"></figure>
+          <figure class="c-side"><img src="photos/canopyview.jpg" alt="Kanopi tepi sungai di bawah pepohon" loading="lazy"></figure>
+          <div class="c-time"><span class="live" aria-hidden="true"></span><span id="kl-time">Kalumpang</span></div>
+          <div class="c-badge">
+            <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 L12 4 L21 11"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span>
+            <span><b>Dari RM 160</b><span>semalam · termasuk tiket masuk</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTS -->
+  <section class="facts" aria-label="Sekilas pandang">
+    <div class="wrap">
+      <div class="facts-grid pop-in">
+        <div class="fact"><b>RM <span class="num" data-count="160">160</span></b><span>Harga chalet semalam, bermula</span></div>
+        <div class="fact"><b><span class="num" data-count="3">3</span> pilihan</b><span>penginapan: chalet, rumah keluarga atau kanopi</span></div>
+        <div class="fact"><b>RM <span class="num" data-count="8">8</span></b><span>Tiket masuk harian dewasa · RM 5 kanak-kanak</span></div>
+        <div class="fact"><b>2 petang</b><span>Daftar masuk · daftar keluar sebelum 12 tengah hari</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCES -->
+  <section id="do" class="bg-paper" aria-labelledby="do-title">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="kicker pop-in">Pengalaman</div>
+          <h2 id="do-title" class="pop-in">Hari-hari di alam terbuka</h2>
+          <p class="lede pop-in">Sungai mengalir betul-betul di sebelah kawasan kami. Mandi-manda, seberangi jambatan gantung, dirikan khemah atau tempah dewan untuk hari keluarga. Pilih mana-mana gambar untuk melihatnya dalam saiz penuh.</p>
+        </div>
+        <div class="filters pop-in" role="tablist" aria-label="Tapis pengalaman">
+          <button class="filter on" role="tab" aria-selected="true" aria-controls="mosaic" data-filter="all">Semua</button>
+          <button class="filter" role="tab" aria-selected="false" aria-controls="mosaic" data-filter="river">Sungai</button>
+          <button class="filter" role="tab" aria-selected="false" aria-controls="mosaic" data-filter="camp">Perkhemahan</button>
+          <button class="filter" role="tab" aria-selected="false" aria-controls="mosaic" data-filter="facilities">Makanan &amp; kemudahan</button>
+        </div>
+      </div>
+
+      <div class="mosaic" id="mosaic" role="tabpanel" aria-label="Gambar pengalaman"></div>
+
+      <div class="see-more pop-in">
+        <a href="Experience.dc.html" class="btn btn-soft">Semua kemudahan &amp; aktiviti</a>
+        <a href="Gallery.dc.html" class="btn btn-soft">Galeri gambar penuh</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAYS -->
+  <section id="stays" aria-labelledby="stays-title">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="kicker pop-in">Penginapan</div>
+          <h2 id="stays-title" class="pop-in">Pilih penginapan anda</h2>
+          <p class="lede pop-in">Setiap pilihan hanya beberapa langkah dari sungai. Hubungi kami di WhatsApp untuk menyemak kekosongan.</p>
+        </div>
+        <a href="Rooms.dc.html" class="btn btn-soft pop-in">Bandingkan semua bilik</a>
+      </div>
+    </div>
+    <div class="wrap stays">
+      <article class="stay pop-in" data-stay="Chalet">
+        <div class="sticker"><div><small>dari</small><b>RM 160</b></div></div>
+        <div class="stay-img"><img src="photos/chalet.jpg" alt="Chalet Blok A, chalet kayu berwarna merah" loading="lazy"></div>
+        <div class="stay-body">
+          <div class="stay-who">Pasangan &amp; keluarga kecil</div>
+          <h3>Chalet</h3>
+          <div class="price-row"><span><small>dari</small> <b>RM 160</b> <small>/ malam</small></span><span class="cap-tag">2–3 dewasa</span></div>
+          <ul class="ticks">
+            <li>Blok A RM 160 · Pondok buluh RM 170 · Blok E RM 170–220</li>
+            <li>2 tilam bujang, bantal, selimut, kipas &amp; soket elektrik</li>
+            <li>Termasuk tiket masuk</li>
+          </ul>
+          <a href="https://wa.me/60173408345?text=Salam%2C%20saya%20berminat%20dengan%20chalet%20di%20Chalet%20Keluarga%20Sakri.%20Boleh%20saya%20semak%20kekosongan%3F" target="_blank" rel="noopener" class="btn btn-soft"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>Tanya di WhatsApp</a>
+        </div>
+      </article>
+      <article class="stay pop-in" data-stay="Double Storey">
+        <div class="sticker"><div><small>dari</small><b>RM 250</b></div></div>
+        <div class="stay-img"><img src="photos/double.jpg" alt="Rumah Dua Tingkat Blok B" loading="lazy"></div>
+        <div class="stay-body">
+          <div class="stay-who">Keluarga besar &amp; kumpulan</div>
+          <h3>Rumah Dua Tingkat</h3>
+          <div class="price-row"><span><small>dari</small> <b>RM 250</b> <small>/ malam</small></span><span class="cap-tag">maks. 12 sebilik</span></div>
+          <ul class="ticks">
+            <li>Blok B · 2 bilik di tingkat atas, 1 bilik besar di bawah</li>
+            <li>Bilik atas muat 5 orang (maks. 6) · RM 250</li>
+            <li>Bilik bawah muat 10 orang (maks. 12) · RM 500</li>
+          </ul>
+          <a href="https://wa.me/60173408345?text=Salam%2C%20saya%20berminat%20dengan%20Rumah%20Dua%20Tingkat%20di%20Chalet%20Keluarga%20Sakri.%20Boleh%20saya%20semak%20kekosongan%3F" target="_blank" rel="noopener" class="btn btn-soft"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>Tanya di WhatsApp</a>
+        </div>
+      </article>
+      <article class="stay pop-in" data-stay="Canopy">
+        <div class="sticker"><div><b>RM 175</b><small>/ malam</small></div></div>
+        <div class="stay-img"><img src="photos/canopy.jpg" alt="Kanopi tepi sungai dengan meja dan bangku" loading="lazy"></div>
+        <div class="stay-body">
+          <div class="stay-who">Kumpulan &amp; perkhemahan</div>
+          <h3>Kanopi Tepi Sungai</h3>
+          <div class="price-row"><span><b>RM 175</b> <small>/ malam</small></span><span class="cap-tag">RM 100 separuh hari</span></div>
+          <ul class="ticks">
+            <li>Teduhan tepi sungai dengan meja, bangku &amp; tempat BBQ</li>
+            <li>Bawa peralatan tidur sendiri · tiada kipas atau soket elektrik</li>
+            <li>Tiket masuk dikenakan berasingan</li>
+          </ul>
+          <a href="https://wa.me/60173408345?text=Salam%2C%20saya%20berminat%20dengan%20kanopi%20tepi%20sungai%20di%20Chalet%20Keluarga%20Sakri.%20Boleh%20saya%20semak%20kekosongan%3F" target="_blank" rel="noopener" class="btn btn-soft"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>Tanya di WhatsApp</a>
+        </div>
+      </article>
+    </div>
+    <p class="note wrap pop-in">Ingin tahu kedudukan setiap unit? <a href="Map.dc.html">Buka peta lokasi interaktif</a></p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-paper" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <div class="faq-aside">
+        <div class="kicker pop-in">Perlu tahu</div>
+        <h2 id="faq-title" class="pop-in">Sebelum anda tiba</h2>
+        <p class="lede pop-in">Jawapan ringkas kepada soalan yang paling kerap ditanya. Untuk pertanyaan lain, hubungi keluarga kami di WhatsApp.</p>
+        <div class="contact-card pop-in">
+          <a href="https://wa.me/60173408345" target="_blank" rel="noopener"><span class="dot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg></span><span><span class="num">017 340 8345</span> <span class="sub">· Nora (WhatsApp)</span></span></a>
+          <div><span class="dot"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span>013 205 5318 <span class="sub">· Mimi</span></span></div>
+        </div>
+      </div>
+
+      <div class="faq pop-in" id="faq">
+        <details open>
+          <summary>Bagaimanakah cara membuat tempahan?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Tempahan dibuat melalui <strong>WhatsApp atau panggilan telefon</strong> sahaja. Tiada tempahan atau bayaran dalam talian. Beritahu kami tarikh, bilangan tetamu dan jenis penginapan, dan keluarga kami akan mengesahkan kekosongan.</p></div></div>
+        </details>
+        <details>
+          <summary>Bilakah waktu daftar masuk dan daftar keluar?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Daftar masuk bermula <strong>2.00 petang</strong> dan daftar keluar sebelum <strong>12.00 tengah hari</strong>. Tempahan kanopi separuh hari diatur terus dengan keluarga kami.</p></div></div>
+        </details>
+        <details>
+          <summary>Berapakah harga tiket masuk untuk lawatan harian?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div>
+            <table class="fee-table">
+              <tr><td>Dewasa (13 tahun ke atas)</td><td>RM 8</td></tr>
+              <tr><td>Kanak-kanak (3–12 tahun)</td><td>RM 5</td></tr>
+              <tr><td>OKU &amp; kanak-kanak bawah 2 tahun</td><td>Percuma</td></tr>
+            </table>
+            <p>Tiket masuk sudah termasuk bagi penginapan chalet dan Rumah Dua Tingkat. Tetamu kanopi perlu membayarnya secara berasingan.</p>
+          </div></div>
+        </details>
+        <details>
+          <summary>Apakah kemudahan yang disediakan di chalet?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Setiap chalet dilengkapi dua tilam bujang, bantal, selimut, kipas dan soket elektrik. Kanopi ialah teduhan terbuka dengan meja, bangku dan tempat BBQ, jadi sila bawa peralatan tidur sendiri. Kanopi tidak mempunyai kipas atau soket elektrik.</p></div></div>
+        </details>
+        <details>
+          <summary>Bolehkah kami membawa khemah sendiri?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Boleh. Anda boleh mendirikan khemah sendiri di padang perkhemahan tepi anak sungai dengan harga <strong>RM 40–60 semalam</strong>.</p></div></div>
+        </details>
+        <details>
+          <summary>Adakah peralatan BBQ dan memasak disediakan?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Set BBQ (pemanggang, arang, pemula api, penyepit dan kipas) dan set memasak (dapur, gas, periuk, sudip, senduk dan penyepit) boleh disewa. Maklumkan kepada kami semasa membuat tempahan.</p></div></div>
+        </details>
+        <details>
+          <summary>Bolehkah kami menempah dewan untuk acara berkumpulan?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Boleh. Dewan terbuka dilengkapi meja, bangku, kipas, soket elektrik dan tempat BBQ. Sewaannya <strong>RM 300 untuk separuh hari</strong> atau <strong>RM 600 semalaman</strong>.</p></div></div>
+        </details>
+        <details>
+          <summary>Bagaimanakah cara untuk ke sana?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <div class="ans"><div><p>Jalan Sungai Inki, Kampung Pasir Puteh, Kalumpang, 44100 Kerling, Selangor.</p><p><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chalet+Keluarga+Sakri,+Jalan+Sungai+Inki,+Kalumpang,+44100+Kerling,+Selangor" target="_blank" rel="noopener">Dapatkan arah di Google Maps</a> · <a href="Location.dc.html">Maklumat lokasi</a></p></div></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO BOOK -->
+  <section id="hubungi" aria-labelledby="contact-title" style="padding-top:clamp(64px,9vw,112px)">
+    <div class="plan-section">
+      <div class="wrap">
+        <div class="kicker pop-in">Tempahan</div>
+        <h2 id="contact-title" class="pop-in">Tempah melalui WhatsApp atau panggilan</h2>
+        <p class="lede pop-in">Tiada tempahan atau bayaran dalam talian. Hubungi keluarga kami terus untuk menyemak kekosongan, bertanya harga dan mengesahkan tempahan anda.</p>
+
+        <div class="contact-grid">
+          <div class="pop-in">
+            <div class="people">
+            <div class="person">
+              <span class="avatar" aria-hidden="true">N</span>
+              <div class="who"><b>Nora</b><span>017 340 8345</span></div>
+              <div class="pacts">
+                <a class="btn btn-main btn-small" href="https://wa.me/60173408345?text=Salam%2C%20saya%20ingin%20bertanya%20tentang%20penginapan%20di%20Chalet%20Keluarga%20Sakri." target="_blank" rel="noopener" aria-label="WhatsApp Nora"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>WhatsApp</a>
+                <a class="btn btn-soft btn-small" href="tel:+60173408345" aria-label="Telefon Nora"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Telefon</a>
+              </div>
+            </div>
+            <div class="person">
+              <span class="avatar" aria-hidden="true">M</span>
+              <div class="who"><b>Mimi</b><span>013 205 5318</span></div>
+              <div class="pacts">
+                <a class="btn btn-main btn-small" href="https://wa.me/60132055318?text=Salam%2C%20saya%20ingin%20bertanya%20tentang%20penginapan%20di%20Chalet%20Keluarga%20Sakri." target="_blank" rel="noopener" aria-label="WhatsApp Mimi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>WhatsApp</a>
+                <a class="btn btn-soft btn-small" href="tel:+60132055318" aria-label="Telefon Mimi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Telefon</a>
+              </div>
+            </div>
+            </div>
+            <ol class="steps">
+              <li><span><b>Hubungi kami</b>WhatsApp atau telefon mana-mana nombor di atas.</span></li>
+              <li><span><b>Beritahu butiran anda</b>Tarikh, bilangan dewasa dan kanak-kanak, serta jenis penginapan atau nombor unit dari <a class="link" href="Map.dc.html">peta lokasi</a>.</span></li>
+              <li><span><b>Kami sahkan tempahan</b>Keluarga kami akan membalas untuk mengesahkan kekosongan dan harga.</span></li>
+            </ol>
+          </div>
+
+          <div class="prices pop-in">
+            <h3>Senarai harga</h3>
+            <table>
+              <tr><th colspan="2">Chalet</th></tr>
+              <tr><td>Blok A</td><td>RM 160 / malam</td></tr>
+              <tr><td>Pondok buluh</td><td>RM 170 / malam</td></tr>
+              <tr><td>Blok E</td><td>RM 170–220 / malam</td></tr>
+              <tr><th colspan="2">Rumah Dua Tingkat (Blok B)</th></tr>
+              <tr><td>Bilik atas (maks. 6)</td><td>RM 250 / malam</td></tr>
+              <tr><td>Bilik bawah (maks. 12)</td><td>RM 500 / malam</td></tr>
+              <tr><th colspan="2">Kanopi &amp; perkhemahan</th></tr>
+              <tr><td>Kanopi tepi sungai</td><td>RM 175 / malam</td></tr>
+              <tr><td>Kanopi separuh hari</td><td>RM 100</td></tr>
+              <tr><td>Tapak khemah sendiri</td><td>RM 40–60 / malam</td></tr>
+              <tr><th colspan="2">Dewan terbuka</th></tr>
+              <tr><td>Separuh hari / semalaman</td><td>RM 300 / RM 600</td></tr>
+              <tr><th colspan="2">Tiket masuk harian</th></tr>
+              <tr><td>Dewasa (13+) / kanak-kanak (3–12)</td><td>RM 8 / RM 5</td></tr>
+              <tr><td>OKU &amp; bawah 2 tahun</td><td>Percuma</td></tr>
+            </table>
+            <p>Tiket masuk sudah termasuk bagi penginapan chalet dan Rumah Dua Tingkat. Sila sahkan harga terkini dengan keluarga kami semasa menempah.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+  <dc-import name="Footer"></dc-import>
+
+  <!-- lightbox -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Paparan gambar" aria-hidden="true">
+    <span class="lb-count" id="lb-count"></span>
+    <button class="lb-btn lb-close" id="lb-close" aria-label="Tutup paparan gambar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-btn lb-prev" id="lb-prev" aria-label="Gambar sebelumnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <figure>
+      <img id="lb-img" src="photos/hero.jpg" alt="" draggable="false">
+      <figcaption><b id="lb-title"></b><span id="lb-desc"></span></figcaption>
+    </figure>
+    <button class="lb-btn lb-next" id="lb-next" aria-label="Gambar seterusnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+    <div class="lb-thumbs" id="lb-thumbs"></div>
+  </div>
+
+  <a class="wa-fab" id="wa-fab" href="https://wa.me/60173408345?text=Salam%2C%20saya%20ingin%20bertanya%20tentang%20penginapan%20di%20Chalet%20Keluarga%20Sakri." target="_blank" rel="noopener" aria-label="Hubungi kami di WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>
+    <span>Hubungi kami</span>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":4200}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+
+  componentDidMount() {
+    (function () {
+      'use strict';
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const $ = (s, r) => (r || document).querySelector(s);
+      const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+      const TZ = 'Asia/Kuala_Lumpur';
+      const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+      /* ---------- live local time in Kalumpang ---------- */
+      const klTime = $('#kl-time');
+      function tickTime() {
+        const t = new Intl.DateTimeFormat('ms-MY', { timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date());
+        klTime.textContent = 'Kini di Kalumpang · ' + t.toLowerCase();
+      }
+      tickTime();
+      setInterval(tickTime, 30000);
+
+      /* ---------- count-up stats ---------- */
+      const nums = $$('.num[data-count]');
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        nums.forEach((n) => { n.textContent = '0'; });
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            io.unobserve(e.target);
+            const el = e.target, to = +el.dataset.count, start = performance.now(), dur = 1100;
+            const step = (now) => {
+              const p = Math.min(1, (now - start) / dur);
+              el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+              if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          });
+        }, { threshold: 0.6 });
+        nums.forEach((n) => io.observe(n));
+      }
+
+      /* ---------- experiences mosaic + lightbox ---------- */
+      const PHOTOS = [
+        { src: 'photos/river.jpg', title: 'Mandi sungai', cat: 'river', catLabel: 'Sungai', desc: 'Sungai Kalumpang yang sejuk dan segar mengalir betul-betul di sebelah kawasan kami.' },
+        { src: 'photos/bridge.jpg', title: 'Jambatan gantung', cat: 'river', catLabel: 'Sungai', desc: 'Seberangi jambatan untuk menikmati pemandangan sungai dan pengunjung yang mandi di bawah.' },
+        { src: 'photos/night.jpg', title: 'Malam BBQ', cat: 'facilities', catLabel: 'Makanan & kemudahan', desc: 'Set BBQ untuk disewa: pemanggang, arang, pemula api, penyepit dan kipas.' },
+        { src: 'photos/tents.jpg', title: 'Padang perkhemahan', cat: 'camp', catLabel: 'Perkhemahan', desc: 'Dirikan khemah sendiri di tepi anak sungai dengan harga RM 40–60 semalam.' },
+        { src: 'photos/pool.jpg', title: 'Kolam kanak-kanak', cat: 'river', catLabel: 'Sungai', desc: 'Kolam cetek dan selamat untuk si kecil bermain air.' },
+        { src: 'photos/canopy.jpg', title: 'Kanopi tepi sungai', cat: 'camp', catLabel: 'Perkhemahan', desc: 'Teduhan terbuka dengan meja, bangku dan tempat BBQ. RM 175 semalam.' },
+        { src: 'photos/rapids.jpg', title: 'Batu & jeram', cat: 'river', catLabel: 'Sungai', desc: 'Batu-batu yang redup dan lubuk cetek di sepanjang Sungai Kalumpang.' },
+        { src: 'photos/hall.jpg', title: 'Dewan terbuka', cat: 'facilities', catLabel: 'Makanan & kemudahan', desc: 'Meja, bangku, kipas dan soket elektrik. RM 300 separuh hari, RM 600 semalaman.' },
+        { src: 'photos/honey.jpg', title: 'Kolam ikan & madu kelulut', cat: 'facilities', catLabel: 'Makanan & kemudahan', desc: 'Lawati kolam ikan dan bawa pulang madu kelulut asli.' }
+      ];
+      const mosaic = $('#mosaic');
+      const zoomIcon = '<span class="zoom" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1E3226" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2M11 8.5v5M8.5 11h5"/></svg></span>';
+      PHOTOS.forEach((p, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'tile pop-in';
+        b.dataset.cat = p.cat;
+        b.dataset.i = i;
+        b.setAttribute('aria-label', 'Lihat gambar: ' + p.title);
+        b.innerHTML = '<img src="' + esc(p.src) + '" alt="" loading="lazy">' + zoomIcon +
+          '<span class="t-body"><span class="t-cat">' + esc(p.catLabel) + '</span><span class="t-title">' + esc(p.title) + '</span><span class="t-desc">' + esc(p.desc) + '</span></span>';
+        mosaic.appendChild(b);
+      });
+      const tiles = $$('.tile', mosaic);
+      tiles[0].classList.add('feature');
+      let visible = PHOTOS.map((_, i) => i);
+      function applyFilter(f) {
+        visible = [];
+        tiles.forEach((t) => {
+          const show = f === 'all' || t.dataset.cat === f;
+          t.classList.toggle('hide', !show);
+          t.classList.remove('feature', 'enter');
+          if (show) {
+            visible.push(+t.dataset.i);
+            t.classList.add('in');
+            if (!reduceMotion) { void t.offsetWidth; t.style.animationDelay = (visible.length - 1) * 0.04 + 's'; t.classList.add('enter'); }
+          }
+        });
+        if (f === 'all') tiles[0].classList.add('feature');
+      }
+      const filters = $$('.filter');
+      filters.forEach((btn, idx) => {
+        btn.tabIndex = idx === 0 ? 0 : -1;
+        btn.addEventListener('click', () => {
+          filters.forEach((b) => { const on = b === btn; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+          applyFilter(btn.dataset.filter);
+        });
+        btn.addEventListener('keydown', (e) => {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          const n = filters[(idx + (e.key === 'ArrowRight' ? 1 : filters.length - 1)) % filters.length];
+          n.focus(); n.click();
+        });
+      });
+
+      const lb = $('#lb'), lbImg = $('#lb-img'), lbTitle = $('#lb-title'), lbDesc = $('#lb-desc'), lbCount = $('#lb-count'), lbThumbs = $('#lb-thumbs');
+      let cur = 0, lastFocus = null, swapT;
+      function renderThumbs() {
+        lbThumbs.innerHTML = '';
+        visible.forEach((pi, k) => {
+          const t = document.createElement('button');
+          t.type = 'button';
+          t.setAttribute('aria-label', 'Papar gambar ' + (k + 1) + ': ' + PHOTOS[pi].title);
+          t.innerHTML = '<img src="' + esc(PHOTOS[pi].src) + '" alt="">';
+          t.addEventListener('click', () => show(k));
+          lbThumbs.appendChild(t);
+        });
+      }
+      function show(k) {
+        cur = (k + visible.length) % visible.length;
+        const p = PHOTOS[visible[cur]];
+        const swap = () => {
+          lbImg.src = p.src; lbImg.alt = p.title;
+          lbTitle.textContent = p.title; lbDesc.textContent = p.desc;
+          lbCount.textContent = (cur + 1) + ' / ' + visible.length;
+          $$('button', lbThumbs).forEach((t, i) => t.setAttribute('aria-current', String(i === cur)));
+          lbImg.classList.remove('fade');
+        };
+        clearTimeout(swapT);
+        if (reduceMotion || !lb.classList.contains('open')) swap();
+        else { lbImg.classList.add('fade'); swapT = setTimeout(swap, 160); }
+      }
+      function openLb(photoIndex) {
+        lastFocus = document.activeElement;
+        renderThumbs();
+        show(Math.max(0, visible.indexOf(photoIndex)));
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.documentElement.style.overflow = 'hidden';
+        setTimeout(() => $('#lb-close').focus(), 50);
+      }
+      function closeLb() {
+        if (!lb.classList.contains('open')) return;
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+        if (lastFocus) lastFocus.focus({ preventScroll: true });
+      }
+      tiles.forEach((t) => t.addEventListener('click', () => openLb(+t.dataset.i)));
+      $('#lb-close').addEventListener('click', closeLb);
+      $('#lb-prev').addEventListener('click', () => show(cur - 1));
+      $('#lb-next').addEventListener('click', () => show(cur + 1));
+      lb.addEventListener('click', (e) => { if (e.target === lb || e.target.tagName === 'FIGURE') closeLb(); });
+      document.addEventListener('keydown', (e) => {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') { e.stopPropagation(); closeLb(); }
+        else if (e.key === 'ArrowRight') show(cur + 1);
+        else if (e.key === 'ArrowLeft') show(cur - 1);
+        else if (e.key === 'Tab') {
+          const f = $$('button', lb).filter((b) => b.offsetParent !== null);
+          const i = f.indexOf(document.activeElement);
+          if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+          else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+        }
+      });
+      let touchX = null;
+      lbImg.addEventListener('pointerdown', (e) => { touchX = e.clientX; });
+      lbImg.addEventListener('pointerup', (e) => {
+        if (touchX == null) return;
+        const dx = e.clientX - touchX; touchX = null;
+        if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
+      });
+
+      /* ---------- FAQ: one open at a time, animated height ---------- */
+      const faqs = $$('#faq details');
+      const ease = 'cubic-bezier(.2,.7,.2,1)';
+      function expand(d) {
+        d.open = true;
+        if (reduceMotion) return;
+        const a = $('.ans', d);
+        a.animate([{ height: '0px', opacity: 0 }, { height: a.scrollHeight + 'px', opacity: 1 }], { duration: 320, easing: ease });
+      }
+      function collapse(d) {
+        if (reduceMotion) { d.open = false; return; }
+        const a = $('.ans', d);
+        a.animate([{ height: a.scrollHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 240, easing: ease }).onfinish = () => { d.open = false; };
+      }
+      faqs.forEach((d) => {
+        $('summary', d).addEventListener('click', (e) => {
+          e.preventDefault();
+          if (d.open) { collapse(d); return; }
+          faqs.forEach((o) => { if (o !== d && o.open) collapse(o); });
+          expand(d);
+        });
+      });
+
+      /* ---------- floating WhatsApp button: after the hero, hidden over the contact section ---------- */
+      const fab = $('#wa-fab'), hero = $('.hero'), plan = $('#hubungi');
+      function onScroll() {
+        const pastHero = hero.getBoundingClientRect().bottom < 0;
+        const pr = plan.getBoundingClientRect();
+        const atPlan = pr.top < window.innerHeight * 0.6 && pr.bottom > 0;
+        fab.classList.toggle('show', pastHero && !atPlan);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  }
+}
+</script>
+</body>
+</html>

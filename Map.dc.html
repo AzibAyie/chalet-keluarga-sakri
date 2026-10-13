@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Peta Lokasi &mdash; Chalet Keluarga Sakri</title>
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon-64.png">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3226">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  /* ---------- toolbar ---------- */
+  .map-bar{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px 20px; margin-bottom:16px}
+  .map-filters{display:flex; flex-wrap:wrap; gap:8px}
+  .mf{display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px; border:1.5px solid var(--line); background:var(--white); color:var(--ink-2); font-weight:500; font-size:14.5px; cursor:pointer; transition:background .2s, border-color .2s, color .2s}
+  .mf:hover{border-color:var(--leaf-2); color:#fff}
+  .mf[aria-pressed=true]{background:var(--leaf); border-color:var(--leaf); color:var(--on-accent)}
+  .mf .sw{width:11px; height:11px; border-radius:50%; flex:0 0 auto}
+  .mf .n{font-size:12px; opacity:.7; font-variant-numeric:tabular-nums}
+  .daynight{display:inline-flex; padding:4px; border-radius:999px; background:var(--white); border:1.5px solid var(--line)}
+  .daynight button{display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:999px; border:none; background:transparent; color:var(--ink-2); font-weight:500; font-size:14px; cursor:pointer; transition:background .25s, color .25s}
+  .daynight button[aria-pressed=true]{background:var(--leaf); color:var(--on-accent)}
+
+  /* ---------- map ---------- */
+  .map-shell{position:relative; border-radius:24px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-lg); background:#0f1d14; touch-action:none; user-select:none; -webkit-user-select:none}
+  .map-svg{display:block; width:100%; height:auto; aspect-ratio:1800/932; cursor:grab}
+  .map-svg.dragging{cursor:grabbing}
+  .map-tools{position:absolute; left:14px; top:14px; display:flex; flex-direction:column; gap:6px; z-index:4}
+  .map-tools button{width:40px; height:40px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(20,34,25,.78); color:#fff; display:grid; place-items:center; cursor:pointer; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); transition:background .2s}
+  .map-tools button:hover{background:rgba(20,34,25,.95)}
+  .map-tools button:disabled{opacity:.4; cursor:default}
+  .map-hint{position:absolute; right:14px; bottom:14px; z-index:4; background:rgba(20,34,25,.78); color:#fff; font-size:12.5px; font-weight:500; padding:7px 12px; border-radius:999px; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); pointer-events:none; transition:opacity .4s}
+  .map-hint.gone{opacity:0}
+  .tip{position:absolute; z-index:5; pointer-events:none; transform:translate(-50%, calc(-100% - 12px)) scale(.9); opacity:0; transition:opacity .15s, transform .2s var(--ease); background:#fff; color:#1E3226; border-radius:12px; padding:8px 12px; box-shadow:0 10px 30px -8px rgba(0,0,0,.5); white-space:nowrap; text-align:center}
+  .tip.show{opacity:1; transform:translate(-50%, calc(-100% - 12px)) scale(1)}
+  .tip b{display:block; font-family:var(--round); font-weight:500; font-size:16px; line-height:1.2}
+  .tip span{font-size:12.5px; color:#4B5B4F}
+  .tip::after{content:''; position:absolute; left:50%; bottom:-6px; width:12px; height:12px; background:#fff; transform:translateX(-50%) rotate(45deg)}
+
+  /* svg scenery (colours switch for night) */
+  .map-svg{--g1:#9AD48A; --g2:#5DAE62; --r1:#5FD0E3; --r2:#2A8CB5; --sand:#F6E2AE; --sand-edge:#DDBF7C; --t1:#2E8A50; --t2:#4BAE63; --t3:#7FD07A; --fb:#226640; --lbl:#163222; --lbl-halo:rgba(255,255,255,.85)}
+  .map-svg.night{--g1:#2C5A3C; --g2:#1B3D29; --r1:#2D6E8C; --r2:#163F5A; --sand:#8A7A54; --sand-edge:#6C5F40; --t1:#174A2C; --t2:#21603A; --t3:#2F7A49; --fb:#10331F; --lbl:#F2EEE4; --lbl-halo:rgba(10,20,14,.85)}
+  .map-svg *{transition:fill .9s ease, stop-color .9s ease, opacity .9s ease}
+  .s-g1{stop-color:var(--g1)} .s-g2{stop-color:var(--g2)} .s-r1{stop-color:var(--r1)} .s-r2{stop-color:var(--r2)}
+  .f-sand{stroke:var(--sand)} .f-sand-edge{stroke:var(--sand-edge)} .f-sand-edge-fill{fill:var(--sand); stroke:var(--sand-edge)}
+  .t1{fill:var(--t1)} .t2{fill:var(--t2)} .t3{fill:var(--t3)} .fb{fill:var(--fb)}
+  .lbl{fill:var(--lbl); stroke:var(--lbl-halo); stroke-width:5px; paint-order:stroke; stroke-linejoin:round; font-family:Inter, system-ui, sans-serif; font-weight:600}
+  .wave{stroke-dasharray:18 26; animation:flow 4s linear infinite}
+  .wave.w2{animation-duration:6s}
+  @keyframes flow{to{stroke-dashoffset:-88}}
+  .win{fill:#FFE6A3}
+  .map-svg.night .win{fill:#FFC94D; filter:url(#glow)}
+  .night-only{opacity:0}
+  .map-svg.night .night-only{opacity:1}
+  .map-svg.night .day-only{opacity:0}
+  .flame{transform-box:fill-box; transform-origin:50% 100%; animation:flick .9s ease-in-out infinite alternate}
+  @keyframes flick{to{transform:scaleY(1.18) scaleX(.9)}}
+  .fly{animation:float 5s ease-in-out infinite}
+  .fly:nth-child(2n){animation-delay:-2s} .fly:nth-child(3n){animation-delay:-3.4s}
+  @keyframes float{50%{transform:translate(10px,-12px); opacity:.35}}
+  .twinkle{animation:tw 2.6s ease-in-out infinite}
+  .twinkle:nth-child(odd){animation-delay:-1.3s}
+  @keyframes tw{50%{opacity:.3}}
+
+  /* interactive units */
+  .unit{cursor:pointer; outline:none; transition:opacity .35s ease, filter .35s ease}
+  .unit .art{transform-box:fill-box; transform-origin:50% 100%; transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+  .unit:hover .art,.unit:focus-visible .art{transform:translateY(-7px) scale(1.08)}
+  .unit.sel .art{transform:translateY(-9px) scale(1.12)}
+  .unit .shadow{fill:rgba(0,0,0,.22); transform-box:fill-box; transform-origin:center; transition:transform .35s ease, opacity .35s}
+  .unit:hover .shadow,.unit.sel .shadow{transform:scale(.85); opacity:.7}
+  .unit .halo{opacity:0; transition:opacity .3s}
+  .unit:focus-visible .halo,.unit.sel .halo{opacity:1}
+  .unit .ring{fill:none; stroke:#fff; stroke-width:3; opacity:0; transform-box:fill-box; transform-origin:center}
+  .unit.sel .ring{animation:ring 1.8s ease-out infinite}
+  @keyframes ring{0%{transform:scale(.7); opacity:.95}100%{transform:scale(1.6); opacity:0}}
+  .unit.dim{opacity:.22; filter:saturate(.2)}
+  .unit .badge circle{stroke:#fff; stroke-width:3}
+  .unit .badge text{font-family:Inter, system-ui, sans-serif; font-weight:700; font-size:15px; text-anchor:middle; dominant-baseline:central}
+  .unit.sel .badge circle{stroke:#1E3226}
+
+  /* ---------- below the map ---------- */
+  .map-below{display:grid; grid-template-columns:1fr 1.05fr; gap:24px; margin-top:24px; align-items:start}
+  .picker{background:var(--white); border:1px solid var(--line); border-radius:20px; padding:22px 24px}
+  .picker h3{font-size:20px; margin-bottom:4px}
+  .picker .sub{font-size:14px; color:var(--ink-2); margin:0 0 16px}
+  .pk-group{margin-bottom:18px}
+  .pk-group:last-child{margin-bottom:0}
+  .pk-title{display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2); margin-bottom:10px}
+  .pk-title .sw{width:10px; height:10px; border-radius:50%}
+  .pk-grid{display:flex; flex-wrap:wrap; gap:8px}
+  .pk{min-width:44px; height:44px; padding:0 12px; border-radius:12px; border:1.5px solid var(--line); background:var(--cream); color:#fff; font-weight:600; font-size:15px; cursor:pointer; font-variant-numeric:tabular-nums; transition:border-color .2s, background .2s, color .2s, transform .2s var(--ease)}
+  .pk:hover{border-color:var(--pk, var(--leaf)); transform:translateY(-2px)}
+  .pk[aria-pressed=true]{background:var(--pk, var(--leaf)); border-color:var(--pk, var(--leaf)); color:var(--pk-ink, #1E3226)}
+  .landmarks{display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:18px; padding-top:16px; border-top:1px solid var(--line); font-size:13.5px; color:var(--ink-2)}
+  .landmarks span{display:inline-flex; align-items:center; gap:7px}
+
+  .detail{background:var(--white); border:1px solid var(--line); border-radius:20px; overflow:hidden; min-height:100%}
+  .detail .ph{position:relative; height:200px; background:var(--paper)}
+  .detail .ph img{width:100%; height:100%; object-fit:cover; transition:opacity .25s}
+  .detail .ph .type{position:absolute; left:16px; top:16px; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase}
+  .detail .nav{position:absolute; right:12px; bottom:12px; display:flex; gap:6px}
+  .detail .nav button{width:38px; height:38px; border-radius:50%; border:none; background:rgba(20,34,25,.8); color:#fff; display:grid; place-items:center; cursor:pointer; transition:background .2s}
+  .detail .nav button:hover{background:rgba(20,34,25,1)}
+  .detail .body{padding:22px 24px 24px}
+  .detail h3{font-size:28px; margin-bottom:4px}
+  .detail .price{font-family:var(--round); font-size:22px; color:#fff; margin-bottom:14px}
+  .detail .price small{font-family:var(--body); font-size:13.5px; color:var(--ink-2)}
+  .detail .acts{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+  .detail .acts .btn{flex:1 1 auto}
+  .empty{padding:28px 26px}
+  .empty h3{font-size:22px; margin-bottom:8px}
+  .empty p{color:var(--ink-2); margin:0 0 18px; font-size:15px}
+  .counts{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+  .counts div{background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:10px; font-size:14px; color:var(--ink-2)}
+  .counts b{font-family:var(--round); font-weight:500; font-size:24px; color:#fff; line-height:1}
+  .counts .sw{width:10px; height:10px; border-radius:50%; flex:0 0 auto}
+  .fadein{animation:fadeUp .35s var(--ease)}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(8px)}}
+  .note-small{font-size:13px; color:var(--ink-2); margin:12px 2px 0}
+  @media (max-width:900px){ .map-below{grid-template-columns:1fr} .detail{order:-1} }
+  @media (max-width:560px){ .map-tools button{width:36px; height:36px} .map-hint{font-size:11.5px} .daynight{width:100%} .daynight button{flex:1; justify-content:center} }
+</style>
+</helmet>
+
+<div class="page">
+  <dc-import name="Header" current="map"></dc-import>
+  <dc-import name="PageHero" kicker="tempat anda menginap" title="Peta lokasi" lede="Tekan mana-mana kanopi, chalet atau bangunan pada peta untuk melihat butiran, harga dan kedudukannya di tepi sungai."></dc-import>
+
+  <section style="padding-top:40px">
+    <div class="wrap">
+      <div class="map-bar pop-in">
+        <div class="map-filters" role="group" aria-label="Tapis unit">
+          <button class="mf" data-f="all" aria-pressed="true">Semua</button>
+          <button class="mf" data-f="canopy" aria-pressed="false"><span class="sw" style="background:#FFC145"></span>Kanopi <span class="n">13</span></button>
+          <button class="mf" data-f="chalet" aria-pressed="false"><span class="sw" style="background:#FF6B4A"></span>Chalet <span class="n">7</span></button>
+          <button class="mf" data-f="double" aria-pressed="false"><span class="sw" style="background:#B794FF"></span>Rumah Dua Tingkat</button>
+          <button class="mf" data-f="hall" aria-pressed="false"><span class="sw" style="background:#3DD6C6"></span>Dewan</button>
+        </div>
+        <div class="daynight" role="group" aria-label="Suasana peta">
+          <button data-mode="day" aria-pressed="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Siang</button>
+          <button data-mode="night" aria-pressed="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>Malam</button>
+        </div>
+      </div>
+
+      <div class="map-shell pop-in" id="map-shell">
+        <svg class="map-svg" id="map" viewBox="0 0 1800 932" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Peta ilustrasi Chalet Keluarga Sakri berdasarkan pelan ukur tapak: Sungai Bernam di bahagian atas, 13 kanopi di tebing sungai, 7 chalet di sepanjang laluan berturap, Rumah Dua Tingkat, dewan makan, surau, kawasan BBQ dan tandas.">
+          <defs>
+            <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="s-g1"/><stop offset="1" class="s-g2"/></linearGradient>
+            <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="s-r2"/><stop offset="1" class="s-r1"/></linearGradient>
+            <radialGradient id="lampglow"><stop offset="0" stop-color="#FFD66B" stop-opacity=".85"/><stop offset="1" stop-color="#FFD66B" stop-opacity="0"/></radialGradient>
+            <radialGradient id="fireglow"><stop offset="0" stop-color="#FF9A3D" stop-opacity=".7"/><stop offset="1" stop-color="#FF9A3D" stop-opacity="0"/></radialGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+
+          <rect width="1800" height="932" fill="url(#grass)"/>
+
+          <!-- Traced from the survey plan (JM/E/25/SEL/3354), turned so the river runs along the top -->
+          <path d="M0,0 L0,0 L523,178 L643,238 L717,313 L727,306 L743,314 L748,309 L749,304 L742,289 L748,286 L749,282 L768,264 L793,218 L798,216 L807,222 L810,217 L816,216 L807,210 L806,206 L821,191 L839,184 L845,186 L852,179 L857,183 L856,190 L865,174 L907,154 L912,158 L916,172 L924,170 L929,182 L935,186 L930,173 L934,167 L924,169 L914,161 L918,150 L946,135 L952,136 L951,145 L955,153 L946,160 L953,163 L960,161 L967,148 L957,139 L961,133 L1042,120 L1048,125 L1061,119 L1063,125 L1051,130 L1058,133 L1065,128 L1069,116 L1080,115 L1091,118 L1094,122 L1103,122 L1101,129 L1094,125 L1093,130 L1099,137 L1107,138 L1110,148 L1110,142 L1118,141 L1118,146 L1114,151 L1124,148 L1127,141 L1124,132 L1132,130 L1147,143 L1153,142 L1159,146 L1166,141 L1170,152 L1184,146 L1195,155 L1214,156 L1221,164 L1229,161 L1322,191 L1338,199 L1338,208 L1342,203 L1349,205 L1355,212 L1354,216 L1347,218 L1344,214 L1338,219 L1354,221 L1359,231 L1366,235 L1376,229 L1371,230 L1368,224 L1360,223 L1360,218 L1366,214 L1372,221 L1382,220 L1438,246 L1441,252 L1439,258 L1432,262 L1434,275 L1430,280 L1424,280 L1429,284 L1428,289 L1434,278 L1445,278 L1452,273 L1449,259 L1457,254 L1462,258 L1461,265 L1468,266 L1474,261 L1479,266 L1485,265 L1506,278 L1507,282 L1520,288 L1521,296 L1528,295 L1576,331 L1652,362 L1727,385 L1731,381 L1760,283 L1800,303 L1800,323 L1800,0 Z" fill="url(#water)"/>
+          <path d="M643,238 L717,313 L727,306 L743,314 L748,309 L749,304 L742,289 L748,286 L749,282 L768,264 L793,218 L798,216 L807,222 L810,217 L816,216 L807,210 L806,206 L821,191 L839,184 L845,186 L852,179 L857,183 L856,190 L865,174 L907,154 L912,158 L916,172 L924,170 L929,182 L935,186 L930,173 L934,167 L924,169 L914,161 L918,150 L946,135 L952,136 L951,145 L955,153 L946,160 L953,163 L960,161 L967,148 L957,139 L961,133 L1042,120 L1048,125 L1061,119 L1063,125 L1051,130 L1058,133 L1065,128 L1069,116 L1080,115 L1091,118 L1094,122 L1103,122 L1101,129 L1094,125 L1093,130 L1099,137 L1107,138 L1110,148 L1110,142 L1118,141 L1118,146 L1114,151 L1124,148 L1127,141 L1124,132 L1132,130 L1147,143 L1153,142 L1159,146 L1166,141 L1170,152 L1184,146 L1195,155 L1214,156 L1221,164 L1229,161 L1322,191 L1338,199 L1338,208 L1342,203 L1349,205 L1355,212 L1354,216 L1347,218 L1344,214 L1338,219 L1354,221 L1359,231 L1366,235 L1376,229 L1371,230 L1368,224 L1360,223 L1360,218 L1366,214 L1372,221 L1382,220 L1438,246 L1441,252 L1439,258 L1432,262 L1434,275 L1430,280 L1424,280 L1429,284 L1428,289 L1434,278 L1445,278 L1452,273 L1449,259 L1457,254 L1462,258 L1461,265 L1468,266 L1474,261 L1479,266 L1485,265 L1506,278 L1507,282 L1520,288 L1521,296 L1528,295 L1576,331 L1652,362 L1727,385 L1731,381 L1760,283 L1800,303 L1800,323" fill="none" class="f-sand" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"/>
+          <g fill="none" stroke="#fff" stroke-linecap="round" opacity=".55" aria-hidden="true">
+            <path class="wave" d="M780,120 C860,104 940,128 1020,112" stroke-width="5"/>
+            <path class="wave w2" d="M1180,150 C1260,136 1340,160 1420,148" stroke-width="5"/>
+            <path class="wave" d="M1480,230 C1540,236 1600,262 1660,280" stroke-width="4"/>
+            <path class="wave w2" d="M420,90 C500,76 580,98 660,86" stroke-width="5"/>
+            <path class="wave" d="M120,40 C200,28 280,50 360,40" stroke-width="4"/>
+            <path class="wave w2" d="M1500,90 C1580,80 1660,100 1740,92" stroke-width="4"/>
+          </g>
+          <g fill="#C9D6CF" stroke="#8FAAA0" stroke-width="2" aria-hidden="true">
+            <ellipse cx="900" cy="170" rx="18" ry="9"/><ellipse cx="1080" cy="150" rx="14" ry="7"/><ellipse cx="1420" cy="240" rx="16" ry="8"/><ellipse cx="640" cy="200" rx="13" ry="7"/>
+          </g>
+          <text x="1080" y="78" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="44" fill="#fff" opacity=".92" letter-spacing="6" transform="rotate(4 1080 78)">Sungai Bernam</text>
+
+          <!-- paved walkways -->
+          <g aria-hidden="true">
+            <g class="f-sand-edge-fill" stroke-width="10" stroke-linejoin="round">
+              <path d="M1063.7,656.1 C1064.4,651.9 1063.6,637.2 1061.4,630.9 C1059.2,624.6 1054.6,621.2 1050.4,618.1 C1046.2,615.0 1041.3,613.6 1036.2,612.4 C1031.1,611.2 1027.7,608.9 1019.7,610.7 C1011.7,612.5 996.1,621.4 988.3,623.4 C980.5,625.4 975.6,622.2 972.9,622.9 C970.1,623.6 969.3,626.2 971.8,627.5 C974.3,628.8 980.0,632.3 988.1,630.7 C996.2,629.1 1011.9,619.5 1020.7,617.8 C1029.5,616.1 1035.4,618.0 1041.0,620.5 C1046.6,623.0 1051.6,626.8 1054.3,632.7 C1057.0,638.6 1055.5,652.1 1057.1,656.0 C1058.7,659.9 1063.0,660.3 1063.7,656.1 Z"/>
+              <path d="M1080.4,533.7 C1083.0,533.0 1083.8,527.2 1080.2,526.0 C1076.6,524.8 1067.2,523.7 1058.6,526.6 C1050.0,529.5 1037.8,541.3 1028.8,543.6 C1019.8,545.9 1019.4,545.6 1004.7,540.6 C990.1,535.6 955.4,521.2 940.9,513.7 C926.4,506.2 921.0,499.5 917.6,495.7 C914.2,491.9 917.9,491.6 920.6,491.0 C923.3,490.4 932.0,493.2 933.7,492.0 C935.4,490.8 937.7,485.8 930.8,483.6 C923.9,481.4 898.3,481.4 892.3,478.7 C886.3,476.0 895.2,473.9 894.7,467.4 C894.2,460.9 893.6,449.4 889.5,439.6 C885.4,429.8 877.0,416.0 870.0,408.4 C863.0,400.8 851.9,395.8 847.6,394.0 C843.3,392.2 840.6,394.2 844.2,397.6 C847.8,401.0 862.7,408.2 869.1,414.1 C875.5,420.1 882.9,427.5 882.7,433.3 C882.5,439.1 871.3,446.6 868.0,448.7 C864.7,450.8 863.3,447.7 862.8,446.0 C862.3,444.3 864.9,440.5 864.9,438.5 C864.9,436.5 864.0,434.6 862.6,434.1 C861.2,433.6 860.6,436.4 856.7,435.5 C852.9,434.6 842.7,430.6 839.5,428.8 C836.3,427.0 839.2,425.5 837.5,424.8 C835.8,424.1 831.1,425.8 829.0,424.9 C826.9,424.0 826.7,419.9 824.8,419.2 C822.9,418.5 820.3,421.5 817.4,420.6 C814.5,419.7 811.2,415.6 807.5,414.0 C803.8,412.4 797.7,412.5 795.0,411.1 C792.3,409.7 792.8,406.5 791.1,405.8 C789.4,405.1 803.2,410.8 784.9,406.9 C766.6,403.0 706.9,385.1 681.5,382.4 C656.1,379.7 646.1,387.3 632.3,390.9 C618.5,394.5 609.1,401.7 598.5,404.1 C587.9,406.6 583.7,403.4 568.4,405.6 C553.1,407.8 518.2,415.8 506.9,417.5 C495.6,419.2 503.3,417.8 500.5,415.8 C497.7,413.8 493.0,407.1 490.1,405.4 C487.2,403.7 484.9,404.1 483.2,405.6 C481.5,407.2 482.1,412.0 480.2,414.7 C478.3,417.4 477.0,419.9 471.9,421.7 C466.8,423.5 454.2,425.4 449.3,425.4 C444.4,425.3 447.6,421.5 442.3,421.4 C437.1,421.2 422.9,423.1 417.8,424.5 C412.8,425.9 417.4,428.1 412.0,429.5 C406.6,430.9 393.3,434.0 385.1,433.2 C376.9,432.4 367.9,430.4 363.0,424.9 C358.1,419.4 358.4,403.8 356.0,400.1 C353.6,396.4 349.7,400.9 348.9,402.6 C348.1,404.3 351.3,405.4 351.4,410.5 C351.5,415.6 350.9,429.0 349.6,433.5 C348.4,438.0 347.2,437.2 343.9,437.7 C340.6,438.1 333.6,435.2 329.7,436.2 C325.8,437.2 332.1,441.6 320.3,443.6 C308.5,445.6 271.7,446.2 259.1,448.1 C246.5,450.0 244.3,451.9 244.7,454.7 C245.0,457.5 248.5,464.7 261.2,464.9 C273.9,465.1 301.8,457.8 320.9,456.0 C340.0,454.2 365.7,453.3 376.1,454.4 C386.6,455.4 382.0,458.3 383.6,462.3 C385.2,466.3 384.1,476.5 385.9,478.3 C387.7,480.1 391.1,473.5 394.3,473.2 C397.5,472.9 403.2,472.8 404.9,476.3 C406.6,479.8 398.3,487.5 404.7,494.4 C411.1,501.3 428.1,511.0 443.3,517.8 C458.5,524.6 482.2,527.2 495.6,535.3 C509.0,543.4 513.6,557.1 523.6,566.4 C533.6,575.7 550.6,588.8 555.6,591.2 C560.6,593.6 562.7,591.2 553.7,580.7 C544.8,570.2 512.1,538.2 501.9,528.5 C491.7,518.8 500.2,525.1 492.3,522.4 C484.4,519.7 464.4,517.1 454.5,512.5 C444.6,507.9 437.9,500.2 432.8,494.7 C427.7,489.2 427.3,483.0 423.9,479.3 C420.5,475.6 414.6,475.9 412.5,472.7 C410.4,469.5 410.5,463.6 411.1,460.2 C411.7,456.8 413.9,454.8 416.0,452.5 C418.1,450.2 421.2,447.4 423.8,446.6 C426.4,445.8 428.4,448.6 431.8,447.6 C435.2,446.6 434.0,441.1 444.3,440.4 C454.6,439.7 481.2,443.5 493.4,443.4 C505.5,443.2 512.8,441.3 517.2,439.5 C521.6,437.7 507.4,434.5 520.0,432.8 C532.6,431.1 577.9,429.4 592.8,429.1 C607.7,428.8 605.5,429.8 609.2,430.8 C612.9,431.8 611.5,434.7 615.1,435.1 C618.7,435.5 627.5,438.8 630.6,433.2 C633.7,427.6 625.4,408.6 633.8,401.8 C642.2,395.1 664.6,392.3 681.1,392.7 C697.6,393.1 722.9,399.8 732.7,404.4 C742.5,409.0 740.5,416.5 739.9,420.4 C739.3,424.3 729.4,424.3 728.9,427.6 C728.4,430.9 739.5,438.6 736.8,440.2 C734.0,441.8 717.3,436.6 712.4,437.5 C707.5,438.4 710.9,443.2 707.5,445.3 C704.1,447.4 694.3,448.1 692.2,449.9 C690.1,451.7 691.4,455.7 694.8,456.2 C698.2,456.7 708.8,451.8 712.7,453.0 C716.6,454.2 716.8,459.0 718.1,463.4 C719.4,467.8 720.9,473.8 720.3,479.4 C719.7,484.9 718.2,490.0 714.4,496.7 C710.6,503.4 701.8,511.1 697.6,519.7 C693.4,528.3 692.0,541.7 689.2,548.3 C686.4,554.9 683.5,556.7 680.7,559.2 C677.9,561.7 678.9,563.0 672.6,563.2 C666.3,563.4 649.3,559.9 642.8,560.2 C636.3,560.5 634.5,563.7 633.6,565.2 C632.7,566.7 636.9,565.4 637.1,569.3 C637.3,573.2 631.8,578.8 634.9,588.4 C638.0,598.0 649.5,618.4 655.8,627.1 C662.1,635.8 666.1,633.9 672.5,640.7 C678.9,647.5 689.5,664.0 693.9,668.1 C698.3,672.2 698.0,666.5 698.7,665.4 C699.4,664.3 704.3,668.9 698.2,661.5 C692.1,654.1 668.1,629.0 662.0,621.0 C655.9,613.0 659.1,621.3 661.4,613.6 C663.7,605.9 671.1,582.7 676.0,574.7 C680.9,566.7 687.5,566.2 691.0,565.4 C694.5,564.6 694.4,569.6 697.2,570.1 C700.0,570.6 705.6,569.6 707.7,568.2 C709.8,566.8 711.2,563.6 709.8,561.5 C708.4,559.4 701.3,558.4 699.1,555.6 C696.9,552.8 695.8,550.4 696.8,544.6 C697.8,538.8 701.3,526.9 705.2,521.0 C709.1,515.1 716.1,511.6 720.3,509.5 C724.5,507.4 727.4,508.4 730.4,508.7 C733.4,509.0 734.9,508.5 738.3,511.2 C741.7,513.9 748.5,523.9 750.8,524.9 C753.1,525.9 753.3,520.2 752.1,517.3 C750.9,514.4 747.0,513.8 743.6,507.4 C740.2,501.0 733.9,485.5 731.9,478.7 C729.9,471.9 730.3,470.5 731.7,466.8 C733.1,463.1 736.4,459.0 740.2,456.6 C744.1,454.2 752.4,454.5 754.8,452.7 C757.2,450.9 753.3,448.1 754.5,445.8 C755.7,443.5 759.7,442.2 762.0,438.7 C764.3,435.1 756.1,422.4 768.5,424.5 C780.9,426.6 826.0,443.8 836.6,451.3 C847.2,458.8 823.5,463.5 832.1,469.5 C840.7,475.5 879.2,480.7 888.2,487.3 C897.2,493.9 887.6,504.6 886.1,509.1 C884.6,513.6 879.0,512.7 879.1,514.4 C879.2,516.1 884.5,510.6 886.9,519.2 C889.3,527.8 890.1,552.9 893.3,565.9 C896.5,578.9 903.5,593.3 906.3,597.0 C909.1,600.7 911.1,594.3 910.1,588.0 C909.1,581.7 903.0,573.7 900.4,559.2 C897.8,544.8 894.7,512.2 894.4,501.3 C894.1,490.4 891.4,490.3 898.5,493.5 C905.6,496.7 918.2,510.7 936.9,520.7 C955.6,530.7 997.7,548.4 1010.7,553.4 C1023.7,558.4 1012.6,551.0 1015.1,551.0 C1017.6,551.0 1020.4,548.8 1025.7,553.4 C1031.0,558.0 1042.5,578.0 1046.9,578.9 C1051.3,579.8 1053.2,563.3 1051.9,558.9 C1050.6,554.5 1041.3,554.9 1039.3,552.5 C1037.3,550.1 1035.6,548.5 1039.8,544.8 C1044.0,541.1 1057.7,532.1 1064.5,530.2 C1071.3,528.4 1077.8,534.4 1080.4,533.7 Z"/>
+              <path d="M1106.8,206.2 C1104.9,203.2 1095.8,198.3 1090.6,195.7 C1085.4,193.1 1083.7,190.2 1075.6,190.7 C1067.5,191.2 1074.7,186.0 1042.2,198.5 C1009.8,211.0 909.1,255.1 880.9,265.9 C852.7,276.7 880.3,261.4 873.0,263.3 C865.7,265.2 848.7,271.8 837.2,277.6 C825.7,283.4 805.7,293.9 804.0,298.1 C802.3,302.3 821.7,303.7 827.2,302.6 C832.8,301.6 815.5,301.6 837.3,291.8 C859.1,282.1 930.2,254.5 958.1,244.1 C986.0,233.7 995.6,231.7 1004.4,229.5 C1013.2,227.3 1006.6,233.2 1010.8,231.2 C1015.0,229.1 1020.5,222.2 1029.6,217.2 C1038.6,212.2 1055.5,203.2 1065.1,201.0 C1074.7,198.8 1081.1,202.2 1087.2,204.3 C1093.3,206.5 1098.6,213.6 1101.9,213.9 C1105.2,214.2 1108.7,209.2 1106.8,206.2 Z"/>
+              <path d="M1661.0,446.9 C1656.9,445.3 1653.7,448.0 1658.6,453.3 C1663.5,458.6 1683.0,471.6 1690.5,478.9 C1698.0,486.2 1701.3,491.2 1703.8,496.9 C1706.3,502.5 1704.0,509.7 1705.3,512.8 C1706.6,515.8 1710.2,516.6 1711.6,515.2 C1713.0,513.8 1713.9,507.6 1713.6,504.2 C1713.3,500.8 1714.8,501.5 1709.7,494.6 C1704.7,487.7 1691.4,470.8 1683.3,462.9 C1675.2,454.9 1665.1,448.5 1661.0,446.9 Z"/>
+            </g>
+          </g>
+
+          <g id="scenery"></g>
+          <g id="landmarks"></g>
+          <g id="units"></g>
+
+          <!-- compass: survey north, turned with the plan (49.4 deg clockwise) -->
+          <g transform="translate(70,862)" aria-hidden="true">
+            <circle r="40" fill="#fff" opacity=".94"/>
+            <g transform="rotate(-40.6)">
+              <polygon points="30,0 -10,-14 -2,0 -10,14" fill="#E2483A"/>
+              <polygon points="-2,0 -10,-14 -22,0 -10,14" fill="#1E3226" opacity=".35"/>
+            </g>
+            <text x="-16" y="-14" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1E3226" text-anchor="middle">U</text>
+          </g>
+
+          <!-- night sky sparkle over the river -->
+          <g class="night-only" fill="#FFF3C4" aria-hidden="true">
+            <circle class="twinkle" cx="900" cy="30" r="2.5"/><circle class="twinkle" cx="1060" cy="70" r="2"/><circle class="twinkle" cx="1200" cy="40" r="2.5"/>
+            <circle class="twinkle" cx="1420" cy="230" r="2"/><circle class="twinkle" cx="1560" cy="60" r="2.5"/><circle class="twinkle" cx="1700" cy="200" r="2"/>
+          </g>
+        </svg>
+
+        <div class="map-tools">
+          <button type="button" id="z-in" aria-label="Zum masuk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          <button type="button" id="z-out" aria-label="Zum keluar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+          <button type="button" id="z-reset" aria-label="Paparan penuh"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        </div>
+        <div class="map-hint" id="map-hint">Tekan unit untuk butiran · seret untuk gerak selepas zum</div>
+        <div class="tip" id="tip" aria-hidden="true"><b id="tip-t"></b><span id="tip-s"></span></div>
+      </div>
+      <p class="note-small">Peta ilustrasi berdasarkan pelan ukur tapak (JM/E/25/SEL/3354). Saiz bangunan dibesarkan supaya mudah ditekan &mdash; tanya keluarga kami di WhatsApp untuk menyemak kekosongan unit pilihan anda.</p>
+
+      <div class="map-below">
+        <div class="picker pop-in">
+          <h3>Pilih unit</h3>
+          <p class="sub">Atau tekan terus pada peta. Gunakan anak panah papan kekunci untuk beralih antara unit.</p>
+          <div id="pk"></div>
+          <div class="landmarks" aria-label="Petunjuk peta">
+            <span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E7F4F8" stroke="#2B7A99" stroke-width="2"/><text x="12" y="16" font-size="9" font-weight="700" text-anchor="middle" fill="#2B7A99" font-family="Inter">WC</text></svg>Tandas (7)</span>
+            <span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V12h14v9z" fill="#F4E9CF"/><path d="M7 12a5 5 0 0 1 10 0z" fill="#3DD6C6"/></svg>Surau</span>
+            <span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14" r="8" fill="#5B3A22"/><path d="M12 6c3 4 3 6 0 9-3-3-3-5 0-9z" fill="#FF8A3D"/></svg>Kawasan BBQ</span>
+          </div>
+        </div>
+
+        <div class="detail pop-in" id="detail" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1800}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+
+  componentDidMount() {
+    (function () {
+      'use strict';
+      const NS = 'http://www.w3.org/2000/svg';
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const $ = (s, r) => (r || document).querySelector(s);
+      const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+      const svg = $('#map'), shell = $('#map-shell');
+      const W = 1800, H = 932;
+
+      const g = (parent, attrs, html) => {
+        const el = document.createElementNS(NS, 'g');
+        Object.keys(attrs || {}).forEach((k) => el.setAttribute(k, attrs[k]));
+        if (html) el.innerHTML = html;
+        parent.appendChild(el);
+        return el;
+      };
+
+      /* ---------- types ---------- */
+      const TYPES = {
+        canopy: { name: 'Kanopi', color: '#FFC145', ink: '#1E3226', photo: 'photos/canopy.jpg',
+          price: 'RM 175', per: '/ malam · RM 100 separuh hari', short: 'RM 175 / malam',
+          ticks: ['Teduhan tepi sungai dengan meja, bangku & tempat BBQ', 'Sesuai untuk kumpulan · bawa peralatan tidur sendiri', 'Tiada kipas atau soket elektrik', 'Tiket masuk dikenakan berasingan'] },
+        chalet: { name: 'Chalet', color: '#FF6B4A', ink: '#fff', photo: 'photos/chalet.jpg',
+          price: 'Dari RM 160', per: '/ malam', short: 'dari RM 160 / malam',
+          ticks: ['2–3 dewasa sebilik', '2 tilam bujang, bantal, selimut, kipas & soket elektrik', 'Blok A RM 160 · Pondok buluh RM 170 · Blok E RM 170–220', 'Termasuk tiket masuk'] },
+        double: { name: 'Rumah Dua Tingkat', color: '#B794FF', ink: '#1E3226', photo: 'photos/double.jpg',
+          price: 'Dari RM 250', per: '/ malam', short: 'dari RM 250 / malam',
+          ticks: ['Blok B · 2 bilik di atas, 1 bilik besar di bawah', 'Bilik atas RM 250 · muat 5 orang (maks. 6)', 'Bilik bawah RM 500 · muat 10 orang (maks. 12)', 'Termasuk tiket masuk'] },
+        hall: { name: 'Dewan Terbuka', color: '#3DD6C6', ink: '#1E3226', photo: 'photos/hall.jpg',
+          price: 'RM 300', per: 'separuh hari · RM 600 semalaman', short: 'RM 300 separuh hari',
+          ticks: ['Untuk majlis, hari keluarga & aktiviti kumpulan', 'Meja, bangku, kipas & soket elektrik', 'Tempat BBQ disediakan'] }
+      };
+
+      /* ---------- unit positions (map units, 1600 x 900) ---------- */
+            const canopyPts = [[659,739],[710,416],[747,315],[787,266],[819,324],[858,248],[965,200],[1162,206],[1227,262],[1300,263],[1371,301],[1537,389],[1650,426]];
+      const chaletPts = [[240,499],[294,428],[469,461],[560,443],[664,527],[798,460],[1107,624]];
+      const UNITS = [];
+      canopyPts.forEach((p, i) => UNITS.push({ id: 'kanopi-' + (i + 1), type: 'canopy', n: i + 1, title: 'Kanopi ' + (i + 1), x: p[0], y: p[1], color: ['#FF7A59', '#FFC145', '#2EC4B6', '#F06C9B'][i % 4] }));
+      chaletPts.forEach((p, i) => UNITS.push({ id: 'chalet-' + (i + 1), type: 'chalet', n: i + 1, title: 'Chalet ' + (i + 1), x: p[0], y: p[1] }));
+      UNITS.push({ id: 'rumah-dua-tingkat', type: 'double', title: 'Rumah Dua Tingkat', x: 753, y: 780, label: 'Rumah Dua Tingkat' });
+      UNITS.push({ id: 'dewan', type: 'hall', title: 'Dewan Terbuka', x: 1121, y: 529, label: 'Dewan Makan' });
+
+      /* ---------- artwork ---------- */
+      function artCanopy(u) {
+        let sc = '';
+        for (let x = -40; x <= 40; x += 10) sc += '<circle cx="' + x + '" cy="-4" r="5.5" fill="' + u.color + '"/>';
+        return '<ellipse class="shadow" cx="0" cy="30" rx="42" ry="8"/>' +
+          '<g class="art">' +
+          '<rect x="-34" y="-8" width="5" height="38" rx="2" fill="#5B3A22"/><rect x="29" y="-8" width="5" height="38" rx="2" fill="#5B3A22"/>' +
+          '<rect x="-20" y="12" width="40" height="7" rx="2" fill="#A8743F"/><rect x="-16" y="19" width="4" height="10" fill="#7A5230"/><rect x="12" y="19" width="4" height="10" fill="#7A5230"/>' +
+          '<path d="M-46,-4 L-30,-30 L30,-30 L46,-4 Z" fill="' + u.color + '"/>' +
+          '<path d="M-30,-30 L-14,-4 L-2,-4 L-14,-30Z M14,-30 L2,-4 L14,-4 L30,-30Z" fill="#fff" opacity=".45"/>' + sc +
+          '<path d="M-30,-30 L30,-30" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/>' +
+          '</g>';
+      }
+      function artChalet() {
+        return '<ellipse class="shadow" cx="0" cy="36" rx="48" ry="9"/>' +
+          '<g class="art">' +
+          '<rect x="-34" y="26" width="5" height="10" fill="#5B3A22"/><rect x="29" y="26" width="5" height="10" fill="#5B3A22"/>' +
+          '<rect x="-40" y="-10" width="80" height="38" rx="3" fill="#C9522E"/>' +
+          '<path d="M-40,2 H40 M-40,14 H40" stroke="#A9401F" stroke-width="2"/>' +
+          '<path d="M-50,-8 L0,-44 L50,-8 Z" fill="#6E2F1E"/><path d="M-50,-8 L0,-44 L50,-8" fill="none" stroke="#4A1D12" stroke-width="3" stroke-linejoin="round"/>' +
+          '<rect class="win" x="-31" y="-2" width="17" height="15" rx="2"/><rect class="win" x="14" y="-2" width="17" height="15" rx="2"/>' +
+          '<rect x="-7" y="4" width="14" height="24" rx="2" fill="#7A2E1C"/><circle cx="4" cy="17" r="1.6" fill="#FFC145"/>' +
+          '<rect x="-12" y="28" width="24" height="5" fill="#8A5A34"/>' +
+          '</g>';
+      }
+      function artDouble() {
+        return '<ellipse class="shadow" cx="0" cy="58" rx="80" ry="12"/>' +
+          '<g class="art">' +
+          '<rect x="-64" y="-34" width="128" height="88" rx="4" fill="#B5462A"/>' +
+          '<path d="M-64,10 H64" stroke="#7E2C17" stroke-width="5"/><path d="M-64,16 H64" stroke="#E2A35E" stroke-width="3"/>' +
+          '<path d="M-64,-20 H64 M-64,-6 H64 M-64,28 H64 M-64,42 H64" stroke="#97391F" stroke-width="2"/>' +
+          '<path d="M-78,-32 L0,-82 L78,-32 Z" fill="#4E2618"/><path d="M-78,-32 L0,-82 L78,-32" fill="none" stroke="#2F150C" stroke-width="3" stroke-linejoin="round"/>' +
+          '<rect class="win" x="-50" y="-22" width="22" height="20" rx="2"/><rect class="win" x="-11" y="-22" width="22" height="20" rx="2"/><rect class="win" x="28" y="-22" width="22" height="20" rx="2"/>' +
+          '<rect class="win" x="-50" y="22" width="22" height="20" rx="2"/><rect class="win" x="28" y="22" width="22" height="20" rx="2"/>' +
+          '<rect x="-9" y="24" width="18" height="30" rx="2" fill="#6B2414"/>' +
+          '<path d="M-64,10 h-10 v44" stroke="#5B3A22" stroke-width="4" fill="none"/>' +
+          '</g>';
+      }
+      function artHall() {
+        let tables = '';
+        [-44, -6, 32].forEach((x) => { tables += '<rect x="' + x + '" y="6" width="22" height="6" rx="2" fill="#A8743F"/>'; });
+        return '<ellipse class="shadow" cx="0" cy="36" rx="92" ry="11"/>' +
+          '<g class="art">' +
+          '<rect x="-80" y="22" width="160" height="12" rx="3" fill="#D9C08C"/>' +
+          '<rect x="-72" y="-14" width="6" height="38" fill="#5B3A22"/><rect x="-26" y="-14" width="6" height="38" fill="#5B3A22"/><rect x="20" y="-14" width="6" height="38" fill="#5B3A22"/><rect x="66" y="-14" width="6" height="38" fill="#5B3A22"/>' +
+          tables +
+          '<path d="M-92,-12 L-64,-50 L64,-50 L92,-12 Z" fill="#2C6E8A"/><path d="M-92,-12 L92,-12" stroke="#1B4A5E" stroke-width="5" stroke-linecap="round"/>' +
+          '<path d="M-64,-50 L64,-50" stroke="#7FC8DE" stroke-width="3" stroke-linecap="round"/>' +
+          '<circle class="win" cx="-46" cy="-12" r="3"/><circle class="win" cx="0" cy="-12" r="3"/><circle class="win" cx="46" cy="-12" r="3"/>' +
+          '</g>';
+      }
+
+      /* ---------- scenery ---------- */
+      const scenery = $('#scenery');
+      const TREES = [[113,60,18],[58,88,25],[131,111,18],[226,111,25],[168,143,22],[382,157,16],[274,162,20],[75,175,20],[387,200,20],[470,201,17],[286,212,19],[230,223,28],[109,234,20],[366,236,23],[426,251,25],[600,252,26],[536,267,23],[148,267,17],[248,273,21],[204,289,16],[577,298,16],[69,301,19],[625,317,25],[519,325,27],[911,335,16],[381,335,21],[999,341,22],[80,351,21],[464,359,20],[135,362,25],[931,366,16],[199,373,16],[1280,377,20],[1144,381,23],[20,397,27],[1036,402,28],[955,410,19],[1339,416,21],[1218,429,20],[1309,449,25],[60,458,18],[929,461,22],[107,468,20],[26,484,21],[1737,486,21],[374,495,16],[1321,495,18],[1694,515,18],[1379,519,25],[1260,524,19],[1310,535,18],[46,535,24],[556,549,16],[1474,563,27],[1778,568,20],[1380,583,20],[1559,589,18],[754,595,24],[1611,595,26],[413,601,27],[1239,606,24],[463,608,24],[1290,618,25],[1745,627,20],[1341,627,25],[863,649,25],[121,653,21],[1222,658,19],[1418,663,19],[1581,666,19],[292,677,24],[987,680,17],[1686,685,18],[165,692,25],[1460,698,19],[472,704,27],[557,715,19],[1196,719,23],[123,731,16],[1553,734,21],[998,736,17],[302,737,19],[162,739,24],[1754,740,28],[378,746,23],[1169,749,17],[1512,760,24],[1466,769,21],[908,780,26],[1341,783,17],[31,788,25],[1243,789,25],[236,792,28],[102,800,19],[1501,810,24],[1393,814,26],[987,821,26],[290,822,23],[457,839,17],[1047,840,21],[1183,844,25],[1358,847,21],[1130,847,27],[208,861,20],[257,867,19],[147,869,24],[861,872,24],[1005,873,26],[1498,874,22],[1389,875,17],[406,881,21],[539,881,22],[639,884,17],[1239,885,21],[483,889,28],[1361,903,16],[1159,916,26],[204,916,24],[1528,919,25],[1310,920,27]];
+      let sc = '';
+      TREES.forEach((t) => {
+        const x = t[0], y = t[1], r = t[2];
+        sc += '<g aria-hidden="true"><ellipse cx="' + x + '" cy="' + (y + r * .85) + '" rx="' + r * .9 + '" ry="' + r * .22 + '" fill="rgba(0,0,0,.18)"/>' +
+          '<rect x="' + (x - 2.5) + '" y="' + (y + r * .3) + '" width="5" height="' + r * .6 + '" fill="#5B3A22"/>' +
+          '<circle class="t1" cx="' + x + '" cy="' + y + '" r="' + r + '"/><circle class="t2" cx="' + (x - r * .3) + '" cy="' + (y - r * .25) + '" r="' + r * .6 + '"/>' +
+          '<circle class="t3" cx="' + (x - r * .45) + '" cy="' + (y - r * .45) + '" r="' + r * .22 + '"/></g>';
+      });
+      sc += '<g class="night-only" fill="#FFF59A" aria-hidden="true">';
+      TREES.filter((t, i) => i % 9 === 0).forEach((t) => { sc += '<circle class="fly" cx="' + (t[0] + 30) + '" cy="' + (t[1] - 20) + '" r="3.5"/>'; });
+      sc += '</g>';
+      scenery.innerHTML = sc;
+
+      /* ---------- landmarks (not selectable) ---------- */
+      const lm = $('#landmarks');
+      let l = '';
+      const toilet = (x, y) => '<g transform="translate(' + x + ',' + y + ') scale(.66)" aria-hidden="true"><ellipse cx="0" cy="20" rx="20" ry="5" fill="rgba(0,0,0,.18)"/>' +
+        '<rect x="-17" y="-17" width="34" height="34" rx="8" fill="#E7F4F8" stroke="#2B7A99" stroke-width="3"/>' +
+        '<text x="0" y="5" font-family="Inter, sans-serif" font-weight="700" font-size="13" text-anchor="middle" fill="#2B7A99">WC</text></g>';
+      [[1059,680],[952,631],[920,617],[617,782],[150,536],[765,495],[1381,458]].forEach((t) => { l += toilet(t[0], t[1]); });
+      // BBQ area
+      l += '<g transform="translate(1122,260) scale(.72)" aria-hidden="true"><circle class="night-only" r="90" fill="url(#fireglow)"/>' +
+        '<circle r="50" fill="#E9D3A6" stroke="#B48C55" stroke-width="4"/><circle r="26" fill="#4A2E1A"/>' +
+        '<path class="flame" d="M0,-20 C11,-7 11,4 0,11 C-11,4 -11,-7 0,-20Z" fill="#FF8A3D"/><path class="flame" d="M0,-9 C5,-2 5,3 0,7 C-5,3 -5,-2 0,-9Z" fill="#FFD166"/>' +
+        '<text class="lbl" x="0" y="80" font-size="24" text-anchor="middle">Kawasan BBQ</text></g>';
+      // Surau
+      l += '<g transform="translate(985,578) scale(.72)" aria-hidden="true"><ellipse cx="0" cy="40" rx="60" ry="10" fill="rgba(0,0,0,.18)"/>' +
+        '<rect x="-50" y="-6" width="100" height="46" rx="3" fill="#F4E9CF"/><path d="M-30,-6 A30,30 0 0 1 30,-6 Z" fill="#3DD6C6"/>' +
+        '<rect x="-2" y="-52" width="4" height="18" fill="#2B7A6F"/><path d="M7,-56 a7,7 0 1 1 -7,-9 a5,5 0 1 0 7,9z" fill="#FFC145"/>' +
+        '<path d="M-12,40 V16 A12,12 0 0 1 12,16 V40Z" fill="#7A5230"/><rect class="win" x="-40" y="6" width="14" height="16" rx="7"/><rect class="win" x="26" y="6" width="14" height="16" rx="7"/>' +
+        '<text class="lbl" x="0" y="74" font-size="24" text-anchor="middle">Surau</text></g>';
+      lm.innerHTML = l;
+
+      /* ---------- interactive units ---------- */
+      const unitsG = $('#units');
+      const drawOrder = UNITS.slice().sort((p, q) => p.y - q.y);
+      const SCALE = { canopy: .74, chalet: .84, double: .9, hall: .88 };
+      drawOrder.forEach((u) => {
+        const t = TYPES[u.type];
+        const el = g(unitsG, {
+          class: 'unit', 'data-id': u.id, 'data-type': u.type, transform: 'translate(' + u.x + ',' + u.y + ') scale(' + SCALE[u.type] + ')',
+          tabindex: '0', role: 'button', 'aria-pressed': 'false',
+          'aria-label': u.title + ', ' + t.short
+        });
+        const size = u.type === 'double' ? 92 : u.type === 'hall' ? 100 : 52;
+        let html = '<g class="halo"><ellipse cx="0" cy="' + (u.type === 'double' ? 6 : 0) + '" rx="' + size + '" ry="' + size * .72 + '" fill="' + t.color + '" opacity=".28"/>' +
+          '<ellipse class="ring" cx="0" cy="' + (u.type === 'double' ? 6 : 0) + '" rx="' + size + '" ry="' + size * .72 + '" stroke="' + t.color + '"/></g>';
+        html += u.type === 'canopy' ? artCanopy(u) : u.type === 'chalet' ? artChalet() : u.type === 'double' ? artDouble() : artHall();
+        if (u.n) {
+          const bx = u.type === 'canopy' ? 38 : 40, by = u.type === 'canopy' ? -34 : -42;
+          html += '<g class="badge" transform="translate(' + bx + ',' + by + ') scale(' + (0.82 / SCALE[u.type]).toFixed(2) + ')"><circle r="14" fill="' + t.color + '"/><text y="1" fill="' + t.ink + '">' + u.n + '</text></g>';
+        } else {
+          html += '<text class="lbl" x="0" y="' + (u.type === 'double' ? 96 : -62) + '" font-size="' + (17 / SCALE[u.type]).toFixed(1) + '" text-anchor="middle">' + u.label + '</text>';
+        }
+        el.innerHTML = html;
+        u.el = el;
+      });
+
+      /* ---------- tooltip ---------- */
+      const tip = $('#tip'), tipT = $('#tip-t'), tipS = $('#tip-s');
+      function placeTip(u) {
+        const r = u.el.querySelector('.art').getBoundingClientRect(), sr = shell.getBoundingClientRect();
+        tip.style.left = (r.left + r.width / 2 - sr.left) + 'px';
+        tip.style.top = (r.top - sr.top) + 'px';
+      }
+      function showTip(u) {
+        tipT.textContent = u.title;
+        tipS.textContent = TYPES[u.type].short;
+        placeTip(u);
+        tip.classList.add('show');
+      }
+      const hideTip = () => tip.classList.remove('show');
+
+      /* ---------- filtering ---------- */
+      let filter = 'all', selected = null;
+      function applyFilter(f) {
+        filter = f;
+        $$('.mf').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
+        UNITS.forEach((u) => u.el.classList.toggle('dim', f !== 'all' && u.type !== f));
+        renderPicker();
+        if (selected && f !== 'all' && selected.type !== f) select(null);
+      }
+      $$('.mf').forEach((b) => b.addEventListener('click', () => applyFilter(b.dataset.f)));
+
+      /* ---------- picker ---------- */
+      const pk = $('#pk');
+      function renderPicker() {
+        const groups = filter === 'all' ? ['canopy', 'chalet', 'double', 'hall'] : [filter];
+        pk.innerHTML = groups.map((ty) => {
+          const t = TYPES[ty];
+          const list = UNITS.filter((u) => u.type === ty);
+          return '<div class="pk-group"><div class="pk-title"><span class="sw" style="background:' + t.color + '"></span>' + t.name + '</div><div class="pk-grid">' +
+            list.map((u) => '<button type="button" class="pk" data-id="' + u.id + '" style="--pk:' + t.color + '; --pk-ink:' + t.ink + '" aria-pressed="' + (selected === u) + '" aria-label="' + u.title + '">' + (u.n || (ty === 'double' ? 'Blok B' : 'Dewan')) + '</button>').join('') +
+            '</div></div>';
+        }).join('');
+        $$('.pk', pk).forEach((b) => b.addEventListener('click', () => select(UNITS.find((u) => u.id === b.dataset.id), true)));
+      }
+
+      /* ---------- detail card ---------- */
+      const detail = $('#detail');
+      const icon = (d) => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>';
+      function renderDetail() {
+        if (!selected) {
+          detail.innerHTML = '<div class="empty fadein"><h3>Terokai kawasan kami</h3><p>Tekan mana-mana kanopi, chalet atau bangunan pada peta untuk melihat gambar, harga dan kemudahannya.</p>' +
+            '<div class="counts">' +
+            ['canopy', 'chalet', 'double', 'hall'].map((ty) => '<div><span class="sw" style="background:' + TYPES[ty].color + '"></span><b>' + UNITS.filter((u) => u.type === ty).length + '</b>' + TYPES[ty].name + '</div>').join('') +
+            '</div></div>';
+          return;
+        }
+        const u = selected, t = TYPES[u.type];
+        const sameType = UNITS.filter((x) => x.type === u.type);
+        detail.innerHTML = '<div class="fadein">' +
+          '<div class="ph"><img src="' + t.photo + '" alt="' + t.name + '"><span class="type" style="background:' + t.color + '; color:' + t.ink + '">' + t.name + '</span>' +
+          (sameType.length > 1 ? '<div class="nav"><button type="button" data-step="-1" aria-label="Unit sebelumnya">' + icon('M15 18l-6-6 6-6') + '</button><button type="button" data-step="1" aria-label="Unit seterusnya">' + icon('M9 18l6-6-6-6') + '</button></div>' : '') +
+          '</div><div class="body"><h3>' + u.title + '</h3>' +
+          '<div class="price">' + t.price + ' <small>' + t.per + '</small></div>' +
+          '<ul class="ticks">' + t.ticks.map((x) => '<li>' + x.replace(/&/g, '&amp;') + '</li>').join('') + '</ul>' +
+          '<div class="acts"><a class="btn btn-main" target="_blank" rel="noopener" href="https://wa.me/60173408345?text=' + encodeURIComponent('Salam, saya berminat dengan ' + u.title + ' di Chalet Keluarga Sakri. Boleh saya semak kekosongan?') + '">' + icon('M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z') + 'Tanya ' + u.title + '</a>' +
+          '<a class="btn btn-soft" href="tel:+60173408345">' + icon('M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2') + 'Telefon</a>' +
+          '<button type="button" class="btn btn-soft" id="zoom-unit">' + icon('M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4') + 'Zum</button></div>' +
+          '</div></div>';
+        $$('[data-step]', detail).forEach((b) => b.addEventListener('click', () => {
+          const i = sameType.indexOf(u);
+          select(sameType[(i + +b.dataset.step + sameType.length) % sameType.length], true);
+        }));
+        $('#zoom-unit').addEventListener('click', () => zoomTo(u, 2.2));
+      }
+
+      /* ---------- selection ---------- */
+      function select(u, fromPanel) {
+        if (selected && selected.el) { selected.el.classList.remove('sel'); selected.el.setAttribute('aria-pressed', 'false'); }
+        selected = u && selected === u && !fromPanel ? null : u;
+        if (selected) {
+          selected.el.classList.add('sel');
+          selected.el.setAttribute('aria-pressed', 'true');
+          if (filter !== 'all' && selected.type !== filter) applyFilter('all');
+          if (vb.w < W - 1) centerOn(selected);
+          try { history.replaceState(null, '', '#' + selected.id); } catch (e) {}
+        } else {
+          try { history.replaceState(null, '', location.pathname); } catch (e) {}
+        }
+        $$('.pk', pk).forEach((b) => b.setAttribute('aria-pressed', String(!!selected && b.dataset.id === selected.id)));
+        renderDetail();
+        $('#map-hint').classList.add('gone');
+      }
+
+      UNITS.forEach((u) => {
+        u.el.addEventListener('click', (e) => { if (moved) return; select(u); showTip(u); });
+        u.el.addEventListener('mouseenter', () => showTip(u));
+        u.el.addEventListener('mouseleave', hideTip);
+        u.el.addEventListener('focus', () => showTip(u));
+        u.el.addEventListener('blur', hideTip);
+        u.el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(u); return; }
+          if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'].indexOf(e.key) === -1) return;
+          e.preventDefault();
+          const same = UNITS.filter((x) => x.type === u.type);
+          const n = same[(same.indexOf(u) + (e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : -1) + same.length) % same.length];
+          n.el.focus();
+          select(n, true);
+        });
+      });
+
+      /* ---------- zoom & pan (viewBox) ---------- */
+      const vb = { x: 0, y: 0, w: W, h: H };
+      let anim = null;
+      const setVB = () => {
+        svg.setAttribute('viewBox', vb.x + ' ' + vb.y + ' ' + vb.w + ' ' + vb.h);
+        $('#z-out').disabled = vb.w >= W - 1;
+        $('#z-reset').disabled = vb.w >= W - 1;
+        $('#z-in').disabled = vb.w <= W / 3.5 + 1;
+        if (selected && tip.classList.contains('show')) placeTip(selected);
+      };
+      const clamp = (t) => {
+        t.w = Math.min(W, Math.max(W / 3.5, t.w)); t.h = t.w * H / W;
+        t.x = Math.min(W - t.w, Math.max(0, t.x)); t.y = Math.min(H - t.h, Math.max(0, t.y));
+        return t;
+      };
+      function animateTo(target) {
+        clamp(target);
+        if (reduceMotion) { Object.assign(vb, target); setVB(); return; }
+        const from = Object.assign({}, vb), start = performance.now(), dur = 450;
+        cancelAnimationFrame(anim);
+        const step = (now) => {
+          const p = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - p, 3);
+          ['x', 'y', 'w', 'h'].forEach((k) => { vb[k] = from[k] + (target[k] - from[k]) * e; });
+          setVB();
+          if (p < 1) anim = requestAnimationFrame(step);
+        };
+        anim = requestAnimationFrame(step);
+      }
+      function zoomBy(f, cx, cy) {
+        cx = cx == null ? vb.x + vb.w / 2 : cx; cy = cy == null ? vb.y + vb.h / 2 : cy;
+        const w = vb.w / f;
+        animateTo({ x: cx - w / 2, y: cy - (w * H / W) / 2, w: w, h: w * H / W });
+      }
+      function zoomTo(u, f) { const w = W / f; animateTo({ x: u.x - w / 2, y: u.y - (w * H / W) / 2, w: w, h: w * H / W }); }
+      function centerOn(u) { animateTo({ x: u.x - vb.w / 2, y: u.y - vb.h / 2, w: vb.w, h: vb.h }); }
+      $('#z-in').addEventListener('click', () => zoomBy(1.5, selected && selected.x, selected && selected.y));
+      $('#z-out').addEventListener('click', () => zoomBy(1 / 1.5));
+      $('#z-reset').addEventListener('click', () => animateTo({ x: 0, y: 0, w: W, h: H }));
+
+      // drag to pan when zoomed in
+      let drag = null, moved = false;
+      svg.addEventListener('pointerdown', (e) => {
+        moved = false;
+        if (vb.w >= W - 1) return;
+        drag = { x: e.clientX, y: e.clientY, vx: vb.x, vy: vb.y, scale: vb.w / svg.getBoundingClientRect().width };
+      });
+      window.addEventListener('pointermove', (e) => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!moved && Math.hypot(dx, dy) < 6) return;
+        if (!moved) { moved = true; svg.classList.add('dragging'); hideTip(); }
+        cancelAnimationFrame(anim);
+        Object.assign(vb, clamp({ x: drag.vx - dx * drag.scale, y: drag.vy - dy * drag.scale, w: vb.w, h: vb.h }));
+        setVB();
+      });
+      window.addEventListener('pointerup', () => {
+        if (!drag) return;
+        drag = null; svg.classList.remove('dragging');
+        setTimeout(() => { moved = false; }, 0);
+      });
+      svg.addEventListener('click', (e) => { if (!moved && !e.target.closest('.unit')) { if (selected) select(null); hideTip(); } });
+      window.addEventListener('resize', () => { if (selected && tip.classList.contains('show')) placeTip(selected); });
+
+      /* ---------- day / night ---------- */
+      function setMode(m) {
+        svg.classList.toggle('night', m === 'night');
+        $$('.daynight button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+      }
+      $$('.daynight button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+      const klHour = +new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kuala_Lumpur', hour: '2-digit', hourCycle: 'h23' }).format(new Date());
+      setMode(klHour >= 19 || klHour < 7 ? 'night' : 'day');
+
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && selected) select(null); });
+
+      /* ---------- start ---------- */
+      setVB();
+      renderPicker();
+      renderDetail();
+      const fromHash = UNITS.find((u) => '#' + u.id === location.hash);
+      if (fromHash) setTimeout(() => { select(fromHash, true); zoomTo(fromHash, 1.8); }, 300);
+    })();
+  }
+}
+</script>
+</body>
+</html>

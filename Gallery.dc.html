@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galeri &mdash; Chalet Keluarga Sakri</title>
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon-64.png">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3226">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  .gallery{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:clamp(20px,3vw,34px); margin-top:40px}
+  .gallery .polaroid{cursor:zoom-in; padding:10px 10px 12px; border:none; font:inherit; text-align:center}
+  .gallery .polaroid .cap{font-size:22px}
+  @media (max-width:520px){ .gallery{grid-template-columns:repeat(2,1fr); gap:16px} .gallery .polaroid{padding:7px 7px 9px} .gallery .polaroid .cap{font-size:17px} }
+  .lightbox{position:fixed; inset:0; z-index:150; background:rgba(44,58,46,.6); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn .25s ease}
+  .lb-card{position:relative; background:var(--white); padding:14px 14px 18px; border-radius:8px; width:min(820px, 100%); box-shadow:0 30px 60px -20px rgba(0,0,0,.5); transform:rotate(-1deg); animation:popUp .45s var(--bounce)}
+  .lb-card::before{content:''; position:absolute; top:-12px; left:50%; width:100px; height:28px; transform:translateX(-50%) rotate(-3deg); background:rgba(203,227,181,.95); border-radius:3px}
+  .lb-img{width:100%; aspect-ratio:4/3; background:#F3EDDD center/contain no-repeat; border-radius:4px}
+  .lb-cap{font-family:var(--hand); font-size:30px; font-weight:700; color:var(--forest); text-align:center; margin-top:8px; line-height:1.1}
+  .lb-cap span{display:block; font-family:var(--body); font-size:14px; font-weight:700; color:var(--ink-2)}
+  .lb-close{position:absolute; top:-18px; right:-18px; z-index:2}
+  .lb-prev,.lb-next{position:absolute; top:50%; margin-top:-24px; z-index:2}
+  .lb-prev{left:-22px}.lb-next{right:-22px}
+  @media (max-width:640px){ .lb-prev{left:6px} .lb-next{right:6px} .lb-close{right:6px; top:6px} }
+  @keyframes fadeIn{from{opacity:0}}
+  @keyframes popUp{from{transform:scale(.85) rotate(-4deg); opacity:0}}
+</style>
+</helmet>
+
+<div class="page">
+  <dc-import name="Header" current="gallery"></dc-import>
+  <dc-import name="PageHero" kicker="tinjau sekeliling" title="Galeri gambar" lede="Chalet, kanopi, sungai dan suasana perkhemahan di Chalet Keluarga Sakri. Tekan gambar untuk melihatnya lebih besar."></dc-import>
+
+  <section style="padding-top:40px">
+    <div class="wrap">
+      <div class="filters pop-in" role="group" aria-label="Tapis gambar">
+        <sc-for list="{{galleryFilters}}" as="f" hint-placeholder-count="5">
+          <button class="filter {{f.activeClass}}" onClick="{{f.select}}" aria-pressed="{{f.pressed}}">{{f.label}}</button>
+        </sc-for>
+      </div>
+
+      <div class="gallery" data-no-leaves>
+        <sc-for list="{{filteredPhotos}}" as="photo" hint-placeholder-count="9">
+          <button class="polaroid pop-in" onClick="{{photo.open}}" aria-label="Buka gambar: {{photo.label}}">
+            <img src="{{photo.src}}" alt="{{photo.label}}" loading="lazy">
+            <span class="cap" style="display:block">{{photo.label}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{lightboxOpen}}" hint-placeholder-val="{{false}}">
+    <div class="lightbox" onClick="{{closeLightbox}}" role="dialog" aria-modal="true" aria-label="{{lightboxPhoto.label}}" data-no-leaves>
+      <div class="lb-card" onClick="{{stop}}">
+        <button class="round-btn lb-close" onClick="{{closeLightbox}}" aria-label="Tutup"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.6" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+        <button class="round-btn lb-prev" onClick="{{lightboxPrev}}" aria-label="Gambar sebelumnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="round-btn lb-next" onClick="{{lightboxNext}}" aria-label="Gambar seterusnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="lb-img" style="background-image:url({{lightboxPhoto.src}})"></div>
+        <div class="lb-cap">{{lightboxPhoto.label}}<span>{{lightboxPhoto.category}} &middot; {{lightboxPhoto.position}}</span></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <dc-import name="Footer"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { galleryFilter: 'all', lightboxOpen: false, lightboxIndex: 0 };
+  }
+
+  setGalleryFilter(f) { this.setState({ galleryFilter: f }); }
+  openLightbox(i) { this._opener = document.activeElement; this.setState({ lightboxOpen: true, lightboxIndex: i }); }
+  closeLightbox() {
+    if (!this.state.lightboxOpen) return;
+    this.setState({ lightboxOpen: false });
+    if (this._opener && this._opener.focus) this._opener.focus();
+  }
+  lightboxNext() {
+    const list = this.getFilteredPhotoList();
+    this.setState({ lightboxIndex: (this.state.lightboxIndex + 1) % list.length });
+  }
+  lightboxPrev() {
+    const list = this.getFilteredPhotoList();
+    this.setState({ lightboxIndex: (this.state.lightboxIndex + list.length - 1) % list.length });
+  }
+
+  getPhotoData() {
+    return [
+      { label: 'Chalet Blok A', category: 'Penginapan', key: 'stay', src: './photos/chalet.jpg' },
+      { label: 'Pondok Buluh', category: 'Penginapan', key: 'stay', src: './photos/pondok.jpg' },
+      { label: 'Rumah Dua Tingkat Blok B', category: 'Penginapan', key: 'stay', src: './photos/double.jpg' },
+      { label: 'Chalet Blok E', category: 'Penginapan', key: 'stay', src: './photos/blockE.jpg' },
+      { label: 'Kanopi Tepi Sungai', category: 'Tapak Khemah', key: 'campsite', src: './photos/canopy.jpg' },
+      { label: 'Kanopi di Tepi Sungai', category: 'Tapak Khemah', key: 'campsite', src: './photos/canopyview.jpg' },
+      { label: 'Padang Perkhemahan', category: 'Tapak Khemah', key: 'campsite', src: './photos/tents.jpg' },
+      { label: 'Khemah di Sebelah Kanopi', category: 'Tapak Khemah', key: 'campsite', src: './photos/camp2.jpg' },
+      { label: 'Mandi Sungai Semula Jadi', category: 'Sungai', key: 'river', src: './photos/river.jpg' },
+      { label: 'Batu & Jeram', category: 'Sungai', key: 'river', src: './photos/rocks.jpg' },
+      { label: 'Sungai Kalumpang', category: 'Sungai', key: 'river', src: './photos/rapids.jpg' },
+      { label: 'Jambatan Gantung', category: 'Sungai', key: 'river', src: './photos/bridge.jpg' },
+      { label: 'Dewan Terbuka', category: 'Aktiviti', key: 'activities', src: './photos/hall.jpg' },
+      { label: 'Ruang Berkumpul & Makan', category: 'Aktiviti', key: 'activities', src: './photos/dining.jpg' },
+      { label: 'BBQ Malam', category: 'Aktiviti', key: 'activities', src: './photos/night.jpg' },
+      { label: 'Sukaneka Berkumpulan', category: 'Aktiviti', key: 'activities', src: './photos/sukaneka.jpg' },
+      { label: 'Kolam Kanak-kanak', category: 'Sungai', key: 'river', src: './photos/pool.jpg' }
+    ];
+  }
+
+  getFilteredPhotoList() {
+    const all = this.getPhotoData();
+    if (this.state.galleryFilter === 'all') return all;
+    return all.filter((p) => p.key === this.state.galleryFilter);
+  }
+
+  renderVals() {
+    const self = this;
+    const filterDefs = [
+      { key: 'all', label: 'Semua' },
+      { key: 'stay', label: 'Penginapan' },
+      { key: 'campsite', label: 'Tapak Khemah' },
+      { key: 'river', label: 'Sungai' },
+      { key: 'activities', label: 'Aktiviti' }
+    ];
+    const galleryFilters = filterDefs.map(function (f) {
+      const on = self.state.galleryFilter === f.key;
+      return { label: f.label, activeClass: on ? 'on' : '', pressed: String(on), select: function () { self.setGalleryFilter(f.key); } };
+    });
+
+    const raw = this.getFilteredPhotoList();
+    const filteredPhotos = raw.map(function (photo, i) {
+      return Object.assign({}, photo, { open: function () { self.openLightbox(i); } });
+    });
+    const idx = this.state.lightboxIndex;
+    const lightboxPhoto = Object.assign({ position: (idx + 1) + ' daripada ' + raw.length }, raw[idx] || raw[0] || { label: '', category: '', src: '' });
+
+    return {
+      galleryFilters: galleryFilters,
+      filteredPhotos: filteredPhotos,
+      lightboxOpen: this.state.lightboxOpen,
+      lightboxPhoto: lightboxPhoto,
+      stop: function (e) { e.stopPropagation(); },
+      closeLightbox: function (e) { if (e) e.stopPropagation(); self.closeLightbox(); },
+      lightboxNext: function (e) { e.stopPropagation(); self.lightboxNext(); },
+      lightboxPrev: function (e) { e.stopPropagation(); self.lightboxPrev(); }
+    };
+  }
+
+  componentDidMount() {
+    const self = this;
+    this._onKey = function (e) {
+      if (!self.state.lightboxOpen) return;
+      if (e.key === 'Escape') self.closeLightbox();
+      if (e.key === 'ArrowRight') self.lightboxNext();
+      if (e.key === 'ArrowLeft') self.lightboxPrev();
+    };
+    document.addEventListener('keydown', this._onKey);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this._onKey);
+  }
+}
+</script>
+</body>
+</html>

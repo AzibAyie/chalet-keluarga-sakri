@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ulasan &mdash; Chalet Keluarga Sakri</title>
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon-64.png">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3226">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  .review{position:relative; max-width:720px; margin:0 auto; background:var(--white); border:2px solid var(--line); border-radius:36px; padding:clamp(28px,5vw,48px); box-shadow:8px 8px 0 var(--leaf-3); text-align:center}
+  .review::after{content:''; position:absolute; left:50%; bottom:-16px; width:28px; height:28px; background:var(--white); border-right:2px solid var(--line); border-bottom:2px solid var(--line); transform:translateX(-50%) rotate(45deg)}
+  .stars{font-size:26px; letter-spacing:4px; color:var(--sun); margin-bottom:14px}
+  .quote{font-family:var(--round); font-weight:400; font-size:clamp(20px,2.6vw,26px); line-height:1.45; color:var(--forest); margin:0; min-height:110px}
+  .who{display:flex; align-items:center; justify-content:center; gap:12px; margin-top:34px}
+  .avatar{width:48px; height:48px; border-radius:50%; background:var(--mint); border:2px solid var(--line); display:grid; place-items:center; font-family:var(--round); font-weight:600; color:var(--forest)}
+  .who-name{font-weight:800; color:var(--forest); text-align:left}
+  .who-from{font-size:13.5px; color:var(--ink-2); text-align:left}
+  .nav-row{display:flex; align-items:center; justify-content:center; gap:20px; margin:30px 0 50px}
+  .dots{display:flex; gap:8px}
+  .dot{width:12px; height:12px; border-radius:50%; border:2px solid var(--line); padding:0; cursor:pointer; background:var(--white); transition:transform .3s var(--bounce), background .2s}
+  .dot.on{background:var(--leaf); transform:scale(1.25)}
+  .sample-note{display:inline-block; margin-top:6px; padding:6px 14px; border-radius:999px; background:var(--white); border:2px dashed var(--blush); font-size:14px; font-weight:700; color:var(--ink-2)}
+</style>
+</helmet>
+
+<div class="page">
+  <dc-import name="Header" current="reviews"></dc-import>
+  <dc-import name="PageHero" kicker="cerita tetamu" title="Kata tetamu kami" lede="Komen contoh untuk paparan &mdash; gantikan dengan ulasan sebenar tetamu."></dc-import>
+
+  <section style="padding-top:40px">
+    <div class="wrap">
+      <div class="review pop-in" data-no-leaves>
+        <div class="stars" aria-label="{{current.rating}} daripada 5 bintang">{{current.stars}}</div>
+        <p class="quote">&ldquo;{{current.quote}}&rdquo;</p>
+        <div class="who">
+          <div class="avatar" aria-hidden="true">{{current.initials}}</div>
+          <div><div class="who-name">{{current.name}}</div><div class="who-from">{{current.location}}</div></div>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button class="round-btn" onClick="{{prevTestimonial}}" aria-label="Ulasan sebelumnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="dots">
+          <sc-for list="{{testimonials}}" as="t" hint-placeholder-count="4">
+            <button class="dot {{t.dotClass}}" onClick="{{t.select}}" aria-label="{{t.aria}}"></button>
+          </sc-for>
+        </div>
+        <button class="round-btn" onClick="{{nextTestimonial}}" aria-label="Ulasan seterusnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+
+      <div class="center pop-in">
+        <a href="Booking.dc.html" class="btn btn-main">Hubungi kami</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1300}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { testimonialIndex: 0 };
+  }
+
+  nextTestimonial() { this.setState({ testimonialIndex: (this.state.testimonialIndex + 1) % 4 }); }
+  prevTestimonial() { this.setState({ testimonialIndex: (this.state.testimonialIndex + 3) % 4 }); }
+  selectTestimonial(i) { this.setState({ testimonialIndex: i }); }
+
+  renderVals() {
+    const self = this;
+    const data = [
+      { quote: 'Anak-anak tak mahu keluar dari sungai. Air sejuk dan bersih, batu-batu yang redup sepanjang petang.', name: 'Tetamu contoh', location: 'Ulasan contoh – gantikan dengan ulasan sebenar', rating: 5 },
+      { quote: 'Kami tempah kanopi tepi sungai dan ber-BBQ ketika matahari terbenam. Ringkas, tenang dan memang seperti yang kami mahukan.', name: 'Tetamu contoh', location: 'Ulasan contoh – gantikan dengan ulasan sebenar', rating: 5 },
+      { quote: 'Kawasan bersih dan jambatan gantung yang cantik. Seluruh kumpulan kami ada ruang untuk berehat dan bermain.', name: 'Tetamu contoh', location: 'Ulasan contoh – gantikan dengan ulasan sebenar', rating: 5 },
+      { quote: 'Chalet ringkas tetapi selesa, dan bangun pagi dengan bunyi deruan sungai memang berbaloi.', name: 'Tetamu contoh', location: 'Ulasan contoh – gantikan dengan ulasan sebenar', rating: 4 }
+    ];
+    const testimonials = data.map(function (t, i) {
+      const initials = t.name.split(' ').map(function (w) { return w[0]; }).slice(0, 2).join('').toUpperCase();
+      return Object.assign({}, t, {
+        stars: '★'.repeat(t.rating) + '☆'.repeat(5 - t.rating),
+        initials: initials,
+        aria: 'Papar ulasan ' + (i + 1),
+        dotClass: i === self.state.testimonialIndex ? 'on' : '',
+        select: function () { self.selectTestimonial(i); }
+      });
+    });
+    return {
+      testimonials: testimonials,
+      current: testimonials[this.state.testimonialIndex],
+      prevTestimonial: function () { self.prevTestimonial(); },
+      nextTestimonial: function () { self.nextTestimonial(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "v": 3,
+  "attachments": {},
+  "createdOnFiles": { "v": 1, "at": "2026-10-04T17:01:48Z" },
+  "title": "Chalet Keluarga Sakri",
+  "launch": { "view": "focused", "file": "Main.dc.html" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1280, "h": 3300, "expand": "fill", "is_interactive": true, "title": "Home" },
+    "About.dc.html": { "x": 1360, "y": 0, "w": 1280, "h": 2300, "expand": "fill", "is_interactive": true, "title": "Story" },
+    "Rooms.dc.html": { "x": 2720, "y": 0, "w": 1280, "h": 1500, "expand": "fill", "is_interactive": true, "title": "Rooms" },
+    "Map.dc.html": { "x": 4080, "y": 0, "w": 1280, "h": 1800, "expand": "fill", "is_interactive": true, "title": "Property Map" },
+    "Gallery.dc.html": { "x": 5440, "y": 0, "w": 1280, "h": 1700, "expand": "fill", "is_interactive": true, "title": "Gallery" },
+    "Experience.dc.html": { "x": 0, "y": 3420, "w": 1280, "h": 1500, "expand": "fill", "is_interactive": true, "title": "Facilities & Activities" },
+    "Reviews.dc.html": { "x": 1360, "y": 3420, "w": 1280, "h": 1200, "expand": "fill", "is_interactive": true, "title": "Reviews" },
+    "Location.dc.html": { "x": 2720, "y": 3420, "w": 1280, "h": 1300, "expand": "fill", "is_interactive": true, "title": "Location" },
+    "Booking.dc.html": { "x": 4080, "y": 3420, "w": 1280, "h": 1500, "expand": "fill", "is_interactive": true, "title": "Booking" },
+    "Header.dc.html": { "x": 0, "y": 5100, "w": 1280, "h": 68, "is_interactive": true, "title": "Header (shared)" },
+    "Footer.dc.html": { "x": 1360, "y": 5100, "w": 1280, "h": 300, "title": "Footer (shared)" }
+  },
+  "order": [
+    "Main.dc.html", "About.dc.html", "Rooms.dc.html", "Map.dc.html", "Gallery.dc.html",
+    "Experience.dc.html", "Reviews.dc.html", "Location.dc.html", "Booking.dc.html",
+    "Header.dc.html", "Footer.dc.html"
+  ],
+  "notes": {},
+  "designSystems": []
+}

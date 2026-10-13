@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilik &mdash; Chalet Keluarga Sakri</title>
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon-64.png">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3226">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  .stays{margin-top:20px}
+  .facts{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px}
+  .facts .pill{font-size:13px; padding:6px 12px}
+  .stay-note{font-size:14px; color:var(--ink-2); margin:0 0 18px; line-height:1.5}
+  .map-cta{display:grid; grid-template-columns:auto 1fr auto; gap:24px; align-items:center; text-align:left}
+  .map-cta svg{flex:0 0 auto}
+  @media (max-width:720px){ .map-cta{grid-template-columns:1fr; text-align:center; justify-items:center} }
+</style>
+</helmet>
+
+<div class="page">
+  <dc-import name="Header" current="rooms"></dc-import>
+  <dc-import name="PageHero" kicker="tempat anda bermalam" title="Pilih sudut selesa anda" lede="Kanopi, chalet atau rumah dua tingkat &mdash; pilih jenis, kemudian pilih lokasi tepat di peta lokasi. Daftar masuk 2.00 petang, daftar keluar 12.00 tengah hari."></dc-import>
+
+  <section style="padding-top:40px">
+    <div class="wrap stays">
+      <sc-for list="{{rooms}}" as="room" hint-placeholder-count="3">
+        <article class="stay pop-in">
+          <div class="sticker" style="background:{{room.sticker}}"><div><small>{{room.from}}</small><b>{{room.price}}</b><small>semalam</small></div></div>
+          <div class="stay-img"><img src="{{room.photo}}" alt="{{room.name}}" loading="lazy"></div>
+          <div class="stay-body">
+            <h3>{{room.name}}</h3>
+            <div class="stay-who">{{room.who}}</div>
+            <div class="facts">
+              <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>{{room.guests}}</span>
+              <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7h5v3"/></svg>{{room.bed}}</span>
+            </div>
+            <p class="stay-note">{{room.facilitiesText}}</p>
+            <p class="stay-note" style="font-weight:700; color:var(--forest)">{{room.unitNote}}</p>
+            <a href="{{room.waLink}}" target="_blank" rel="noopener" class="btn btn-main">Tanya di WhatsApp</a>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="card-strong map-cta pop-in">
+        <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#E3F0DA"/><path d="M22 18 12 22v26l10-4 10 4 10-4 10 4V22l-10-4-10 4z" fill="#fff" stroke="#F2EEE4" stroke-width="2.4" stroke-linejoin="round"/><path d="M22 18v26M32 22v26M42 18v26" stroke="#F2EEE4" stroke-width="2"/><circle cx="37" cy="30" r="4" fill="#F6C35B" stroke="#F2EEE4" stroke-width="2"/></svg>
+        <div>
+          <h3 style="font-size:26px">Di manakah kedudukan setiap bilik?</h3>
+          <p class="muted" style="margin:4px 0 0">Lihat kawasan dan tekan pin untuk memilih kanopi atau chalet anda.</p>
+        </div>
+        <a href="Map.dc.html" class="btn btn-sun">Buka peta</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const roomsData = [
+      { name: 'Kanopi', who: 'untuk kumpulan & perkhemahan', guests: 'Sesuai untuk kumpulan', bed: 'Bawa peralatan tidur sendiri', from: '', price: 'RM 175', unitNote: 'RM 175 / malam · RM 100 separuh hari', sticker: '#F6C35B', facilitiesText: 'Teduhan tepi sungai dengan meja, bangku & tempat BBQ. Tiada kipas atau soket elektrik. Tidak termasuk tiket masuk.', photo: './photos/canopy.jpg' },
+      { name: 'Chalet', who: 'untuk 2–3 dewasa', guests: '2–3 dewasa sebilik', bed: '2 tilam bujang', from: 'dari', price: 'RM 160', unitNote: 'Blok A RM 160 · Pondok buluh RM 170 · Blok E RM 170–220', sticker: '#F2B8A2', facilitiesText: 'Bantal & selimut, kipas & soket elektrik. Termasuk tiket masuk.', photo: './photos/chalet.jpg' },
+      { name: 'Rumah Dua Tingkat', who: 'untuk keluarga besar', guests: '5–10 tetamu sebilik', bed: '2 bilik atas · 1 bilik bawah', from: 'dari', price: 'RM 250', unitNote: 'Bilik atas RM 250 · bilik bawah RM 500', sticker: '#CBE3B5', facilitiesText: 'Blok B. Bilik atas sesuai untuk 5 orang (maks. 6); bilik bawah sesuai untuk 10 orang (maks. 12).', photo: './photos/double.jpg' }
+    ];
+    const rooms = roomsData.map(function (room) {
+      return Object.assign({}, room, {
+        waLink: 'https://wa.me/60173408345?text=' + encodeURIComponent('Salam, saya berminat dengan ' + room.name + ' di Chalet Keluarga Sakri. Boleh saya semak kekosongan?')
+      });
+    });
+    return { rooms: rooms };
+  }
+}
+</script>
+</body>
+</html>

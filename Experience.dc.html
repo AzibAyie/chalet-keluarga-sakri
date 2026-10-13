@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aktiviti &mdash; Chalet Keluarga Sakri</title>
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon-64.png">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="theme-color" content="#1E3226">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&amp;family=Inter:wght@400;500;600;700&amp;family=Quicksand:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  .polaroids{margin-top:10px}
+  .polaroid .cap{font-size:24px}
+  .tickets{display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-top:28px}
+  .ticket{position:relative; min-width:180px; padding:20px 26px; background:var(--white); border:2px solid var(--line); border-radius:20px; text-align:center; transform:rotate(var(--t,0deg)); transition:transform .4s var(--bounce)}
+  .ticket:nth-child(1){--t:-3deg}.ticket:nth-child(2){--t:2deg}.ticket:nth-child(3){--t:-1.5deg}
+  .ticket:hover{transform:rotate(0) translateY(-4px)}
+  .ticket::before,.ticket::after{content:''; position:absolute; top:50%; width:18px; height:18px; margin-top:-9px; border-radius:50%; background:var(--mint); border:2px solid var(--line)}
+  .ticket::before{left:-11px; clip-path:inset(0 0 0 50%)}
+  .ticket::after{right:-11px; clip-path:inset(0 50% 0 0)}
+  .ticket b{display:block; font-family:var(--round); font-weight:600; font-size:34px; color:var(--forest); line-height:1.1}
+  .ticket span{font-size:14px; font-weight:700; color:var(--ink-2)}
+</style>
+</helmet>
+
+<div class="page">
+  <dc-import name="Header" current="experience"></dc-import>
+  <dc-import name="PageHero" kicker="di kawasan kami" title="Aktiviti" lede="Sungai, BBQ, perkhemahan dan ruang berkumpul &mdash; semuanya hanya beberapa langkah dari pintu anda."></dc-import>
+
+  <section style="padding-top:40px">
+    <div class="wrap">
+      <div class="polaroids four">
+        <figure class="polaroid pop-in"><img src="./photos/river.jpg" alt="Mandi sungai semula jadi" loading="lazy"><figcaption class="cap">mandi sungai<small>Sungai Kalumpang yang sejuk dan segar betul-betul di sebelah kawasan kami.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/bridge.jpg" alt="Jambatan gantung" loading="lazy"><figcaption class="cap">jambatan gantung<small>Seberangi untuk menikmati pemandangan sungai dan pengunjung yang mandi di bawah.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/pool.jpg" alt="Kolam kanak-kanak" loading="lazy"><figcaption class="cap">kolam kanak-kanak<small>Kolam cetek dan selamat untuk si kecil.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/night.jpg" alt="BBQ waktu malam" loading="lazy"><figcaption class="cap">BBQ malam<small>Sewa set BBQ: pemanggang, arang, pemula api, penyepit &amp; kipas.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/cook.jpg" alt="Set memasak" loading="lazy"><figcaption class="cap">sewa set memasak<small>Dapur, gas, periuk, sudip, senduk dan penyepit untuk disewa.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/hall.jpg" alt="Dewan serbaguna terbuka" loading="lazy"><figcaption class="cap">dewan terbuka<small>Meja, bangku, kipas, soket elektrik &amp; tempat BBQ. RM 300 separuh hari / RM 600 semalaman.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/tents.jpg" alt="Perkhemahan dan kanopi" loading="lazy"><figcaption class="cap">perkhemahan &amp; kanopi<small>Dirikan khemah dengan harga RM 40–60 semalam, atau sewa kanopi tepi sungai.</small></figcaption></figure>
+        <figure class="polaroid pop-in"><img src="./photos/honey.jpg" alt="Madu kelulut" loading="lazy"><figcaption class="cap">kolam ikan &amp; madu<small>Lihat ikan dan bawa pulang madu kelulut asli.</small></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-mint round-block center">
+    <div class="wrap">
+      <div class="kicker pop-in">datang untuk sehari sahaja?</div>
+      <h2 class="pop-in">Tiket masuk harian</h2>
+      <div class="tickets pop-in">
+        <div class="ticket"><b>RM 8</b><span>Dewasa (13 tahun ke atas)</span></div>
+        <div class="ticket"><b>RM 5</b><span>Kanak-kanak (3–12 tahun)</span></div>
+        <div class="ticket"><b>Percuma</b><span>OKU, bayi &amp; bawah 2 tahun</span></div>
+      </div>
+      <p class="muted pop-in" style="margin:28px 0 0; font-weight:600">Termasuk bagi penginapan chalet. Tidak termasuk bagi sewaan kanopi, tapak khemah atau dewan.</p>
+    </div>
+  </section>
+
+  <section class="center">
+    <div class="wrap">
+      <div class="kicker pop-in">seronok, bukan?</div>
+      <h2 class="pop-in">Jom bermain di tepi sungai</h2>
+      <div class="actions pop-in" style="margin-top:22px">
+        <a href="Booking.dc.html" class="btn btn-main">Hubungi kami</a>
+        <a href="Location.dc.html" class="btn btn-soft">Cari kami</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1800}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
