@@ -1,27 +1,27 @@
-/* Chalet Keluarga Sakri — shared look: deep forest green, white type, cream accents. */
+/* Chalet Keluarga Sakri — shared look: pastel nature (sage, moss, sand, river, blossom). */
 :root{
-  color-scheme:dark;
-  --cream:#1E3226;   /* page background: the main green */
-  --paper:#192B20;   /* alternate section background */
-  --mint:#29432F;    /* tinted surfaces, hovers */
-  --white:#243B2C;   /* cards and controls */
-  --deep:#142219;    /* darkest green: footer, feature panels */
-  --leaf:#F2EEE4;    /* accent: cream */
-  --leaf-2:#B9CDBC;
-  --leaf-3:#3E5C48;
-  --forest:#FFFFFF;  /* headings */
-  --ink:#FFFFFF;     /* body text */
-  --ink-2:#C3CEC5;   /* secondary text */
-  --on-accent:#1E3226;
-  --river:#8CC3CF;
-  --river-2:#7CC0CF;
+  color-scheme:light;
+  --cream:#F6F4EA;   /* page background: warm parchment */
+  --paper:#ECE8D6;   /* sand */
+  --mint:#DCEBD3;    /* sage */
+  --white:#FFFFFF;   /* cards and controls */
+  --deep:#CFE2C4;    /* moss pastel: footer, feature panels */
+  --leaf:#4E7A55;    /* accent: moss green */
+  --leaf-2:#8DB48F;
+  --leaf-3:#D5E8CF;
+  --forest:#23402B;  /* headings */
+  --ink:#2C3B30;     /* body text */
+  --ink-2:#5E6D61;   /* secondary text */
+  --on-accent:#FFFFFF;
+  --river:#A9D3DF;
+  --river-2:#5F9FB2;
   --sun:#D8B53D;     /* CKS logo yellow */
-  --blush:#EBC9BA;
-  --wood:#E58F75;
-  --line:#3A5444;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.18), 0 2px 8px -2px rgba(0,0,0,.25);
-  --shadow-md:0 2px 4px rgba(0,0,0,.12), 0 18px 40px -18px rgba(0,0,0,.55);
-  --shadow-lg:0 30px 70px -28px rgba(0,0,0,.7);
+  --blush:#F3D3C2;
+  --wood:#B86B4B;
+  --line:#DDD8C3;
+  --shadow-sm:0 1px 2px rgba(35,64,43,.06), 0 2px 8px -2px rgba(35,64,43,.10);
+  --shadow-md:0 2px 4px rgba(35,64,43,.05), 0 18px 40px -18px rgba(35,64,43,.30);
+  --shadow-lg:0 30px 70px -28px rgba(35,64,43,.40);
   --round:'Fraunces', Georgia, 'Times New Roman', serif;
   --body:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --hand:'Fraunces', Georgia, serif;
@@ -32,7 +32,7 @@
   --teal:#2EC4B6;
   --pink:#F06C9B;
   /* pastels */
-  --p-peach:#FFDCCB; --p-mint:#CDEFD9; --p-sky:#CFE6FA; --p-lav:#E2DAFB; --p-butter:#FFEDAD; --p-pink:#FFD3E2;
+  --p-peach:#F6D9C6; --p-mint:#D3EACB; --p-sky:#CFE5EC; --p-lav:#E3DDF0; --p-butter:#F5E8B8; --p-pink:#F4D6DC;
   --radius:18px;
 }
 *{box-sizing:border-box}
@@ -53,7 +53,7 @@ h1,h2,h3{font-family:var(--round); font-weight:500; color:var(--forest); margin:
 h1{font-size:clamp(38px,5.4vw,64px); line-height:1.05; letter-spacing:-.025em}
 h2{font-size:clamp(30px,3.8vw,44px); line-height:1.12; margin:10px 0 14px}
 h3{font-size:21px; line-height:1.25}
-.kicker{font-family:var(--body); font-size:12.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--sun); display:inline-flex; align-items:center; gap:10px}
+.kicker{font-family:var(--body); font-size:12.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:#7A5A12; background:rgba(255,255,255,.75); padding:7px 13px; border-radius:999px; display:inline-flex; align-items:center; gap:10px}
 .kicker svg{width:16px; height:16px}
 .lede{font-size:17.5px; color:var(--ink-2); max-width:580px; margin:0}
 .hand{font-family:var(--hand); font-style:italic; font-weight:400; color:var(--leaf)}
@@ -88,14 +88,14 @@ h3{font-size:21px; line-height:1.25}
 .pop-in.in{opacity:1; transform:none}
 
 /* ---------- header ---------- */
-.site-header{position:sticky; top:0; z-index:50; background:rgba(30,50,38,.88); backdrop-filter:saturate(1.4) blur(14px); -webkit-backdrop-filter:saturate(1.4) blur(14px); border-bottom:1px solid transparent; transition:border-color .3s, background .3s}
-.site-header.scrolled{border-bottom-color:var(--line); background:rgba(30,50,38,.96)}
+.site-header{position:sticky; top:0; z-index:50; background:rgba(246,244,234,.86); backdrop-filter:saturate(1.4) blur(14px); -webkit-backdrop-filter:saturate(1.4) blur(14px); border-bottom:1px solid transparent; transition:border-color .3s, background .3s}
+.site-header.scrolled{border-bottom-color:var(--line); background:rgba(246,244,234,.96)}
 .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; height:72px}
 .logo{display:flex; align-items:center; gap:10px; font-family:var(--round); font-weight:500; font-size:20px; letter-spacing:-.01em; color:var(--forest); white-space:nowrap}
 .logo-mark{height:36px; width:auto; flex:0 0 auto; transition:transform .4s var(--ease)}
 .logo:hover .logo-mark{transform:rotate(-4deg) scale(1.05)}
 .logo-words{display:flex; flex-direction:column; line-height:1.05; font-family:'Quicksand', var(--body); font-weight:400; letter-spacing:.04em}
-.logo-words .lw-1{font-size:15px; color:#fff}
+.logo-words .lw-1{font-size:15px; color:var(--forest)}
 .logo-words .lw-2{font-size:12px; color:var(--ink-2); letter-spacing:.12em}
 .logo-words b{font-weight:700}
 .lw-1 b,.lw-2 b{font-weight:700}
@@ -108,8 +108,8 @@ h3{font-size:21px; line-height:1.25}
 .links .btn{padding:10px 20px; font-size:14.5px; margin-left:10px}
 .lang-switch{display:inline-flex; padding:3px; border-radius:999px; border:1.5px solid var(--line); background:var(--white); margin-left:8px}
 .lang-switch button{border:none; background:transparent; color:var(--ink-2); font:600 12.5px/1 var(--body); letter-spacing:.06em; padding:8px 10px; border-radius:999px; cursor:pointer; transition:background .2s, color .2s}
-.lang-switch button:hover{color:#fff}
-.lang-switch button[aria-pressed=true]{background:var(--sun); color:var(--on-accent)}
+.lang-switch button:hover{color:var(--forest)}
+.lang-switch button[aria-pressed=true]{background:var(--sun); color:#23402B}
 .menu-lang{margin-top:18px}
 .menu-lang .lang-switch{margin-left:0}
 @media (max-width:560px){ .links .lang-switch{display:none} }
@@ -248,20 +248,20 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 .round-btn:hover{border-color:var(--leaf-2); box-shadow:var(--shadow-sm)}
 
 /* ---------- footer ---------- */
-.site-footer{color:#DCE6DE; border-top:1px solid var(--line); margin-top:0}
+.site-footer{color:var(--ink); border-top:1px solid var(--line); margin-top:0}
 .site-footer .hills{display:none}
 .foot-body{background:var(--deep); padding:clamp(40px,6vw,64px) 0 34px}
 .foot-top{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:30px; padding:0 0 36px}
 .foot-brand img{width:150px; height:auto; display:block; margin-bottom:12px}
-.foot-brand .lw-1{font-family:'Quicksand', var(--body); font-size:19px; color:#fff; letter-spacing:.04em}
-.foot-brand .lw-2{font-family:'Quicksand', var(--body); font-size:15px; color:#B9C6BC; letter-spacing:.14em; margin-top:2px}
+.foot-brand .lw-1{font-family:'Quicksand', var(--body); font-size:19px; color:var(--forest); letter-spacing:.04em}
+.foot-brand .lw-2{font-family:'Quicksand', var(--body); font-size:15px; color:var(--ink-2); letter-spacing:.14em; margin-top:2px}
 .foot-brand .tagline{font-size:28px; margin-top:10px}
 .foot-hello{font-family:var(--round); font-style:italic; font-weight:400; color:#fff; font-size:clamp(28px,3.4vw,38px); line-height:1.1; letter-spacing:-.01em}
 .foot-about{font-size:14.5px; opacity:.8; margin:14px 0 0; max-width:340px}
-.foot-col h4{font-family:var(--body); font-weight:600; font-size:12px; letter-spacing:.16em; text-transform:uppercase; margin:0 0 14px; color:var(--sun)}
+.foot-col h4{font-family:var(--body); font-weight:600; font-size:12px; letter-spacing:.16em; text-transform:uppercase; margin:0 0 14px; color:var(--leaf)}
 .foot-col a{display:block; padding:4px 0; font-weight:400; font-size:15px; opacity:.8; transition:opacity .2s}
 .foot-col a:hover{opacity:1}
-.foot-bottom{border-top:1px solid rgba(220,230,222,.16); padding-top:22px; font-size:13px; opacity:.65; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.foot-bottom{border-top:1px solid rgba(35,64,43,.15); padding-top:22px; font-size:13px; opacity:.65; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
 @media (max-width:760px){ .foot-top{grid-template-columns:1fr 1fr} .foot-top > :first-child{grid-column:1 / -1} }
 
 /* ---------- celebration leaves (used on successful actions) ---------- */
@@ -301,17 +301,14 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 .theme-light select.input{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355635A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")}
 
 .theme-dark{
-  --cream:#1E3226; --paper:#192B20; --mint:#29432F; --white:#243B2C; --deep:#142219;
-  --leaf:#F2EEE4; --leaf-2:#B9CDBC; --leaf-3:#3E5C48; --forest:#FFFFFF;
-  --ink:#FFFFFF; --ink-2:#C3CEC5; --on-accent:#1E3226; --line:#3A5444;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.18), 0 2px 8px -2px rgba(0,0,0,.25);
-  --shadow-md:0 2px 4px rgba(0,0,0,.12), 0 18px 40px -18px rgba(0,0,0,.55);
-  --shadow-lg:0 30px 70px -28px rgba(0,0,0,.7);
-  color:var(--ink); color-scheme:dark;
+  --cream:#DCEBD3; --paper:#CFE2C4; --mint:#C6DDBA; --white:#FFFFFF; --deep:#CFE2C4;
+  --leaf:#4E7A55; --leaf-2:#8DB48F; --leaf-3:#D5E8CF; --forest:#23402B;
+  --ink:#2C3B30; --ink-2:#55665A; --on-accent:#FFFFFF; --line:#C3D8B8;
+  color:var(--ink); color-scheme:light;
 }
-.theme-dark .kicker{color:var(--sun)}
-.theme-dark [stroke="#F2EEE4"]{stroke:#F2EEE4}
-.theme-dark [fill="#F2EEE4"]{fill:#F2EEE4}
+.theme-dark .kicker{color:#7A5A12}
+.theme-dark [stroke="#F2EEE4"]{stroke:#2F5236}
+.theme-dark [fill="#F2EEE4"]{fill:#2F5236}
 
 .theme-sun{
   --forest:#14261A; --ink:#1F2A22; --ink-2:#3F3A1C; --line:rgba(20,38,26,.22); --white:#FFF6D6;
@@ -391,3 +388,17 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 .theme-light .polaroids .polaroid:nth-child(4n+3){border-color:var(--p-sky)}
 .theme-light .polaroids .polaroid:nth-child(4n){border-color:var(--p-lav)}
 .theme-light .polaroid{border-width:3px}
+
+
+/* =========================================================================
+   Pastel nature base
+   ========================================================================= */
+/* icons drawn in cream for the old dark theme now draw in moss */
+[stroke="#F2EEE4"]{stroke:#2F5236}
+[fill="#F2EEE4"]{fill:#2F5236}
+.c-time [stroke],.lb [stroke],.map-tools [stroke]{stroke:currentColor}
+/* soft leafy background wash on the main page sections */
+body{background:var(--cream) radial-gradient(circle at 8% 4%, rgba(141,180,143,.18), transparent 40%) no-repeat}
+.page-hero{background:linear-gradient(170deg, #D6E9CC 0%, #DDEDE6 55%, #E4F0F2 100%)}
+.foot-body{background:linear-gradient(180deg, #D7E7CC, #C8DDBC)}
+.menu-sheet{background:#F6F4EA}

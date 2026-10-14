@@ -6,7 +6,7 @@
 <link rel="icon" href="brand/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="brand/favicon-64.png">
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
-<meta name="theme-color" content="#1E3226">
+<meta name="theme-color" content="#DCEBD3">
 <script src="./lang-en.js"></script>
 <script src="./i18n.js"></script>
 <script src="./support.js"></script>
@@ -575,8 +575,7 @@ class Component extends DCLogic {
         $$('.daynight button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
       }
       $$('.daynight button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
-      const klHour = +new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kuala_Lumpur', hour: '2-digit', hourCycle: 'h23' }).format(new Date());
-      setMode(klHour >= 19 || klHour < 7 ? 'night' : 'day');
+      setMode('day');
 
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && selected) select(null); });
 
