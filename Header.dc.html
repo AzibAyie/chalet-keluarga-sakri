@@ -35,6 +35,14 @@
   </div>
 </header>
 
+<div class="pop-card" id="pop-card" role="dialog" aria-label="Ada soalan?">
+  <button type="button" class="pop-x" id="pop-x" aria-label="Tutup"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <img class="pop-logo" src="brand/cks-mark-sm.png" alt="" width="70" height="34">
+  <b>Ada soalan?</b>
+  <p>Tanya keluarga kami terus di WhatsApp. Kami sedia membantu!</p>
+  <a class="btn btn-main btn-small" href="https://wa.me/60173408345?text=Salam%2C%20saya%20ingin%20bertanya%20tentang%20penginapan%20di%20Chalet%20Keluarga%20Sakri." target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>WhatsApp kami</a>
+</div>
+
 <div class="menu-overlay {{sheetClass}}" onClick="{{closeMenu}}"></div>
 <aside class="menu-sheet {{sheetClass}}" id="menu-sheet" aria-label="Menu laman">
   <div class="menu-top">
@@ -146,12 +154,25 @@ class Component extends DCLogic {
       }
     };
 
-    this._onKey = function (e) { if (e.key === 'Escape') self.closeMenu(); };
+    // friendly "Ada soalan?" card: pops up once per visit after a short while (not on the contact page)
+    const card = document.getElementById('pop-card');
+    const hideCard = function () { if (card) card.classList.remove('show'); try { sessionStorage.setItem('cks_pop', '1'); } catch (e) {} };
+    let seenCard = false;
+    try { seenCard = sessionStorage.getItem('cks_pop') === '1'; } catch (e) {}
+    if (card && !seenCard && this.props.current !== 'booking') {
+      this._popT = setTimeout(function () { card.classList.add('show'); }, 9000);
+    }
+    const x = document.getElementById('pop-x');
+    if (x) x.addEventListener('click', hideCard);
+    if (card) card.querySelector('a').addEventListener('click', hideCard);
+
+    this._onKey = function (e) { if (e.key === 'Escape') { self.closeMenu(); hideCard(); } };
     document.addEventListener('keydown', this._onKey);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
+    clearTimeout(this._popT);
     document.removeEventListener('keydown', this._onKey);
     if (this._mo) this._mo.disconnect();
     if (this._io) this._io.disconnect();

@@ -56,8 +56,8 @@
   }
 
   /* ---------- highlights ---------- */
-  .facts{padding:0 0 clamp(56px,7vw,80px)}
-  .facts-grid{display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .facts{padding:clamp(18px,3vw,30px) 0}
+  .facts-grid{display:grid; grid-template-columns:repeat(4,1fr)}
   .fact{padding:28px 24px; text-align:left}
   .fact + .fact{border-left:1px solid var(--line)}
   .fact b{display:block; font-family:var(--round); font-weight:400; font-size:clamp(30px,3.4vw,40px); color:var(--forest); line-height:1.05; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
@@ -162,19 +162,19 @@
   .person{display:flex; align-items:center; gap:14px; flex-wrap:wrap; background:var(--white); border:1px solid var(--line); border-radius:18px; padding:16px 18px}
   .person .avatar{width:46px; height:46px; border-radius:50%; background:var(--leaf); color:var(--on-accent); display:grid; place-items:center; font-family:var(--round); font-size:20px; flex:0 0 auto}
   .person .who{flex:1 1 140px}
-  .person .who b{display:block; font-size:16px; color:#fff}
+  .person .who b{display:block; font-size:16px; color:var(--forest)}
   .person .who span{font-size:14px; color:var(--ink-2); font-variant-numeric:tabular-nums}
   .pacts{display:flex; gap:8px; flex-wrap:wrap}
   .steps{list-style:none; counter-reset:step; margin:12px 0 0; padding:20px 22px; background:var(--white); border:1px solid var(--line); border-radius:18px; display:grid; gap:16px}
   .steps li{counter-increment:step; display:grid; grid-template-columns:32px 1fr; gap:12px; font-size:14.5px; color:var(--ink-2)}
   .steps li::before{content:counter(step); width:32px; height:32px; border-radius:50%; border:1px solid var(--leaf-2); display:grid; place-items:center; font-weight:600; color:#fff}
-  .steps b{display:block; color:#fff; font-size:15px}
+  .steps b{display:block; color:var(--forest); font-size:15px}
   .prices{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:22px 24px}
   .prices h3{font-size:21px; margin-bottom:4px}
   .prices table{width:100%; border-collapse:collapse; font-size:14.5px}
   .prices th{text-align:left; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--sun); font-weight:600; padding:16px 0 6px}
   .prices td{padding:8px 0; border-bottom:1px dashed var(--line); color:var(--ink-2)}
-  .prices td:last-child{text-align:right; color:#fff; font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums}
+  .prices td:last-child{text-align:right; color:var(--forest); font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums}
   .prices p{font-size:12.5px; color:var(--ink-2); margin:14px 0 0; line-height:1.5}
   @media (max-width:900px){ .contact-grid{grid-template-columns:1fr} }
 
@@ -208,6 +208,9 @@
         <div class="collage pop-in">
           <figure class="c-main"><img src="photos/hero.jpg" alt="Keluarga mandi di sungai berbatu di bawah chalet, dikelilingi hutan"></figure>
           <figure class="c-side"><img src="photos/canopyview.jpg" alt="Kanopi tepi sungai di bawah pepohon" loading="lazy"></figure>
+          <span class="sticker-pop s-coral" style="--r:-6deg; top:40%; left:-26px"><i></i>Mandi sungai</span>
+          <span class="sticker-pop s-teal" style="--r:5deg; top:-14px; right:18%; animation-delay:-1.3s"><i></i>Perkhemahan</span>
+          <span class="sticker-pop s-pink" style="--r:-4deg; bottom:22px; right:-10px; animation-delay:-2.6s"><i></i>Malam BBQ</span>
           <div class="c-time"><span class="live" aria-hidden="true"></span><span id="kl-time">Kalumpang</span></div>
           <div class="c-badge">
             <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2EEE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 L12 4 L21 11"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span>
@@ -220,7 +223,7 @@
   </section>
 
   <!-- HIGHLIGHTS -->
-  <section class="facts" aria-label="Sekilas pandang">
+  <section class="facts theme-sun" aria-label="Sekilas pandang">
     <div class="wrap">
       <div class="facts-grid pop-in">
         <div class="fact"><b>RM <span class="num" data-count="160">160</span></b><span>Harga chalet semalam, bermula</span></div>
@@ -258,7 +261,7 @@
   </section>
 
   <!-- STAYS -->
-  <section id="stays" aria-labelledby="stays-title">
+  <section id="stays" class="theme-light" aria-labelledby="stays-title">
     <div class="wrap">
       <div class="head">
         <div>
@@ -320,7 +323,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="bg-paper" aria-labelledby="faq-title">
+  <section class="bg-paper theme-light" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
       <div class="faq-aside">
         <div class="kicker pop-in">Perlu tahu</div>
@@ -377,8 +380,8 @@
   </section>
 
   <!-- HOW TO BOOK -->
-  <section id="hubungi" aria-labelledby="contact-title" style="padding-top:clamp(64px,9vw,112px)">
-    <div class="plan-section">
+  <section id="hubungi" class="theme-light" aria-labelledby="contact-title" style="padding-top:clamp(64px,9vw,112px)">
+    <div class="plan-section theme-dark">
       <div class="wrap">
         <div class="kicker pop-in">Tempahan</div>
         <h2 id="contact-title" class="pop-in">Tempah melalui WhatsApp atau panggilan</h2>

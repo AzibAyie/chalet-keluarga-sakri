@@ -24,7 +24,7 @@
   .person{display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:var(--white); border:1px solid var(--line); border-radius:20px; padding:20px 22px}
   .person .avatar{width:54px; height:54px; border-radius:50%; background:var(--leaf); color:var(--on-accent); display:grid; place-items:center; font-family:var(--round); font-size:23px; flex:0 0 auto}
   .person .who{flex:1 1 160px}
-  .person .who b{display:block; font-family:var(--round); font-weight:500; font-size:21px; color:#fff}
+  .person .who b{display:block; font-family:var(--round); font-weight:500; font-size:21px; color:var(--forest)}
   .person .who span{font-size:15px; color:var(--ink-2); font-variant-numeric:tabular-nums}
   .pacts{display:flex; gap:8px; flex-wrap:wrap}
   .note-box{margin-top:14px; display:flex; gap:12px; align-items:flex-start; padding:16px 18px; border-radius:16px; border:1px dashed var(--leaf-2); color:var(--ink-2); font-size:14.5px}
@@ -34,7 +34,7 @@
   .box h3{font-size:21px; margin-bottom:12px}
   .box ul{margin:0}
   .box .rows{display:grid; gap:10px; font-size:14.5px; color:var(--ink-2)}
-  .box .rows b{color:#fff; font-weight:600}
+  .box .rows b{color:var(--forest); font-weight:600}
   .box .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
   @media (max-width:900px){ .contact-wrap{grid-template-columns:1fr} }
 </style>
@@ -44,7 +44,7 @@
   <dc-import name="Header" current="booking"></dc-import>
   <dc-import name="PageHero" kicker="tempahan" title="Hubungi kami" lede="Tempahan dibuat melalui WhatsApp atau panggilan telefon sahaja. Hubungi keluarga kami untuk menyemak kekosongan dan harga."></dc-import>
 
-  <section style="padding-top:40px">
+  <section class="theme-light" style="padding-top:40px">
     <div class="wrap contact-wrap">
       <div class="pop-in">
         <div class="people">
