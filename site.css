@@ -31,6 +31,8 @@
   --coral:#FF6B4A;
   --teal:#2EC4B6;
   --pink:#F06C9B;
+  /* pastels */
+  --p-peach:#FFDCCB; --p-mint:#CDEFD9; --p-sky:#CFE6FA; --p-lav:#E2DAFB; --p-butter:#FFEDAD; --p-pink:#FFD3E2;
   --radius:18px;
 }
 *{box-sizing:border-box}
@@ -324,21 +326,22 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
    ========================================================================= */
 .stay,.know-card,.polaroid,.card-strong{transition:transform .45s var(--pop), box-shadow .45s var(--ease), border-color .3s, opacity .7s var(--ease)}
 .stay:hover,.stay.pop-in.in:hover,.polaroid:hover,.polaroid.pop-in.in:hover,.know-card:hover{transform:translateY(-8px) rotate(-.6deg); box-shadow:8px 10px 0 var(--sun), var(--shadow-md)}
-.stays .stay:nth-child(2):hover{box-shadow:8px 10px 0 var(--coral), var(--shadow-md)}
-.stays .stay:nth-child(3):hover{box-shadow:8px 10px 0 var(--teal), var(--shadow-md)}
+.stays .stay:nth-child(3n+1):hover{box-shadow:8px 10px 0 #FFB08C, var(--shadow-md)}
+.stays .stay:nth-child(3n+2):hover{box-shadow:8px 10px 0 #B6A4F2, var(--shadow-md)}
+.stays .stay:nth-child(3n):hover{box-shadow:8px 10px 0 #8FD3AA, var(--shadow-md)}
 .btn{transition:transform .35s var(--pop), box-shadow .25s, background .2s, border-color .2s, color .2s}
 .btn:hover{transform:translateY(-2px) scale(1.03)}
 .btn:active{transform:scale(.97)}
 
 .sticker-pop{position:absolute; z-index:3; display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border-radius:999px; font:700 13.5px/1 var(--body); color:#14261A; box-shadow:0 12px 24px -10px rgba(0,0,0,.5); animation:bob 4s ease-in-out infinite; white-space:nowrap}
 .sticker-pop i{width:8px; height:8px; border-radius:50%; background:currentColor; opacity:.55}
-.sticker-pop.s-coral{background:var(--coral); color:#fff}
-.sticker-pop.s-teal{background:var(--teal)}
+.sticker-pop.s-coral{background:var(--p-peach)}
+.sticker-pop.s-teal{background:var(--p-mint)}
 .sticker-pop.s-sun{background:var(--sun)}
-.sticker-pop.s-pink{background:var(--pink); color:#fff}
+.sticker-pop.s-pink{background:var(--p-lav)}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-9px) rotate(var(--r,0deg))}}
 
-.pop-card{position:fixed; left:20px; bottom:20px; z-index:95; width:min(330px, calc(100% - 40px)); background:#FBF7EE; color:#22302A; border-radius:22px; padding:20px 20px 18px; box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 4px var(--sun); transform:translateY(30px) scale(.6); transform-origin:15% 100%; opacity:0; visibility:hidden; transition:transform .55s var(--pop), opacity .3s, visibility 0s linear .55s}
+.pop-card{background-image:linear-gradient(160deg, #FFF6E9, #F3EEFF); position:fixed; left:20px; bottom:20px; z-index:95; width:min(330px, calc(100% - 40px)); background:#FBF7EE; color:#22302A; border-radius:22px; padding:20px 20px 18px; box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 4px var(--p-lav), 0 0 0 8px var(--p-butter); transform:translateY(30px) scale(.6); transform-origin:15% 100%; opacity:0; visibility:hidden; transition:transform .55s var(--pop), opacity .3s, visibility 0s linear .55s}
 .pop-card.show{transform:none; opacity:1; visibility:visible; transition:transform .55s var(--pop), opacity .3s}
 .pop-card .pop-logo{height:34px; width:auto; margin-bottom:10px}
 .pop-card b{display:block; font-family:var(--round); font-weight:500; font-size:22px; color:#14261A; margin-bottom:4px}
@@ -349,3 +352,42 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 .pop-x:hover{transform:rotate(90deg) scale(1.08)}
 @media (max-width:560px){ .pop-card{left:12px; right:12px; bottom:12px; width:auto} }
 @media (prefers-reduced-motion:reduce){ .sticker-pop{animation:none} }
+
+
+/* =========================================================================
+   Pastel section tints (use with .theme-light): p-peach, p-mint, p-sky,
+   p-lav, p-butter, p-pink
+   ========================================================================= */
+.theme-light.p-peach{--cream:#FFF0E6; --line:#F4D3C1}
+.theme-light.p-mint{--cream:#E6F7EC; --line:#C8E7D3}
+.theme-light.p-sky{--cream:#E6F2FD; --line:#C8DEF3}
+.theme-light.p-lav{--cream:#F0ECFD; --line:#DAD1F4}
+.theme-light.p-butter{--cream:#FFF7DB; --line:#F0E2A9}
+.theme-light.p-pink{--cream:#FFEEF4; --line:#F4CEDC}
+
+/* section labels become little pills */
+.theme-light .kicker{background:#fff; color:#7A5200; padding:7px 13px; border-radius:999px; box-shadow:0 2px 0 rgba(20,38,26,.06)}
+.theme-light .center .kicker,.theme-light .kicker{margin-bottom:2px}
+
+/* stay cards in pastel */
+.theme-light .stays .stay{border-color:transparent}
+.theme-light .stays .stay:nth-child(3n+1){background:var(--p-peach)}
+.theme-light .stays .stay:nth-child(3n+2){background:var(--p-lav)}
+.theme-light .stays .stay:nth-child(3n){background:var(--p-mint)}
+.theme-light .stays .stay .cap-tag{background:#fff; border-color:transparent}
+.theme-light .stays .stay .price-row{border-bottom-color:rgba(20,38,26,.12)}
+.theme-light .stays .stay .btn-soft{background:#fff; border-color:transparent}
+
+/* pastel pills */
+.theme-light .pill{border-color:transparent}
+.theme-light .pills .pill:nth-child(4n+1){background:var(--p-peach)}
+.theme-light .pills .pill:nth-child(4n+2){background:var(--p-mint)}
+.theme-light .pills .pill:nth-child(4n+3){background:var(--p-sky)}
+.theme-light .pills .pill:nth-child(4n){background:var(--p-lav)}
+
+/* photo cards on pastel get a soft tinted frame */
+.theme-light .polaroids .polaroid:nth-child(4n+1){border-color:var(--p-peach)}
+.theme-light .polaroids .polaroid:nth-child(4n+2){border-color:var(--p-mint)}
+.theme-light .polaroids .polaroid:nth-child(4n+3){border-color:var(--p-sky)}
+.theme-light .polaroids .polaroid:nth-child(4n){border-color:var(--p-lav)}
+.theme-light .polaroid{border-width:3px}

@@ -57,7 +57,12 @@
 
   /* ---------- highlights ---------- */
   .facts{padding:clamp(18px,3vw,30px) 0}
-  .facts-grid{display:grid; grid-template-columns:repeat(4,1fr)}
+  .facts-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+  .facts .fact{border:none!important; border-radius:22px; padding:24px 22px; transition:transform .45s var(--pop)}
+  .facts .fact:hover{transform:translateY(-6px) rotate(-1deg)}
+  .facts .fact:nth-child(1){background:var(--p-peach)} .facts .fact:nth-child(2){background:var(--p-mint)}
+  .facts .fact:nth-child(3){background:var(--p-sky)} .facts .fact:nth-child(4){background:var(--p-lav)}
+  .facts .fact b{color:#14261A} .facts .fact span{color:#46524A}
   .fact{padding:28px 24px; text-align:left}
   .fact + .fact{border-left:1px solid var(--line)}
   .fact b{display:block; font-family:var(--round); font-weight:400; font-size:clamp(30px,3.4vw,40px); color:var(--forest); line-height:1.05; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
@@ -79,7 +84,8 @@
   .tile:hover img,.tile:focus-visible img{transform:scale(1.06)}
   .tile:hover{box-shadow:var(--shadow-md)}
   .tile .t-body{position:absolute; left:0; right:0; bottom:0; padding:18px 20px}
-  .tile .t-cat{display:block; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; opacity:.85}
+  .tile .t-cat{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#14261A; background:var(--p-sky); padding:5px 10px; border-radius:999px}
+  .tile[data-cat=camp] .t-cat{background:var(--p-mint)} .tile[data-cat=facilities] .t-cat{background:var(--p-peach)}
   .tile .t-title{display:block; font-family:var(--round); font-weight:400; font-size:21px; line-height:1.2; margin-top:4px}
   .tile.feature .t-title{font-size:clamp(24px,2.6vw,32px)}
   .tile .t-desc{display:block; font-size:14px; line-height:1.45; opacity:0; max-height:0; transition:opacity .4s, max-height .4s var(--ease), margin .4s; overflow:hidden}
@@ -134,8 +140,10 @@
   .contact-card .dot{width:38px; height:38px; border-radius:50%; background:var(--mint); display:grid; place-items:center; flex:0 0 auto}
   .contact-card .sub{font-weight:400; color:var(--ink-2); font-size:13.5px}
   .contact-card a:hover .num{text-decoration:underline; text-underline-offset:3px}
-  .faq{border-top:1px solid var(--line)}
-  .faq details{border-bottom:1px solid var(--line)}
+  .faq{border-top:1px solid var(--line); display:grid; gap:2px}
+  .faq details{border-bottom:1px solid var(--line); border-radius:16px; transition:background .3s}
+  .faq details[open]{background:#fff; border-bottom-color:transparent; box-shadow:0 10px 30px -18px rgba(20,38,26,.35)}
+  .faq details[open] summary{padding-left:18px; padding-right:14px} .faq details[open] .ans > div{padding-left:18px}
   .faq summary{list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 4px; font-family:var(--round); font-size:clamp(18px,1.8vw,21px); color:var(--forest); transition:color .2s}
   .faq summary::-webkit-details-marker{display:none}
   .faq summary:hover{color:var(--leaf)}
@@ -223,7 +231,7 @@
   </section>
 
   <!-- HIGHLIGHTS -->
-  <section class="facts theme-sun" aria-label="Sekilas pandang">
+  <section class="facts" aria-label="Sekilas pandang">
     <div class="wrap">
       <div class="facts-grid pop-in">
         <div class="fact"><b>RM <span class="num" data-count="160">160</span></b><span>Harga chalet semalam, bermula</span></div>
@@ -261,7 +269,7 @@
   </section>
 
   <!-- STAYS -->
-  <section id="stays" class="theme-light" aria-labelledby="stays-title">
+  <section id="stays" class="theme-light p-peach" aria-labelledby="stays-title">
     <div class="wrap">
       <div class="head">
         <div>
@@ -323,7 +331,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="bg-paper theme-light" aria-labelledby="faq-title">
+  <section class="theme-light p-mint" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
       <div class="faq-aside">
         <div class="kicker pop-in">Perlu tahu</div>
@@ -380,7 +388,7 @@
   </section>
 
   <!-- HOW TO BOOK -->
-  <section id="hubungi" class="theme-light" aria-labelledby="contact-title" style="padding-top:clamp(64px,9vw,112px)">
+  <section id="hubungi" class="theme-light p-lav" aria-labelledby="contact-title" style="padding-top:clamp(64px,9vw,112px)">
     <div class="plan-section theme-dark">
       <div class="wrap">
         <div class="kicker pop-in">Tempahan</div>
