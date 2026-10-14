@@ -1,11 +1,11 @@
 /* Chalet Keluarga Sakri — shared look: pastel nature (sage, moss, sand, river, blossom). */
 :root{
   color-scheme:light;
-  --cream:#F6F4EA;   /* page background: warm parchment */
-  --paper:#ECE8D6;   /* sand */
+  --cream:#FFF8F0;   /* main colour 1: warm cream */
+  --paper:#F1F3E0;   /* main colour 2: soft sage */
   --mint:#DCEBD3;    /* sage */
   --white:#FFFFFF;   /* cards and controls */
-  --deep:#CFE2C4;    /* moss pastel: footer, feature panels */
+  --deep:#F1F3E0;    /* footer, feature panels */
   --leaf:#4E7A55;    /* accent: moss green */
   --leaf-2:#8DB48F;
   --leaf-3:#D5E8CF;
@@ -88,8 +88,8 @@ h3{font-size:21px; line-height:1.25}
 .pop-in.in{opacity:1; transform:none}
 
 /* ---------- header ---------- */
-.site-header{position:sticky; top:0; z-index:50; background:rgba(246,244,234,.86); backdrop-filter:saturate(1.4) blur(14px); -webkit-backdrop-filter:saturate(1.4) blur(14px); border-bottom:1px solid transparent; transition:border-color .3s, background .3s}
-.site-header.scrolled{border-bottom-color:var(--line); background:rgba(246,244,234,.96)}
+.site-header{position:sticky; top:0; z-index:50; background:rgba(255,248,240,.88); backdrop-filter:saturate(1.4) blur(14px); -webkit-backdrop-filter:saturate(1.4) blur(14px); border-bottom:1px solid transparent; transition:border-color .3s, background .3s}
+.site-header.scrolled{border-bottom-color:var(--line); background:rgba(255,248,240,.97)}
 .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; height:72px}
 .logo{display:flex; align-items:center; gap:10px; font-family:var(--round); font-weight:500; font-size:20px; letter-spacing:-.01em; color:var(--forest); white-space:nowrap}
 .logo-mark{height:36px; width:auto; flex:0 0 auto; transition:transform .4s var(--ease)}
@@ -285,7 +285,7 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
    the dark green back inside a light section (e.g. a panel).
    ========================================================================= */
 .theme-light{
-  --cream:#FBF7EE; --paper:#F2ECDD; --mint:#E4F0E1; --white:#FFFFFF; --deep:#1E3226;
+  --cream:#FFF8F0; --paper:#F1F3E0; --mint:#E4F0E1; --white:#FFFFFF; --deep:#1E3226;
   --leaf:#1E3226; --leaf-2:#6E9B78; --leaf-3:#D5E6D6; --forest:#14261A;
   --ink:#22302A; --ink-2:#55635A; --on-accent:#FFFFFF; --line:#E3DCCB;
   --shadow-sm:0 1px 2px rgba(30,50,38,.06), 0 2px 8px -2px rgba(30,50,38,.10);
@@ -301,7 +301,7 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 .theme-light select.input{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355635A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")}
 
 .theme-dark{
-  --cream:#DCEBD3; --paper:#CFE2C4; --mint:#C6DDBA; --white:#FFFFFF; --deep:#CFE2C4;
+  --cream:#F1F3E0; --paper:#F1F3E0; --mint:#C6DDBA; --white:#FFFFFF; --deep:#CFE2C4;
   --leaf:#4E7A55; --leaf-2:#8DB48F; --leaf-3:#D5E8CF; --forest:#23402B;
   --ink:#2C3B30; --ink-2:#55665A; --on-accent:#FFFFFF; --line:#C3D8B8;
   color:var(--ink); color-scheme:light;
@@ -355,12 +355,12 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
    Pastel section tints (use with .theme-light): p-peach, p-mint, p-sky,
    p-lav, p-butter, p-pink
    ========================================================================= */
-.theme-light.p-peach{--cream:#FFF0E6; --line:#F4D3C1}
-.theme-light.p-mint{--cream:#E6F7EC; --line:#C8E7D3}
-.theme-light.p-sky{--cream:#E6F2FD; --line:#C8DEF3}
-.theme-light.p-lav{--cream:#F0ECFD; --line:#DAD1F4}
-.theme-light.p-butter{--cream:#FFF7DB; --line:#F0E2A9}
-.theme-light.p-pink{--cream:#FFEEF4; --line:#F4CEDC}
+.theme-light.p-peach{--cream:#FFF8F0; --line:#EFE2D2}
+.theme-light.p-mint{--cream:#F1F3E0; --line:#DCE0C4}
+.theme-light.p-sky{--cream:#F1F3E0; --line:#DCE0C4}
+.theme-light.p-lav{--cream:#FFF8F0; --line:#EFE2D2}
+.theme-light.p-butter{--cream:#FFF8F0; --line:#EFE2D2}
+.theme-light.p-pink{--cream:#FFF8F0; --line:#EFE2D2}
 
 /* section labels become little pills */
 .theme-light .kicker{background:#fff; color:#7A5200; padding:7px 13px; border-radius:999px; box-shadow:0 2px 0 rgba(20,38,26,.06)}
@@ -398,7 +398,7 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 [fill="#F2EEE4"]{fill:#2F5236}
 .c-time [stroke],.lb [stroke],.map-tools [stroke]{stroke:currentColor}
 /* soft leafy background wash on the main page sections */
-body{background:var(--cream) radial-gradient(circle at 8% 4%, rgba(141,180,143,.18), transparent 40%) no-repeat}
-.page-hero{background:linear-gradient(170deg, #D6E9CC 0%, #DDEDE6 55%, #E4F0F2 100%)}
-.foot-body{background:linear-gradient(180deg, #D7E7CC, #C8DDBC)}
-.menu-sheet{background:#F6F4EA}
+body{background:var(--cream)}
+.page-hero{background:#F1F3E0}
+.foot-body{background:#F1F3E0}
+.menu-sheet{background:#FFF8F0}
