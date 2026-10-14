@@ -341,7 +341,7 @@ select.input{appearance:none; -webkit-appearance:none; padding-right:40px; backg
 .sticker-pop.s-pink{background:var(--p-lav)}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-9px) rotate(var(--r,0deg))}}
 
-.pop-card{background-image:linear-gradient(160deg, #FFF6E9, #F3EEFF); position:fixed; left:20px; bottom:20px; z-index:95; width:min(330px, calc(100% - 40px)); background:#FBF7EE; color:#22302A; border-radius:22px; padding:20px 20px 18px; box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 4px var(--p-lav), 0 0 0 8px var(--p-butter); transform:translateY(30px) scale(.6); transform-origin:15% 100%; opacity:0; visibility:hidden; transition:transform .55s var(--pop), opacity .3s, visibility 0s linear .55s}
+.pop-card{position:fixed; left:20px; bottom:20px; z-index:95; width:min(330px, calc(100% - 40px)); background:linear-gradient(160deg, #FFF6E9, #F3EEFF); color:#22302A; border-radius:22px; padding:20px 20px 18px; box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 4px var(--p-lav), 0 0 0 8px var(--p-butter); transform:translateY(30px) scale(.6); transform-origin:15% 100%; opacity:0; visibility:hidden; transition:transform .55s var(--pop), opacity .3s, visibility 0s linear .55s}
 .pop-card.show{transform:none; opacity:1; visibility:visible; transition:transform .55s var(--pop), opacity .3s}
 .pop-card .pop-logo{height:34px; width:auto; margin-bottom:10px}
 .pop-card b{display:block; font-family:var(--round); font-weight:500; font-size:22px; color:#14261A; margin-bottom:4px}
