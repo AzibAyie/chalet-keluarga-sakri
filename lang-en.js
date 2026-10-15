@@ -382,6 +382,9 @@ window.CKS_EN = (function () {
     '<b>Daftar masuk</b> dari 2.00 petang · <b>daftar keluar</b> sebelum 12.00 tengah hari': '<b>Check-in</b> from 2.00 pm · <b>check-out</b> by 12.00 noon',
     '<b>Alamat:</b> Jalan Sungai Inki, Kampung Pasir Puteh, Kalumpang, 44100 Kerling, Hulu Selangor': '<b>Address:</b> Jalan Sungai Inki, Kampung Pasir Puteh, Kalumpang, 44100 Kerling, Hulu Selangor',
 
+    /* ---------- tagline ---------- */
+    '“Nikmati pengalaman bersama alam semulajadi”': '“Enjoy the experience of nature”',
+
     /* ---------- pop-up card ---------- */
     'Ada soalan?': 'Got a question?',
     'Tanya keluarga kami terus di WhatsApp. Kami sedia membantu!': "Ask the family directly on WhatsApp. We're happy to help!",
