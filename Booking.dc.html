@@ -99,8 +99,7 @@ class Component extends DCLogic {
   renderVals() {
     const text = encodeURIComponent('Salam, saya ingin bertanya tentang penginapan di Chalet Keluarga Sakri.');
     const people = [
-      { name: 'Nora', display: '017 340 8345', num: '60173408345' },
-      { name: 'Mimi', display: '013 205 5318', num: '60132055318' }
+      { name: 'Nora', display: '017 340 8345', num: '60173408345' }
     ].map(function (p) {
       return Object.assign({}, p, { initial: p.name.charAt(0), wa: 'https://wa.me/' + p.num + '?text=' + text, tel: 'tel:+' + p.num });
     });
