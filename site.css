@@ -443,3 +443,26 @@ body{background:var(--cream)}
 @media (prefers-reduced-motion:reduce){
   .fab-book,.fab-book .dot::after{transition:none; animation:none}
 }
+
+/* =========================================================================
+   Two-tone palette (60/30/10): cream #FFF8F0, sage #F1F3E0, forest #2F5236,
+   logo yellow only for stars and small labels, light mint #DCEBD3 for hover.
+   The pastel accents are retired; the property map keeps its own colours.
+   ========================================================================= */
+:root{--p-peach:#FFFFFF; --p-mint:#FFFFFF; --p-sky:#FFFFFF; --p-lav:#FFFFFF; --p-butter:#FFFFFF; --p-pink:#FFFFFF; --hover-mint:#DCEBD3; --edge:#E3DFCB}
+.facts .fact{background:#fff!important; border:1px solid var(--edge)!important}
+.facts .fact b{color:#2F5236!important}
+.facts .fact:hover,.counter:hover{background:var(--hover-mint)!important}
+.tile .t-cat{background:#FFF8F0!important; color:#2F5236!important}
+.theme-light .stays .stay{background:#fff!important; border:1px solid var(--edge)!important}
+.theme-light .stays .stay:hover{border-color:#8DB48F!important}
+.theme-light .stays .stay .cap-tag{background:#F1F3E0}
+.theme-light .stays .stay .btn-soft{background:#FFF8F0; border-color:var(--edge)}
+.theme-light .stays .stay .btn-soft:hover{background:var(--hover-mint); border-color:#8DB48F}
+.theme-light .pills .pill{background:#fff!important; border:1px solid var(--edge)!important}
+.theme-light .pills .pill:hover{background:var(--hover-mint)!important}
+.theme-light .polaroids .polaroid{border:1px solid var(--edge)!important}
+.sticker-pop.s-coral,.sticker-pop.s-teal,.sticker-pop.s-pink{background:#FFF8F0; color:#2F5236; border:1px solid var(--edge)}
+.sticker-pop i{background:#4E7A55; opacity:1}
+.pop-card{background:#FFF8F0!important; box-shadow:0 30px 60px -20px rgba(47,82,54,.45), 0 0 0 1px var(--edge)!important}
+.pop-x{background:#F1F3E0}
