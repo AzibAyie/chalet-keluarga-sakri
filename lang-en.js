@@ -384,6 +384,15 @@ window.CKS_EN = (function () {
     /* ---------- tagline ---------- */
     '“Nikmati pengalaman bersama alam semulajadi”': '“Enjoy the experience of nature”',
 
+    /* ---------- forest theme additions ---------- */
+    'Tempah via WhatsApp': 'Book via WhatsApp',
+    'Tempah melalui WhatsApp': 'Book via WhatsApp',
+    'Kemudahan di kawasan kami': 'Facilities on the grounds',
+    'Chalet & pondok': 'Chalets & huts',
+    'Tandas untuk tetamu': 'Guest toilets',
+    'Kolam ikan & kolam kanak-kanak': "Fish pond & children's pool",
+    'Lihat semua ulasan': 'See all reviews',
+
     /* ---------- pop-up card ---------- */
     'Ada soalan?': 'Got a question?',
     'Tanya keluarga kami terus di WhatsApp. Kami sedia membantu!': "Ask the family directly on WhatsApp. We're happy to help!",
