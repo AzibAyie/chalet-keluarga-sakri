@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Photo Framer — Chalet Keluarga Sakri</title>
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<!--
+  Photo framer for the website's photos. Everything happens in this browser tab:
+  the photo is never uploaded anywhere. Choose a photo, pick a frame shape,
+  zoom and drag it into place, then save the framed copy into project/photos.
+-->
+<style>
+  :root{--cream:#FFF8F0; --sage:#F1F3E0; --forest:#2F5236; --moss:#4E7A55; --mint:#DCEBD3; --ink:#2C3B30; --ink-2:#5E6D61; --edge:#E3DFCB; --ease:cubic-bezier(.2,.7,.2,1)}
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  body{margin:0; background:var(--cream); color:var(--ink); font:16px/1.55 Inter, system-ui, sans-serif}
+  .wrap{max-width:1080px; margin:0 auto; padding:24px 16px 48px}
+  header{display:flex; align-items:center; gap:14px; margin-bottom:22px}
+  header img{height:38px; width:auto}
+  h1{font-family:Fraunces, Georgia, serif; font-weight:500; font-size:clamp(24px,4vw,32px); color:var(--forest); margin:0; line-height:1.1}
+  .sub{color:var(--ink-2); font-size:14px; margin:2px 0 0}
+  .grid{display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:20px; align-items:start}
+  @media (max-width:820px){ .grid{grid-template-columns:minmax(0,1fr)} }
+
+  /* stage */
+  .stage-box{min-width:0; background:var(--sage); border:1px solid var(--edge); border-radius:22px; padding:16px; display:grid; place-items:center; min-height:420px}
+  .stage{position:relative; width:100%; max-width:640px; max-height:70vh; border-radius:14px; overflow:hidden; background:#E8E5D5; touch-action:none; cursor:grab; box-shadow:0 18px 40px -24px rgba(47,82,54,.5)}
+  .stage.dragging{cursor:grabbing}
+  .stage canvas{display:block; width:100%; height:100%}
+  .stage .grid3{position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .3s;
+    background:linear-gradient(to right, transparent 33.2%, rgba(255,255,255,.6) 33.3%, transparent 33.5%, transparent 66.5%, rgba(255,255,255,.6) 66.6%, transparent 66.8%),
+               linear-gradient(to bottom, transparent 33.2%, rgba(255,255,255,.6) 33.3%, transparent 33.5%, transparent 66.5%, rgba(255,255,255,.6) 66.6%, transparent 66.8%)}
+  .stage.dragging .grid3,.stage:hover .grid3{opacity:1}
+  .drop{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; width:100%; min-height:380px; border:2px dashed var(--moss); border-radius:16px; color:var(--ink-2); text-align:center; padding:24px; cursor:pointer; transition:background .2s}
+  .drop:hover,.drop.over{background:var(--mint)}
+  .drop b{color:var(--forest); font-size:17px}
+  .hint{font-size:13px; color:var(--ink-2); text-align:center; margin:10px 0 0}
+
+  /* controls */
+  .panel{background:#fff; border:1px solid var(--edge); border-radius:22px; padding:20px}
+  .panel h2{font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--moss); margin:0 0 10px}
+  .panel section + section{margin-top:20px; padding-top:18px; border-top:1px solid var(--edge)}
+  .shapes{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+  .shape{display:flex; flex-direction:column; align-items:center; gap:8px; padding:12px 6px; border-radius:14px; border:1.5px solid var(--edge); background:var(--cream); color:var(--ink); font:600 13px/1 Inter, sans-serif; cursor:pointer; transition:border-color .2s, background .2s}
+  .shape:hover{border-color:var(--moss)}
+  .shape[aria-pressed=true]{background:var(--forest); border-color:var(--forest); color:#FFF8F0}
+  .shape i{display:block; border:2px solid currentColor; border-radius:3px}
+  .shape small{font-weight:400; font-size:11px; opacity:.75}
+  .zoom{display:flex; align-items:center; gap:10px}
+  .zoom button{width:36px; height:36px; border-radius:50%; border:1.5px solid var(--edge); background:var(--cream); color:var(--forest); font-size:20px; line-height:1; cursor:pointer}
+  .zoom button:hover{border-color:var(--moss); background:var(--mint)}
+  .zoom input{flex:1; accent-color:var(--forest)}
+  .zoom output{min-width:44px; text-align:right; font-variant-numeric:tabular-nums; font-size:14px; color:var(--ink-2)}
+  label.lbl{display:block; font-size:13px; font-weight:600; color:var(--forest); margin:0 0 6px}
+  input[type=text]{width:100%; padding:10px 12px; border-radius:12px; border:1.5px solid var(--edge); background:var(--cream); font:inherit; font-size:15px}
+  input[type=text]:focus{outline:none; border-color:var(--moss)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px 16px; border-radius:999px; border:1.5px solid var(--forest); background:var(--forest); color:#FFF8F0; font:600 15px/1.2 Inter, sans-serif; cursor:pointer; transition:background .2s, transform .2s var(--ease)}
+  .btn:hover{background:#244229; transform:translateY(-1px)}
+  .btn.soft{background:var(--cream); color:var(--forest); border-color:var(--edge)}
+  .btn.soft:hover{background:var(--mint); border-color:var(--moss)}
+  .btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+  .row{display:flex; gap:8px; margin-top:8px}
+  .meta{font-size:12.5px; color:var(--ink-2); margin:8px 0 0}
+  .meta.warn{color:#9A5B12}
+  .done{display:none; margin-top:12px; padding:12px 14px; border-radius:14px; background:var(--mint); color:var(--forest); font-size:14px}
+  .done.show{display:block}
+  .help{margin-top:22px; font-size:14px; color:var(--ink-2)}
+  .help ol{padding-left:20px; margin:6px 0 0}
+  :focus-visible{outline:2px solid var(--moss); outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="brand/cks-mark-sm.png" alt="CKS" width="78" height="38">
+    <div>
+      <h1>Photo Framer</h1>
+      <p class="sub">Frame photos for the website. Your photo stays on this device — nothing is uploaded.</p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="stage-box" id="stage-box">
+      <label class="drop" id="drop" for="file">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4E7A55" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="3"/><circle cx="9" cy="11" r="2"/><path d="m21 17-5-5-9 8"/></svg>
+        <b>Choose a photo</b>
+        <span>or drag and drop it here (JPG, PNG, WebP or HEIC from your phone)</span>
+      </label>
+      <div class="stage" id="stage" hidden tabindex="0" aria-label="Photo preview. Drag or use the arrow keys to move, plus and minus to zoom.">
+        <canvas id="view"></canvas>
+        <div class="grid3" aria-hidden="true"></div>
+      </div>
+      <p class="hint" id="hint" hidden>Drag to position · scroll, pinch or use the slider to zoom · arrow keys nudge</p>
+    </div>
+
+    <div class="panel">
+      <input type="file" id="file" accept="image/*" hidden>
+      <section>
+        <h2>1 · Frame shape</h2>
+        <div class="shapes" role="group" aria-label="Frame shape">
+          <button type="button" class="shape" data-shape="portrait" aria-pressed="true"><i style="width:20px; height:25px"></i>Portrait<small>4 : 5</small></button>
+          <button type="button" class="shape" data-shape="square" aria-pressed="false"><i style="width:23px; height:23px"></i>Square<small>1 : 1</small></button>
+          <button type="button" class="shape" data-shape="original" aria-pressed="false"><i style="width:27px; height:19px; border-style:dashed"></i>Original<small id="orig-ratio">as taken</small></button>
+        </div>
+      </section>
+      <section>
+        <h2>2 · Zoom &amp; position</h2>
+        <div class="zoom">
+          <button type="button" id="zoom-out" aria-label="Zoom out">&minus;</button>
+          <input type="range" id="zoom" min="1" max="4" step="0.01" value="1" aria-label="Zoom">
+          <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+          <output id="zoom-val">100%</output>
+        </div>
+        <div class="row"><button type="button" class="btn soft" id="reset" disabled>Reset position</button></div>
+      </section>
+      <section>
+        <h2>3 · Save</h2>
+        <label class="lbl" for="name">File name</label>
+        <input type="text" id="name" value="photo" spellcheck="false" autocomplete="off">
+        <p class="meta" id="out-size">Choose a photo to start.</p>
+        <div class="row"><button type="button" class="btn" id="save" disabled>Save framed photo</button></div>
+        <div class="row"><button type="button" class="btn soft" id="another" disabled>Choose another photo</button></div>
+        <div class="done" id="done" role="status"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="help">
+    <b>Adding the photo to the website</b>
+    <ol>
+      <li>Save the framed photo, then move it into the <code>project/photos</code> folder.</li>
+      <li>Tell Claude which photo it is and where it should appear (for example, "use photos/pondok-mawar.jpg for the Pondok card").</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const stage = $('#stage'), view = $('#view'), ctx = view.getContext('2d');
+  const fileIn = $('#file'), drop = $('#drop'), zoomIn = $('#zoom'), zoomVal = $('#zoom-val');
+  const SHAPES = { portrait: 4 / 5, square: 1 };
+  const MAX_OUT = { portrait: [1200, 1500], square: [1400, 1400], original: 2000 }; // pixels
+  const MAX_ZOOM = 4;
+
+  let img = null, shape = 'portrait', zoom = 1, cx = 0.5, cy = 0.5, baseName = 'photo';
+  // cx, cy: the point of the photo (0..1 of its width/height) shown at the frame centre
+
+  function ratio() { return shape === 'original' ? img.naturalWidth / img.naturalHeight : SHAPES[shape]; }
+
+  /* ---------- layout ---------- */
+  function sizeStage() {
+    if (!img) return;
+    stage.style.width = '0px'; // let the box shrink to its column before measuring
+    const box = $('#stage-box').getBoundingClientRect();
+    const maxW = Math.min(640, box.width - 32), maxH = Math.min(window.innerHeight * 0.7, 640);
+    let w = maxW, h = w / ratio();
+    if (h > maxH) { h = maxH; w = h * ratio(); }
+    stage.style.width = Math.round(w) + 'px';
+    stage.style.height = Math.round(h) + 'px';
+    const dpr = window.devicePixelRatio || 1;
+    view.width = Math.round(w * dpr); view.height = Math.round(h * dpr);
+    draw();
+  }
+
+  // scale (frame px per photo px) at the current zoom, for a frame of width fw
+  function scaleFor(fw, fh) { return Math.max(fw / img.naturalWidth, fh / img.naturalHeight) * zoom; }
+
+  // keep the photo covering the frame: no empty edges
+  function clampCentre(fw, fh) {
+    const s = scaleFor(fw, fh);
+    const halfW = fw / 2 / (img.naturalWidth * s), halfH = fh / 2 / (img.naturalHeight * s);
+    cx = Math.min(1 - halfW, Math.max(halfW, cx));
+    cy = Math.min(1 - halfH, Math.max(halfH, cy));
+  }
+
+  function paint(c, fw, fh) {
+    clampCentre(fw, fh);
+    const s = scaleFor(fw, fh);
+    const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+    const x = fw / 2 - cx * dw, y = fh / 2 - cy * dh;
+    c.imageSmoothingQuality = 'high';
+    c.drawImage(img, x, y, dw, dh);
+  }
+
+  function draw() {
+    if (!img) return;
+    ctx.clearRect(0, 0, view.width, view.height);
+    paint(ctx, view.width, view.height);
+    zoomVal.textContent = Math.round(zoom * 100) + '%';
+    zoomIn.value = zoom;
+    const [ow, oh] = outSize();
+    const small = Math.max(ow, oh) < 900;
+    $('#out-size').textContent = 'Saves as ' + ow + ' × ' + oh + ' px JPG' + (small ? ' — low resolution: zoom out or use a larger original photo for a sharper result.' : '');
+    $('#out-size').classList.toggle('warn', small);
+  }
+
+  /* ---------- output size: never upscale beyond the photo's own pixels ---------- */
+  function outSize() {
+    const r = ratio();
+    // pixels of the original photo inside the frame
+    const fw = 1000, fh = 1000 / r;
+    const s = scaleFor(fw, fh);
+    let w = fw / s, h = fh / s;
+    let maxW, maxH;
+    if (shape === 'original') { const m = MAX_OUT.original; if (r >= 1) { maxW = m; maxH = m / r; } else { maxH = m; maxW = m * r; } }
+    else { [maxW, maxH] = MAX_OUT[shape]; }
+    const k = Math.min(1, maxW / w, maxH / h);
+    return [Math.round(w * k), Math.round(h * k)];
+  }
+
+  /* ---------- loading ---------- */
+  function load(file) {
+    if (!file || !/^image\//.test(file.type)) { if (file) alert('Please choose an image file (JPG, PNG or WebP).'); return; }
+    const url = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = () => {
+      if (img && img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+      img = im; zoom = 1; cx = cy = 0.5;
+      baseName = file.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'photo';
+      $('#name').value = baseName + '-' + shape;
+      $('#orig-ratio').textContent = niceRatio(im.naturalWidth, im.naturalHeight);
+      drop.hidden = true; stage.hidden = false; $('#hint').hidden = false;
+      ['#save', '#another', '#reset'].forEach((s) => { $(s).disabled = false; });
+      $('#done').classList.remove('show');
+      sizeStage();
+      stage.focus({ preventScroll: true });
+    };
+    im.onerror = () => { URL.revokeObjectURL(url); alert('This photo could not be opened. If it is HEIC from an iPhone, try exporting it as JPG first.'); };
+    im.src = url;
+  }
+  function niceRatio(w, h) {
+    const r = w / h, known = [[1, 1], [4, 3], [3, 4], [3, 2], [2, 3], [16, 9], [9, 16], [4, 5], [5, 4]];
+    const k = known.find(([a, b]) => Math.abs(a / b - r) < 0.02);
+    return k ? k[0] + ' : ' + k[1] : w + ' × ' + h;
+  }
+
+  fileIn.addEventListener('change', () => { load(fileIn.files[0]); fileIn.value = ''; });
+  ['dragenter', 'dragover'].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+  document.addEventListener('drop', (e) => load(e.dataTransfer.files[0]));
+  $('#another').addEventListener('click', () => fileIn.click());
+
+  /* ---------- frame shape ---------- */
+  document.querySelectorAll('.shape').forEach((b) => b.addEventListener('click', () => {
+    shape = b.dataset.shape;
+    document.querySelectorAll('.shape').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    $('#name').value = $('#name').value.replace(/-(portrait|square|original)$/, '') + '-' + shape;
+    sizeStage();
+  }));
+
+  /* ---------- zoom ---------- */
+  function setZoom(z, px, py) {
+    if (!img) return;
+    const fw = view.width, fh = view.height;
+    const before = scaleFor(fw, fh);
+    // keep the photo point under (px, py) fixed while zooming
+    const ax = px == null ? fw / 2 : px, ay = py == null ? fh / 2 : py;
+    const ux = cx + (ax - fw / 2) / (img.naturalWidth * before), uy = cy + (ay - fh / 2) / (img.naturalHeight * before);
+    zoom = Math.min(MAX_ZOOM, Math.max(1, z));
+    const after = scaleFor(fw, fh);
+    cx = ux - (ax - fw / 2) / (img.naturalWidth * after);
+    cy = uy - (ay - fh / 2) / (img.naturalHeight * after);
+    draw();
+  }
+  zoomIn.addEventListener('input', () => setZoom(+zoomIn.value));
+  $('#zoom-in').addEventListener('click', () => setZoom(zoom * 1.15));
+  $('#zoom-out').addEventListener('click', () => setZoom(zoom / 1.15));
+  stage.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const r = stage.getBoundingClientRect(), dpr = view.width / r.width;
+    setZoom(zoom * Math.exp(-e.deltaY * 0.0015), (e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr);
+  }, { passive: false });
+
+  /* ---------- drag (mouse, touch) and pinch ---------- */
+  const pts = new Map();
+  let last = null, pinch = null;
+  stage.addEventListener('pointerdown', (e) => {
+    stage.setPointerCapture(e.pointerId);
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    stage.classList.add('dragging');
+    if (pts.size === 1) last = { x: e.clientX, y: e.clientY };
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), z: zoom }; }
+  });
+  stage.addEventListener('pointermove', (e) => {
+    if (!pts.has(e.pointerId) || !img) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const r = stage.getBoundingClientRect(), dpr = view.width / r.width;
+    if (pts.size === 2 && pinch) {
+      const [a, b] = [...pts.values()];
+      setZoom(pinch.z * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d, ((a.x + b.x) / 2 - r.left) * dpr, ((a.y + b.y) / 2 - r.top) * dpr);
+      return;
+    }
+    if (!last) return;
+    const s = scaleFor(view.width, view.height);
+    cx -= (e.clientX - last.x) * dpr / (img.naturalWidth * s);
+    cy -= (e.clientY - last.y) * dpr / (img.naturalHeight * s);
+    last = { x: e.clientX, y: e.clientY };
+    draw();
+  });
+  function endPointer(e) {
+    pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (pts.size === 1) { const p = [...pts.values()][0]; last = { x: p.x, y: p.y }; }
+    if (pts.size === 0) { last = null; stage.classList.remove('dragging'); }
+  }
+  stage.addEventListener('pointerup', endPointer);
+  stage.addEventListener('pointercancel', endPointer);
+
+  stage.addEventListener('keydown', (e) => {
+    if (!img) return;
+    const s = scaleFor(view.width, view.height), step = 12 * (view.width / stage.clientWidth);
+    const moves = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+    if (moves[e.key]) {
+      e.preventDefault();
+      cx += moves[e.key][0] * step / (img.naturalWidth * s);
+      cy += moves[e.key][1] * step / (img.naturalHeight * s);
+      draw();
+    } else if (e.key === '+' || e.key === '=') { setZoom(zoom * 1.15); }
+    else if (e.key === '-' || e.key === '_') { setZoom(zoom / 1.15); }
+  });
+
+  $('#reset').addEventListener('click', () => { zoom = 1; cx = cy = 0.5; draw(); });
+
+  /* ---------- save ---------- */
+  $('#save').addEventListener('click', () => {
+    if (!img) return;
+    const [ow, oh] = outSize();
+    const out = document.createElement('canvas');
+    out.width = ow; out.height = oh;
+    const c = out.getContext('2d');
+    c.fillStyle = '#ffffff'; c.fillRect(0, 0, ow, oh); // transparent PNGs get a white background
+    paint(c, ow, oh);
+    const name = ($('#name').value.trim().toLowerCase().replace(/[^a-z0-9-_]+/g, '-').replace(/^-+|-+$/g, '') || 'photo') + '.jpg';
+    out.toBlob((blob) => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      const done = $('#done');
+      done.textContent = 'Saved ' + name + ' (' + ow + ' × ' + oh + ' px, ' + Math.round(blob.size / 1024) + ' KB). Move it into the project/photos folder.';
+      done.classList.add('show');
+    }, 'image/jpeg', 0.86);
+  });
+
+  window.addEventListener('resize', sizeStage);
+  window.__framer = { load: load, state: () => ({ shape, zoom, cx, cy, out: img ? outSize() : null }) };
+})();
+</script>
+</body>
+</html>
